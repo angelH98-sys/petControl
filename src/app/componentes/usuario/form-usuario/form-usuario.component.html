@@ -6,40 +6,63 @@
             <mat-label>Nombre</mat-label>
             <input matInput type="text"
                 formControlName="nombre">
+            <mat-error *ngIf="formUsuario.get('nombre').invalid">
+                {{alertaService.errorInput(formUsuario.get('nombre'))}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="col-12">
             <mat-label>Usuario</mat-label>
             <input matInput type="text"
                 formControlName="usuario">
+            <mat-error *ngIf="formUsuario.get('usuario').invalid">
+                {{alertaService.errorInput(formUsuario.get('usuario'))}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="col-12">
             <mat-label>Correo electrónico</mat-label>
             <input matInput type="text"
                 formControlName="correo">
+            <mat-hint>Ej: mail@mail.com</mat-hint>
+            <mat-error *ngIf="formUsuario.get('correo').invalid">
+                {{alertaService.errorInput(formUsuario.get('correo'))}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="col-12">
             <mat-label>Constraseña</mat-label>
             <input matInput type="password"
                 formControlName="contrasenia">
+            <mat-error *ngIf="formUsuario.get('contrasenia').invalid">
+                {{alertaService.errorInput(formUsuario.get('contrasenia'))}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="col-12">
             <mat-label>Confirmar contraseña</mat-label>
             <input matInput type="password"
                 formControlName="comprobacion">
+            <mat-error *ngIf="formUsuario.get('comprobacion').invalid">
+                {{alertaService.errorInput(formUsuario.get('comprobacion'))}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="col-12">
             <mat-label>Pregunta de seguridad</mat-label>
             <input matInput type="text"
                 formControlName="pregunta">
+            <mat-error *ngIf="formUsuario.get('pregunta').invalid">
+                {{alertaService.errorInput(formUsuario.get('pregunta'))}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="col-12">
             <mat-label>Respuesta</mat-label>
             <input matInput type="password"
                 formControlName="respuesta">
+            <mat-error *ngIf="formUsuario.get('respuesta').invalid">
+                {{alertaService.errorInput(formUsuario.get('respuesta'))}}
+            </mat-error>
         </mat-form-field>
 
         <button mat-raised-button color="primary" 
-            class="col-11 py-2 mx-auto">
+            class="col-11 py-2 mx-auto mt-1"
+            [disabled]="formUsuario.invalid">
             Registrar usuario
         </button>
     </form>
