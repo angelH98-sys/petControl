@@ -8,11 +8,20 @@ import { MaterialModule } from './utilidades/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormUsuarioComponent } from './componentes/usuario/form-usuario/form-usuario.component';
+import { TableUsuarioComponent } from './componentes/usuario/table-usuario/table-usuario.component';
+
+import { environment } from '../environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FormUsuarioComponent
+    FormUsuarioComponent,
+    TableUsuarioComponent,
+    ModificarUsuarioDialog,
+    EliminarUsuarioDialog
   ],
   imports: [
     BrowserModule,
@@ -20,7 +29,9 @@ import { FormUsuarioComponent } from './componentes/usuario/form-usuario/form-us
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

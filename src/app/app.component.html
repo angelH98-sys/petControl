@@ -1,6 +1,16 @@
-<mat-toolbar color="primary">
-  <span>Veterinaria</span>
-</mat-toolbar>
-<div class="container mt-4">
-  <router-outlet></router-outlet>
-</div>
+<mat-drawer-container hasBackDrop="true">
+  <mat-drawer #drawer mode="over">
+    <h1>hello</h1>
+  </mat-drawer>
+  <mat-drawer-content style="height: 100%;">
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Veterinaria</span>
+    </mat-toolbar>
+    <div class="container mt-4">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

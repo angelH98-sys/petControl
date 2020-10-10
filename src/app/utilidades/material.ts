@@ -7,6 +7,11 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTableModule} from '@angular/material/table';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
@@ -17,7 +22,12 @@ import {MatInputModule} from '@angular/material/input';
         MatCardModule,
         MatDividerModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatSidenavModule,
+        MatSnackBarModule,
+        MatTableModule,
+        MatTooltipModule,
+        MatDialogModule
     ],
     exports:[
         MatToolbarModule,
@@ -26,7 +36,12 @@ import {MatInputModule} from '@angular/material/input';
         MatCardModule,
         MatDividerModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatSidenavModule,
+        MatSnackBarModule,
+        MatTableModule,
+        MatTooltipModule,
+        MatDialogModule
     ]
 })
 

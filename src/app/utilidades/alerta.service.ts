@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlertaService {
 
-  constructor() { }
+  constructor(public snackBar: MatSnackBar) { }
 
   errorInput(input: FormControl) {
     for(let error in input.errors){
@@ -24,4 +25,21 @@ export class AlertaService {
     }
   }
 
+  openErrorSnackBar(message: string) {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: ['snackbar', 'errorsnackbar']
+    });
+  }
+
+  openSuccessSnackBar(message: string) {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: ['snackbar', 'successsnackbar']
+    });
+  }
 }
