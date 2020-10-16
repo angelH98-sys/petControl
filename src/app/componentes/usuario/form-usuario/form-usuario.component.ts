@@ -39,7 +39,10 @@ export class FormUsuarioComponent implements OnInit {
   }
 
   async onSubmit(){
+    
     this.validadorService.verificarContrasenias(this.formUsuario);
+    await this.validadorService.usuarioDisponible(this.formUsuario);
+    
     if(this.formUsuario.invalid) return false;
     try{
       await this.db.Create(this.formGroupToUser(), 'usuario');

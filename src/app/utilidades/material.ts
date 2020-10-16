@@ -12,6 +12,11 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -27,7 +32,12 @@ import {MatDialogModule} from '@angular/material/dialog';
         MatSnackBarModule,
         MatTableModule,
         MatTooltipModule,
-        MatDialogModule
+        MatDialogModule,
+        MatProgressBarModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSelectModule,
+        MatMenuModule
     ],
     exports:[
         MatToolbarModule,
@@ -41,7 +51,12 @@ import {MatDialogModule} from '@angular/material/dialog';
         MatSnackBarModule,
         MatTableModule,
         MatTooltipModule,
-        MatDialogModule
+        MatDialogModule,
+        MatProgressBarModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSelectModule,
+        MatMenuModule
     ]
 })
 

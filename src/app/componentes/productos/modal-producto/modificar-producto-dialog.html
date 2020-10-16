@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>Modificar producto</h1>
+<div mat-dialog-content>
+    <form [formGroup]="formGroup" class="row">
+        <mat-form-field class="mb-1 col-12">
+            <mat-label>Nombre</mat-label>
+            <textarea matInput formControlName="nombre" style="height: 50px;"></textarea>
+            <mat-error *ngIf="formGroup.get('nombre').invalid">
+                {{alertaService.errorInput(formGroup.get('nombre'))}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="mb-1 col-12">
+            <mat-label>Precio</mat-label>
+            <input matInput type="number" min="0.00" step="0.01"
+                formControlName="precio">
+            <span matPrefix>$&nbsp;</span>
+            <mat-error *ngIf="formGroup.get('precio').invalid">
+                {{alertaService.errorInput(formGroup.get('precio'))}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="mb-1 col-12"
+            *ngIf="formGroup.get('estado').value == 'Disponible' ||
+                    formGroup.get('estado').value == 'Deshabilitado'">
+            <mat-label>Estado</mat-label>
+            <mat-select [value]="formGroup.get('estado').value"
+                formControlName="estado">
+                <mat-option value="Disponible">Disponible</mat-option>
+                <mat-option value="Deshabilitado">Deshabilitado</mat-option>
+              </mat-select>
+            <mat-error *ngIf="formGroup.get('estado').invalid">
+                {{alertaService.errorInput(formGroup.get('estado'))}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="mb-1 col-12">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput formControlName="descripcion" style="height: 100px;"></textarea>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">
+        Cancelar  
+      </button>
+    <button mat-button [mat-dialog-close]="formGroup.value" 
+      cdkFocusInitial [disabled]="formGroup.invalid">
+        Enviar
+    </button>
+  </div>
