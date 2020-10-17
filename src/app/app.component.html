@@ -1,16 +1,30 @@
-<mat-drawer-container hasBackDrop="true">
-  <mat-drawer #drawer mode="over">
-    <h1>hello</h1>
+<mat-toolbar color="primary" class="position-fixed">
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Veterinaria</span>
+</mat-toolbar>
+
+<mat-drawer-container hasBackDrop="true" id="drawerContainer">
+  <mat-drawer #drawer mode="push">
+    <button mat-button class="drawerButton w-100 py-1"
+      [routerLink]="['/usuarios/registro']"
+      (click)="drawer.toggle()">
+      Nuevo usuario
+    </button>
+    <button mat-button class="drawerButton w-100 py-1"
+      [routerLink]="['/usuarios/tabla']"
+      (click)="drawer.toggle()">
+      Usuarios registrados
+    </button>
   </mat-drawer>
-  <mat-drawer-content style="height: 100%;">
-    <mat-toolbar color="primary">
-      <button mat-icon-button (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span>Veterinaria</span>
-    </mat-toolbar>
+  <mat-drawer-content>
     <div class="container mt-4">
       <router-outlet></router-outlet>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
+
+<footer>
+  <p class="text-center mat-body text-white my-0">DPS</p>
+</footer>
