@@ -1,1 +1,48 @@
-<p>mascota works!</p>
+<mat-card class="col-xl-6 col-lg-6 col-md-12 mat-elevation-z8 mb-3">
+    <p class="mat-display-1 mb-3">Nueva Mascota </p>
+    <form [formGroup]="formmascotas" class="row" 
+        (ngSubmit)="onSubmit()">
+        <mat-form-field class="col-12">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text"
+                formControlName="nombre">
+           
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Tipo</mat-label>
+            <input matInput type="text"
+                formControlName="tipo">
+          
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>raza</mat-label>
+            <input matInput type="text"
+                formControlName="raza">
+      
+          
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>edad</mat-label>
+            <input matInput type="text"
+                formControlName="fecha">
+           
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>peso</mat-label>
+            <input matInput type="text"
+                formControlName="peso">
+           
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>pedigree</mat-label>
+            <input matInput type="text"
+                formControlName="pedigree">
+        </mat-form-field>
+        <button mat-raised-button color="primary" 
+            class="col-11 py-2 mx-auto mt-1"
+            [disabled]="formmascotas.invalid">
+            Registrar Mascota
+        </button>
+    </form>
+</mat-card>
+

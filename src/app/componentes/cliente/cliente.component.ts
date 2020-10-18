@@ -56,7 +56,7 @@ export class ClienteComponent implements OnInit {
     try{
       await this.db.Create(this.formGroupToUser(), 'cliente');
       this.alertaService.openSuccessSnackBar('cliente registrado exitosamente');
-      this.router.navigate(['usuarios/tabla']);
+      this.router.navigate(['cliente/tabla']);
     }catch(rej){
       this.alertaService
         .openErrorSnackBar('Ups... algo salio mal al registrar el cliente.');
