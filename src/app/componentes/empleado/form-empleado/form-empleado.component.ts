@@ -24,7 +24,10 @@ export class FormEmpleadoComponent implements OnInit {
     this.formEmpleado=this.formBuilder.group({
       id:undefined,
       nombre:['',Validators.required],
-      telefono:['',Validators.required],
+      telefono:['', [
+        Validators.required,
+        Validators.pattern(/^\d{4}-\d{4}$/)
+      ]],
       correo: ['', [
         Validators.required,
         Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
@@ -36,5 +39,29 @@ export class FormEmpleadoComponent implements OnInit {
       especialidad:['',Validators.required]
     })
   }
+
+  formGroupToEmpleado(){
+    return {
+      nombre: this.formEmpleado.get('nombre').value,
+      telefono: this.formEmpleado.get('telefono').value,
+      correo: this.formEmpleado.get('correo').value,
+      dui: this.formEmpleado.get('dui').value,
+      especialidad:this.formEmpleado.get('especialidad').value,
+      estado:"Activo"
+    }
+  }
+
+  async onSubmit(){
+    if(this.formEmpleado.invalid) return false;
+    try{
+      await this.db.Create(this.formGroupToEmpleado(), 'empleado');
+      this.alertaService.openSuccessSnackBar('Empleado registrado exitosamente');
+      this.router.navigate(['empleado/tabla']);
+    }catch(rej){
+      this.alertaService
+        .openErrorSnackBar('Ups... algo salio mal al registrar el usuario.');
+    }
+  }
+  
 
 }
