@@ -22,14 +22,20 @@ export class ClienteComponent implements OnInit {
     this.formcliente = this.formBuilder.group({
       id: undefined,
       nombre: ['', Validators.required],
-      telefono: ['', Validators.required],
+      telefono: ['',[
+       Validators.required,
+       Validators.pattern(/^\d{4}-\d{4}$/)
+    ]],
       correo: ['', [
         Validators.required,
         Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
       ]],
       direccion: ['', Validators.required],
       mascota: ['', Validators.required],  
-      dui: ['', Validators.required],  
+      dui: ['', [
+        Validators.required,
+        Validators.pattern(/^\d{8}-\d{1}$/)
+     ]],  
         
     })
   }
