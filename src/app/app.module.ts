@@ -14,6 +14,11 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
+import { FormProductoComponent } from './componentes/productos/form-producto/form-producto.component';
+import { TableProductoComponent } from './componentes/productos/table-producto/table-producto.component';
+import { AprobarProductoDialog, ModificarProductoDialog } from './componentes/productos/modal-producto/producto-dialog';
+import { TableCompraComponent } from './componentes/compras/table-compra/table-compra.component';
+import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, NuevaCompraDialog } from './componentes/compras/modal-compra/compra-dialog';
 
 @NgModule({
   declarations: [
@@ -21,7 +26,16 @@ import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usu
     FormUsuarioComponent,
     TableUsuarioComponent,
     ModificarUsuarioDialog,
-    EliminarUsuarioDialog
+    EliminarUsuarioDialog,
+    FormProductoComponent,
+    TableProductoComponent,
+    ModificarProductoDialog,
+    TableCompraComponent,
+    NuevaCompraDialog,
+    AprobarProductoDialog,
+    AprobarCompraDialog,
+    ModificarCompraDialog,
+    CancelarCompraDialog
   ],
   imports: [
     BrowserModule,
