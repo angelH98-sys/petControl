@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { AlertaService } from 'src/app/utilidades/alerta.service';
 import { DbService } from 'src/app/utilidades/db.service';
-//import { EliminarClienteDialog, ModificaClienteDialog } from '../cliente/moda-cliente/cliente-dialog';
+import { EliminarClienteDialog, ModificarClienteDialog } from '../cliente/modal-clientes/cliente-dialog';
 
 @Component({
   selector: 'app-tabla-cliente',
@@ -51,11 +51,11 @@ export class TablaClienteComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  async modifyDialog(usuario: any){
-    /*const dialogRef = this.dialog.open(ModificarUsuarioDialog, {
+  async modifyDialog(cliente: any){
+    const dialogRef = this.dialog.open(ModificarClienteDialog, {
       width: '250px',
-      data: usuario
-    });*/
+      data: cliente
+    });
 
    /* await dialogRef.afterClosed().subscribe(result => {
       if(result != undefined && result != usuario){
