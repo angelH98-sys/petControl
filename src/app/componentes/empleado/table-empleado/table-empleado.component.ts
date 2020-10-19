@@ -33,7 +33,7 @@ export class TableEmpleadoComponent implements OnInit {
           list.push({
             id: single.payload.doc.id,
             nombre: single.payload.doc.data().nombre,
-            telefono: single.payload.doc.data().usuario,
+            telefono: single.payload.doc.data().telefono,
             correo: single.payload.doc.data().correo,
             dui:single.payload.doc.data().dui,
             especialidad:single.payload.doc.data().especialidad,
