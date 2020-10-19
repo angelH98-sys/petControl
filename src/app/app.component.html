@@ -8,11 +8,6 @@
 <mat-drawer-container hasBackDrop="true" id="drawerContainer">
   <mat-drawer #drawer mode="push">
     <button mat-button class="drawerButton w-100 py-1"
-      [routerLink]="['/usuarios/registro']"
-      (click)="drawer.toggle()">
-      Nuevo usuario
-    </button>
-    <button mat-button class="drawerButton w-100 py-1"
       [routerLink]="['/usuarios/tabla']"
       (click)="drawer.toggle()">
       Usuarios registrados

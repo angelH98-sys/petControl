@@ -13,7 +13,7 @@ import { TableUsuarioComponent } from './componentes/usuario/table-usuario/table
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
+import { DeshabilitarUsuarioDialog, HabilitarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
 import { FormProductoComponent } from './componentes/productos/form-producto/form-producto.component';
 import { TableProductoComponent } from './componentes/productos/table-producto/table-producto.component';
 import { AprobarProductoDialog, ModificarProductoDialog } from './componentes/productos/modal-producto/producto-dialog';
@@ -26,7 +26,8 @@ import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, Nueva
     FormUsuarioComponent,
     TableUsuarioComponent,
     ModificarUsuarioDialog,
-    EliminarUsuarioDialog,
+    DeshabilitarUsuarioDialog,
+    HabilitarUsuarioDialog,
     FormProductoComponent,
     TableProductoComponent,
     ModificarProductoDialog,

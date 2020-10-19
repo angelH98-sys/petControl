@@ -45,6 +45,18 @@
                     {{element.correo}}
                 </td>
             </ng-container>
+            <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef>Estado</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.estado}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="permiso">
+                <th mat-header-cell *matHeaderCellDef>Permiso</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.permiso}}
+                </td>
+            </ng-container>
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef>Acciones</th>
                 <td mat-cell *matCellDef="let element">
@@ -54,24 +66,41 @@
                         <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button color="primary"
-                        matTooltip="Eliminar"
-                        (click)="deleteDialog(element)">
-                        <mat-icon>delete</mat-icon>
+                        *ngIf="element.estado == 'Habilitado'"
+                        matTooltip="Deshabilitar"
+                        (click)="deshabilitarDialog(element)">
+                        <mat-icon>person_remove</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary"
+                        *ngIf="element.estado == 'Deshabilitado'"
+                        matTooltip="Habilitar"
+                        (click)="habilitarDialog(element)">
+                        <mat-icon>how_to_reg</mat-icon>
                     </button>
                 </td>
             </ng-container>
         
             <tr mat-header-row 
-                *matHeaderRowDef="['nombre', 'usuario', 'correo', 'actions']">
+                *matHeaderRowDef="[
+                    'nombre',
+                    'usuario', 
+                    'correo', 
+                    'estado', 
+                    'permiso', 
+                    'actions']">
             </tr>
             <tr mat-row 
-                *matRowDef="
-                let row; 
-                columns: ['nombre', 'usuario', 'correo','actions'];">
+                *matRowDef="let row; columns: [
+                    'nombre', 
+                    'usuario', 
+                    'correo',
+                    'estado', 
+                    'permiso',
+                    'actions'];">
             </tr>
         
             <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">
+                <td class="mat-cell" colspan="6">
                     <div class="my-5" *ngIf="dataSource.data.length == 0">
                         <p class="text-center">
                             {{message}}

@@ -1,26 +1,49 @@
 <h1 mat-dialog-title>Modificar usuario</h1>
 <div mat-dialog-content>
-  <form [formGroup]="formGroup">
-      <mat-form-field class="mb-1">
+  <form [formGroup]="formGroup" class="row">
+      <mat-form-field class="mb-1 col-xl-12">
         <mat-label>Nombre</mat-label>
         <input matInput type="text" formControlName="nombre">
         <mat-error *ngIf="formGroup.get('nombre').invalid">
             {{alertaService.errorInput(formGroup.get('nombre'))}}
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="mb-1">
+      <mat-form-field class="mb-1 col-xl-12">
         <mat-label>Usuario</mat-label>
         <input matInput type="text" formControlName="usuario">
         <mat-error *ngIf="formGroup.get('usuario').invalid">
             {{alertaService.errorInput(formGroup.get('usuario'))}}
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="mb-1">
+      <mat-form-field class="mb-1 col-xl-12">
         <mat-label>Correo</mat-label>
         <input matInput type="text" formControlName="correo">
         <mat-error *ngIf="formGroup.get('correo').invalid">
             {{alertaService.errorInput(formGroup.get('correo'))}}
         </mat-error>
+      </mat-form-field>
+      <mat-form-field class="mb-1 col-xl-12">
+            <mat-label>Estado</mat-label>
+            <mat-select [value]="formGroup.get('estado').value"
+                formControlName="estado">
+                <mat-option value="Habilitado">Habilitado</mat-option>
+                <mat-option value="Deshabilitado">Deshabilitado</mat-option>
+              </mat-select>
+            <mat-error *ngIf="formGroup.get('estado').invalid">
+                {{alertaService.errorInput(formGroup.get('estado'))}}
+            </mat-error>
+        </mat-form-field>
+      <mat-form-field class="mb-1 col-xl-12">
+          <mat-label>Permiso</mat-label>
+          <mat-select [value]="formGroup.get('permiso').value"
+              formControlName="permiso">
+              <mat-option value="Administrador">Administrador</mat-option>
+              <mat-option value="Empleado">Empleado</mat-option>
+              <mat-option value="Analista">Analista</mat-option>
+            </mat-select>
+          <mat-error *ngIf="formGroup.get('permiso').invalid">
+              {{alertaService.errorInput(formGroup.get('permiso'))}}
+          </mat-error>
       </mat-form-field>
   </form>
 </div>

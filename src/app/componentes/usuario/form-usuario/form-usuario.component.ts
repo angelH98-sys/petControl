@@ -34,7 +34,7 @@ export class FormUsuarioComponent implements OnInit {
       contrasenia: ['', Validators.required],
       comprobacion: ['', Validators.required],
       pregunta: ['', Validators.required],  
-      respuesta: ['', Validators.required],  
+      respuesta: ['', Validators.required]
     })
   }
 
@@ -62,6 +62,8 @@ export class FormUsuarioComponent implements OnInit {
       contrasenia: sha256(this.formUsuario.get('contrasenia').value),
       pregunta: this.formUsuario.get('pregunta').value,
       respuesta: sha256(this.formUsuario.get('respuesta').value),
+      estado: 'Habilitado',
+      permiso: 'Empleado'
     }
   }
 
