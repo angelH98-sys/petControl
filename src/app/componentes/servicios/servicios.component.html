@@ -6,29 +6,44 @@
             <mat-label>Nombre</mat-label>
             <input matInput type="text"
                 formControlName="nombre">
+                <mat-error *ngIf="formServicios.get('nombre').invalid">
+                    {{alertaService.errorInput(formServicios.get('nombre'))}}
+                </mat-error>
         </mat-form-field>
         <mat-form-field class="col-12">
             <mat-label>Descripcion</mat-label>
             <input matInput type="text"
                 formControlName="descripcion">
+                <mat-error *ngIf="formServicios.get('descripcion').invalid">
+                    {{alertaService.errorInput(formServicios.get('descripcion'))}}
+                </mat-error>
             </mat-form-field>
 
         <mat-form-field class="col-12">
             <mat-label>Duracion</mat-label>
             <input matInput type="text"
                 formControlName="duracion">
+                <mat-error *ngIf="formServicios.get('duracion').invalid">
+                    {{alertaService.errorInput(formServicios.get('duracion'))}}
+                </mat-error>
         </mat-form-field>
 
         <mat-form-field class="col-12">
             <mat-label>Precio</mat-label>
             <input matInput type="text"
                 formControlName="precio">
+                <mat-error *ngIf="formServicios.get('precio').invalid">
+                    {{alertaService.errorInput(formServicios.get('precio'))}}
+                </mat-error>
           </mat-form-field>
 
         <mat-form-field class="col-12">
             <mat-label>Empleado</mat-label>
             <input matInput type="text"
                 formControlName="empleado">
+                <mat-error *ngIf="formServicios.get('empleado').invalid">
+                    {{alertaService.errorInput(formServicios.get('empleado'))}}
+                </mat-error>
         </mat-form-field>
 
        
