@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { AlertaService } from 'src/app/utilidades/alerta.service';
 import { DbService } from 'src/app/utilidades/db.service';
-//import { EliminarUsuarioDialog, ModificarUsuarioDialog } from '../modal-usuario/usuario-dialog';
+import { ModificarEmpleadoDialog } from '../modal-empleado/empleado-dialog';
 
 @Component({
   selector: 'app-table-empleado',
@@ -52,15 +52,17 @@ export class TableEmpleadoComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  async modifyDialog(usuario: any){
-    /*const dialogRef = this.dialog.open(ModificarUsuarioDialog, {
+  async modifyDialog(empleado: any){
+    const dialogRef = this.dialog.open(ModificarEmpleadoDialog, {
       width: '250px',
-      data: usuario
-    });*/
+      data: empleado
+    });
 
-    /*await dialogRef.afterClosed().subscribe(result => {
-      if(result != undefined && result != usuario){
-        try{
+    await dialogRef.afterClosed().subscribe(result => {
+      if(result != undefined && result != empleado){
+        console.log(result);
+        //Do something
+        /*try{
 
           this.db.Update(result.id, {
             nombre: result.nombre,
@@ -75,9 +77,9 @@ export class TableEmpleadoComponent implements OnInit {
 
           this.alertaService
             .openErrorSnackBar('Ups... Ocurrio un error al modificar el usuario');
-        }
+        }*/
       }
-    });*/
+    });
   }
   
   async deleteDialog(usuario: any){
