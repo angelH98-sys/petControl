@@ -57,49 +57,51 @@ export class TablaClienteComponent implements OnInit {
       data: cliente
     });
 
-   /* await dialogRef.afterClosed().subscribe(result => {
-      if(result != undefined && result != usuario){
+    await dialogRef.afterClosed().subscribe(result => {
+      if(result != undefined && result != cliente){
         try{
 
           this.db.Update(result.id, {
             nombre: result.nombre,
-            usuario: result.usuario,
-            correo: result.correo
-          }, 'usuario');
+            telefono: result.telefono,
+            correo: result.correo,
+            dui: result.dui,
+            mascota:result.mascota
+          }, 'cliente');
           
-          this.getUsuarios();
+          this.getClientes();
           this.alertaService
-            .openSuccessSnackBar('Usuario modificado exitosamente');
+            .openSuccessSnackBar('Cliente modificado exitosamente');
         }catch(rej){
 
           this.alertaService
-            .openErrorSnackBar('Ups... Ocurrio un error al modificar el usuario');
+            .openErrorSnackBar('Ups... Ocurrio un error al modificar el Cliente');
         }
       }
-    });*/
+    });
   }
 
-  async deleteDialog(usuario: any){
-    /*const dialogRef = this.dialog.open(EliminarUsuarioDialog, {
+  async deleteDialog(cliente: any){
+    const dialogRef = this.dialog.open(EliminarClienteDialog, {
       width: '250px',
-      data: usuario.nombre
+      data: cliente.nombre
     });
 
     await dialogRef.afterClosed().subscribe(result => {
       if(result != undefined){
         try{
 
-          this.db.Delete(usuario.id, 'usuario');
-          this.getUsuarios();
+          this.db.Delete(cliente.id, 'cliente');
+          this.getClientes();
           this.alertaService
-            .openSuccessSnackBar('Usuario eliminado exitosamente');
+            .openSuccessSnackBar('Cliente eliminado exitosamente');
         }catch(rej){
 
           this.alertaService
-            .openErrorSnackBar('Ups... Ocurrio un error al eliminar el usuario');
+            .openErrorSnackBar('Ups... Ocurrio un error al eliminar el cliente');
         }
       }
-    });*/
+    });
   }
     }
   

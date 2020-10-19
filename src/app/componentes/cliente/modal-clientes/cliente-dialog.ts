@@ -18,7 +18,7 @@ import { AlertaService } from 'src/app/utilidades/alerta.service';
       public alertaService: AlertaService) {
 
         this.formGroup = this.formBuilder.group({
-            id: undefined,
+            id: this.data.id,
       nombre: ['', Validators.required],
       telefono: ['',[
        Validators.required,
@@ -42,7 +42,7 @@ import { AlertaService } from 'src/app/utilidades/alerta.service';
         this.dialogRef.close();
     }
 
-}
+  }
 @Component({
     selector: 'eliminar-cliente-dialog',
     templateUrl: 'eliminar-cliente-dialog.html',
@@ -59,4 +59,6 @@ import { AlertaService } from 'src/app/utilidades/alerta.service';
     }
   
 }
+
+
 
