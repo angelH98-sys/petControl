@@ -51,10 +51,9 @@ export class ClienteComponent implements OnInit {
     }
   }
   async onSubmit(){
-    this.validadorService.verificarContrasenias(this.formcliente);
     if(this.formcliente.invalid) return false;
     try{
-      await this.db.Create(this.formGroupToUser(), 'cliente');
+      await this.db.Create(this.formGroupToUser(),'cliente');
       this.alertaService.openSuccessSnackBar('cliente registrado exitosamente');
       this.router.navigate(['cliente/tabla']);
     }catch(rej){

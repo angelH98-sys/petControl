@@ -1,0 +1,62 @@
+<p class="mat-display-1 mb-3 text-center">
+    Usuarios registrados
+</p>
+<div class="row">
+    <div class="col-2">
+        <button mat-raised-button color="primary"
+            class="w-100"
+            routerLink="../registro">
+            Nuevo usuario
+        </button>
+    </div>
+    <mat-form-field class="col-10">
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
+</div>
+<table mat-table [dataSource]="dataSource" class="w-100 mat-elevation-z8">
+    <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">
+            {{element.nombre}}
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="usuario">
+        <th mat-header-cell *matHeaderCellDef>Usuario</th>
+        <td mat-cell *matCellDef="let element">
+            {{element.usuario}}
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="correo">
+        <th mat-header-cell *matHeaderCellDef>Correo</th>
+        <td mat-cell *matCellDef="let element">
+            {{element.correo}}
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary"
+                matTooltip="Editar"
+                (click)="modifyDialog(element)">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="primary"
+                matTooltip="Eliminar"
+                (click)="deleteDialog(element)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row 
+        *matHeaderRowDef="['nombre', 'usuario', 'correo', 'actions']"></tr>
+    <tr mat-row 
+        *matRowDef="let row; columns: ['nombre', 'usuario', 'correo','actions'];"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No se encotraron coincidencias para "{{input.value}}"</td>
+    </tr>
+</table>
+

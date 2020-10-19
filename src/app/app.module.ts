@@ -16,6 +16,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
 import { ClienteComponent } from './componentes/cliente/cliente.component';
 import { MascotaComponent } from './componentes/mascota/mascota.component';
+import { TablaClienteComponent } from './componentes/tabla-cliente/tabla-cliente.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MascotaComponent } from './componentes/mascota/mascota.component';
     ModificarUsuarioDialog,
     EliminarUsuarioDialog,
     ClienteComponent,
-    MascotaComponent
+    MascotaComponent,
+    TablaClienteComponent
   ],
   imports: [
     BrowserModule,
