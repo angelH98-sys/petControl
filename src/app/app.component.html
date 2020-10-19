@@ -22,6 +22,11 @@
       (click)="drawer.toggle()">
      Ingresar Servicio
     </button>
+    <button mat-button class="drawerButton w-100 py-1"
+    [routerLink]="['/servicio/tabla']"
+    (click)="drawer.toggle()">
+    Servicios registrados
+  </button>
   </mat-drawer>
   <mat-drawer-content>
     <div class="container mt-4">
