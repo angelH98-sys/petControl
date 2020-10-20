@@ -92,14 +92,14 @@ export class TableServiciosComponent implements OnInit {
       if(result != undefined){
         try{
 
-          this.db.Delete(servicio.nombre, 'servicio');
+          this.db.Delete(servicio.id, 'servicio');
           this.getServicios();
           this.alertaService
-            .openSuccessSnackBar('Usuario eliminado exitosamente');
+            .openSuccessSnackBar('Servicio eliminado exitosamente');
         }catch(rej){
 
           this.alertaService
-            .openErrorSnackBar('Ups... Ocurrio un error al eliminar el usuario');
+            .openErrorSnackBar('Ups... Ocurrio un error al eliminar el servicio');
         }
       }
     });
