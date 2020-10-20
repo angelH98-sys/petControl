@@ -93,7 +93,6 @@ export class TableEmpleadoComponent implements OnInit {
     await dialogRef.afterClosed().subscribe(result => {
       if(result != undefined){
         try{
-
           this.db.Delete(usuario.id, 'usuario');
           this.getUsuarios();
           this.alertaService
