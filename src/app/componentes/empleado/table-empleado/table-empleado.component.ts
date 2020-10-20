@@ -61,23 +61,25 @@ export class TableEmpleadoComponent implements OnInit {
     await dialogRef.afterClosed().subscribe(result => {
       if(result != undefined && result != empleado){
         console.log(result);
-        //Do something
-        /*try{
+        try{
 
           this.db.Update(result.id, {
             nombre: result.nombre,
-            usuario: result.usuario,
-            correo: result.correo
-          }, 'usuario');
+            telefono: result.telefono,
+            correo: result.correo,
+            dui:result.dui,
+            especialidad:result.especialidad,
+            estado:result.estado
+          }, 'empleado');
           
-          this.getUsuarios();
+          this.getEmpleados();
           this.alertaService
-            .openSuccessSnackBar('Usuario modificado exitosamente');
+            .openSuccessSnackBar('Empleado modificado exitosamente');
         }catch(rej){
 
           this.alertaService
-            .openErrorSnackBar('Ups... Ocurrio un error al modificar el usuario');
-        }*/
+            .openErrorSnackBar('Ups... Ocurrio un error al modificar el Empleado');
+        }
       }
     });
   }

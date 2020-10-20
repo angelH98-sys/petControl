@@ -26,6 +26,7 @@ import { AlertaService } from 'src/app/utilidades/alerta.service';
                 Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
             dui:[this.data.dui, Validators.required],
             especialidad:[this.data.especialidad, Validators.required],
+            estado:[this.data.estado,Validators.required]
         });
       }
   
