@@ -14,6 +14,9 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
+import { FormEmpleadoComponent } from './componentes/empleado/form-empleado/form-empleado.component';
+import { TableEmpleadoComponent } from './componentes/empleado/table-empleado/table-empleado.component';
+import { ModificarEmpleadoDialog } from './componentes/empleado/modal-empleado/empleado-dialog';
 import { FormProductoComponent } from './componentes/productos/form-producto/form-producto.component';
 import { TableProductoComponent } from './componentes/productos/table-producto/table-producto.component';
 import { AprobarProductoDialog, ModificarProductoDialog } from './componentes/productos/modal-producto/producto-dialog';
@@ -27,6 +30,9 @@ import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, Nueva
     TableUsuarioComponent,
     ModificarUsuarioDialog,
     EliminarUsuarioDialog,
+    FormEmpleadoComponent,
+    TableEmpleadoComponent,
+    ModificarEmpleadoDialog
     FormProductoComponent,
     TableProductoComponent,
     ModificarProductoDialog,
