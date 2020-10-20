@@ -16,8 +16,17 @@ export class DbService {
     return this.firestore.collection(collection).snapshotChanges();
   }
 
+  GetDocWith(name: string, value: string, collection: string){
+    return this.firestore.collection(collection).ref
+      .where(name, '==', value).get();
+  }
+
+  GetDocWithId(id: string, collection: string){
+    return this.firestore.collection(collection).doc(id).get();
+  }
+
   Update(id: string, data: any, collecton: string){
-    return this.firestore.collection(collecton).doc(id).set(data);
+    return this.firestore.collection(collecton).doc(id).update(data);
   }
   
   Delete(id: string, collection: string){

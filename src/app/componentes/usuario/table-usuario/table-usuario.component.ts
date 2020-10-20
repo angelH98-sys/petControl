@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { AlertaService } from 'src/app/utilidades/alerta.service';
@@ -12,8 +12,10 @@ import { EliminarUsuarioDialog, ModificarUsuarioDialog } from '../modal-usuario/
 })
 export class TableUsuarioComponent implements OnInit {
 
-  dataSource: any;
-
+  dataSource = new MatTableDataSource();
+  message = "Cargando información";
+  tableCharged = false;
+  windowWidth: any;
 
   constructor(
     private db: DbService,
@@ -21,8 +23,9 @@ export class TableUsuarioComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
-
+    
     this.getUsuarios();
+    this.windowWidth = window.innerWidth;
   }
 
   async getUsuarios(){
@@ -38,7 +41,12 @@ export class TableUsuarioComponent implements OnInit {
             correo: single.payload.doc.data().correo,
           });
         });
-        this.dataSource = new MatTableDataSource(list);
+        if(list.length > 0){
+          this.dataSource = new MatTableDataSource(list);
+        }else{
+          this.message = "No se encontraron usuarios registrados";
+        }
+        this.tableCharged = true;
       });
     }catch(rej){
       this.alertaService.openErrorSnackBar('Error al cargar los usuarios');
@@ -99,6 +107,11 @@ export class TableUsuarioComponent implements OnInit {
         }
       }
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.windowWidth = window.innerWidth;
   }
 
 }

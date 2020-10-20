@@ -17,6 +17,11 @@ import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usu
 import { FormEmpleadoComponent } from './componentes/empleado/form-empleado/form-empleado.component';
 import { TableEmpleadoComponent } from './componentes/empleado/table-empleado/table-empleado.component';
 import { ModificarEmpleadoDialog } from './componentes/empleado/modal-empleado/empleado-dialog';
+import { FormProductoComponent } from './componentes/productos/form-producto/form-producto.component';
+import { TableProductoComponent } from './componentes/productos/table-producto/table-producto.component';
+import { AprobarProductoDialog, ModificarProductoDialog } from './componentes/productos/modal-producto/producto-dialog';
+import { TableCompraComponent } from './componentes/compras/table-compra/table-compra.component';
+import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, NuevaCompraDialog } from './componentes/compras/modal-compra/compra-dialog';
 
 @NgModule({
   declarations: [
@@ -28,6 +33,15 @@ import { ModificarEmpleadoDialog } from './componentes/empleado/modal-empleado/e
     FormEmpleadoComponent,
     TableEmpleadoComponent,
     ModificarEmpleadoDialog
+    FormProductoComponent,
+    TableProductoComponent,
+    ModificarProductoDialog,
+    TableCompraComponent,
+    NuevaCompraDialog,
+    AprobarProductoDialog,
+    AprobarCompraDialog,
+    ModificarCompraDialog,
+    CancelarCompraDialog
   ],
   imports: [
     BrowserModule,
