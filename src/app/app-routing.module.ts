@@ -7,7 +7,7 @@ import{ TableServiciosComponent} from './componentes/servicios/table-servicio/ta
 const routes: Routes = [
   { path: 'usuarios/registro', component: FormUsuarioComponent },
   { path: 'usuarios/tabla', component: TableUsuarioComponent },
-  { path: 'servicio/registro',component: ServiciosComponent},
+  { path: 'servicio/registros',component: ServiciosComponent},
  { path: 'servicio/tabla', component: TableServiciosComponent },
 ];
 
