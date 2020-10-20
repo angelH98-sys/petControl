@@ -76,14 +76,13 @@ export class TableEmpleadoComponent implements OnInit {
           this.alertaService
             .openSuccessSnackBar('Empleado modificado exitosamente');
         }catch(rej){
-
           this.alertaService
             .openErrorSnackBar('Ups... Ocurrio un error al modificar el Empleado');
         }
       }
     });
   }
-  
+
   async deleteDialog(usuario: any){
     /*const dialogRef = this.dialog.open(EliminarUsuarioDialog, {
       width: '250px',
