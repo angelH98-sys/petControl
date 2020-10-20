@@ -15,6 +15,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
 import { ServiciosComponent } from './componentes/servicios/servicios.component';
+import{ TableServiciosComponent} from './componentes/servicios/table-servicio/table-servicios.component'
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ServiciosComponent } from './componentes/servicios/servicios.component'
     TableUsuarioComponent,
     ModificarUsuarioDialog,
     EliminarUsuarioDialog,
-    ServiciosComponent
+    ServiciosComponent,
+    TableServiciosComponent
   ],
   imports: [
     BrowserModule,
