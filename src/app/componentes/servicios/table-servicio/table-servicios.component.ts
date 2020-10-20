@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { AlertaService } from 'src/app/utilidades/alerta.service';
 import { DbService } from 'src/app/utilidades/db.service';
-//import { EliminarServicioDialog, ModificarServicioDialog } from '../modal-servicio/servicio-dialog';
+import { EliminarServiciosDialog, ModificarServiciosDialog } from '../modal-servicio/servicios-dialog';
 
 @Component({
   selector: 'app-table-servicios',
@@ -52,8 +52,8 @@ export class TableServiciosComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  /*async modifyDialog(servicio: any){
-    const dialogRef = this.dialog.open(ModificarServicioDialog, {
+  async modifyDialog(servicio: any){
+    const dialogRef = this.dialog.open(ModificarServiciosDialog, {
       width: '250px',
       data: servicio
     });
@@ -83,7 +83,7 @@ export class TableServiciosComponent implements OnInit {
   }
 
   async deleteDialog(servicio: any){
-    const dialogRef = this.dialog.open(EliminarServicioDialog, {
+    const dialogRef = this.dialog.open(EliminarServiciosDialog, {
       width: '250px',
       data: servicio.nombre
     });
@@ -103,6 +103,6 @@ export class TableServiciosComponent implements OnInit {
         }
       }
     });
-  }*/
+  }
 
 }

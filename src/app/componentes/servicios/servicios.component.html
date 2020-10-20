@@ -23,6 +23,7 @@
             <mat-label>Duracion</mat-label>
             <input matInput type="text"
                 formControlName="duracion">
+        <span matSuffix>minutos</span>
                 <mat-error *ngIf="formServicios.get('duracion').invalid">
                     {{alertaService.errorInput(formServicios.get('duracion'))}}
                 </mat-error>
