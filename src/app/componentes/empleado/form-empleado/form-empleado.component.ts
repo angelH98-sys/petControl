@@ -56,7 +56,7 @@ export class FormEmpleadoComponent implements OnInit {
     try{
       await this.db.Create(this.formGroupToEmpleado(), 'empleado');
       this.alertaService.openSuccessSnackBar('Empleado registrado exitosamente');
-      this.router.navigate(['empleado/tabla']);
+      this.router.navigate(['empleados/tabla']);
     }catch(rej){
       this.alertaService
         .openErrorSnackBar('Ups... algo salio mal al registrar el usuario.');
