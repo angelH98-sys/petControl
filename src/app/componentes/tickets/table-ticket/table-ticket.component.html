@@ -1,0 +1,25 @@
+<p class="mat-display-1 mb-3 text-center">
+    Tickets
+</p>
+<div class="row">
+    <div class="col-sm-1 col-2 mx-auto"
+        [ngClass]="{'d-none': windowWidth >= 768}">
+        <button mat-mini-fab color="primary"
+            (click)="newTicketDialog()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <div class="col-xl-2 col-lg-2 col-md-3"
+        [ngClass]="{'d-none': windowWidth < 768}">
+        <button mat-raised-button color="primary"
+            class="w-100 mt-2"
+            (click)="newTicketDialog()">
+            Nuevo ticket
+        </button>
+    </div>
+    <!--mat-form-field class="col-xl-10 col-lg-10 col-md-9 col-10">
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input
+            [disabled]="dataSource == undefined">
+    </mat-form-field-->
+</div>

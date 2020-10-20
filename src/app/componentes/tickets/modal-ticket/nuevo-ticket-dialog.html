@@ -1,0 +1,55 @@
+<h1 mat-dialog-title>Nuevo ticket</h1>
+<div mat-dialog-content>
+    <div class="row" *ngIf="!formReady">
+        <div class="col-xl-6 mx-auto" style="height: 200px;">
+            <div class="row h-100 overflow-hidden">
+                <mat-spinner class="m-auto"></mat-spinner>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="formGroup" *ngIf="formReady">
+        <mat-form-field class="mb-1 col-xl-12">
+            <mat-label>Cliente</mat-label>
+
+            <input type="text" matInput formControlName="clienteDetail"
+                [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" 
+                    [value]="option.nombreDui">
+                    {{option.nombreDui}}
+                </mat-option>
+            </mat-autocomplete>
+
+            <!--mat-select [value]="formGroup.get('cliente').value"
+                formControlName="cliente">
+                <mat-option *ngFor="let cliente of clientes" 
+                    [value]="cliente.id">
+                    {{cliente.nombre}}<b> | </b>{{cliente.dui}}
+                </mat-option>
+              </mat-select-->
+            <mat-error *ngIf="formGroup.get('clienteDetail').invalid">
+                {{alertaService.errorInput(formGroup.get('clienteDetail'))}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12 mb-1">
+            <mat-label>Fecha de ticket</mat-label>
+            <input matInput [matDatepicker]="picker"
+                formControlName="fecha">
+            <mat-datepicker-toggle matSuffix [for]="picker">
+                </mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="formGroup.get('fecha').invalid">
+                {{alertaService.errorInput(formGroup.get('fecha'))}}
+            </mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">
+        Cancelar  
+      </button>
+    <button mat-button (click)="sendTicket()" *ngIf="formReady"
+      cdkFocusInitial [disabled]="formGroup.invalid">
+        Enviar
+    </button>
+</div>

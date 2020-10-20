@@ -39,6 +39,9 @@ export class AlertaService {
         case "productoNoDisponible": {
           return "Nombre de producto no disponible";
         }
+        case "clienteInvalido": {
+          return "No existe registro del cliente";
+        }
       }
     }
   }

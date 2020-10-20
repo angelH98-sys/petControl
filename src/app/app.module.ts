@@ -19,6 +19,8 @@ import { TableProductoComponent } from './componentes/productos/table-producto/t
 import { AprobarProductoDialog, ModificarProductoDialog } from './componentes/productos/modal-producto/producto-dialog';
 import { TableCompraComponent } from './componentes/compras/table-compra/table-compra.component';
 import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, NuevaCompraDialog } from './componentes/compras/modal-compra/compra-dialog';
+import { NuevoTicketDialog } from './componentes/tickets/modal-ticket/ticket-dialog';
+import { TableTicketComponent } from './componentes/tickets/table-ticket/table-ticket.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, Nueva
     AprobarProductoDialog,
     AprobarCompraDialog,
     ModificarCompraDialog,
-    CancelarCompraDialog
+    CancelarCompraDialog,
+    NuevoTicketDialog,
+    TableTicketComponent
   ],
   imports: [
     BrowserModule,

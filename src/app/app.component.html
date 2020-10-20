@@ -10,7 +10,12 @@
     <button mat-button class="drawerButton w-100 py-1"
       [routerLink]="['/usuarios/tabla']"
       (click)="drawer.toggle()">
-      Usuarios registrados
+      Usuarios
+    </button>
+    <button mat-button class="drawerButton w-100 py-1"
+      [routerLink]="['/tickets/tabla']"
+      (click)="drawer.toggle()">
+      Tickets
     </button>
   </mat-drawer>
   <mat-drawer-content>
