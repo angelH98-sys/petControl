@@ -11,8 +11,8 @@ import { TableUsuarioComponent } from './componentes/usuario/table-usuario/table
 const routes: Routes = [
   { path: 'usuarios/registro', component: FormUsuarioComponent },
   { path: 'usuarios/tabla', component: TableUsuarioComponent },
-  { path: 'empleados/tabla', component:TableEmpleadoComponent},
-  { path: 'empleados/registro', component:FormEmpleadoComponent},
+  { path: 'empleados/tabla', component: TableEmpleadoComponent},
+  { path: 'empleados/registro', component: FormEmpleadoComponent},
   { path: 'productos/registro', component: FormProductoComponent },
   { path: 'productos/tabla', component: TableProductoComponent },
   { path: 'compras/tabla/:id', component: TableCompraComponent },
