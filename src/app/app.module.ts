@@ -17,6 +17,8 @@ import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usu
 import { ClienteComponent } from './componentes/cliente/cliente.component';
 import { MascotaComponent } from './componentes/mascota/mascota.component';
 import { TablaClienteComponent } from './componentes/tabla-cliente/tabla-cliente.component';
+import {ModificarClienteDialog} from './componentes/cliente/modal-clientes/cliente-dialog';
+import {EliminarClienteDialog} from './componentes/cliente/modal-clientes/cliente-dialog';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { TablaClienteComponent } from './componentes/tabla-cliente/tabla-cliente
     EliminarUsuarioDialog,
     ClienteComponent,
     MascotaComponent,
-    TablaClienteComponent
+    TablaClienteComponent,
+    EliminarClienteDialog,
+    ModificarClienteDialog,
   ],
   imports: [
     BrowserModule,

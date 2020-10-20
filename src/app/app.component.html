@@ -17,11 +17,25 @@
       (click)="drawer.toggle()">
       Usuarios registrados
     </button>
+    <button mat-button class="drawerButton w-100 py-1"
+    [routerLink]="['/clientes/registro']"
+    (click)="drawer.toggle()">
+    Nuevo Cliente
+  </button>
+  <button mat-button class="drawerButton w-100 py-1"
+  [routerLink]="['/mascota/tabla']"
+  (click)="drawer.toggle()">
+  Nueva Mascota
+</button>
+    <button mat-button class="drawerButton w-100 py-1"
+    [routerLink]="['/clientes/tabla']"
+    (click)="drawer.toggle()">
+    Clientes Registrados
+  </button>
   </mat-drawer>
   <mat-drawer-content>
     <div class="container mt-4">
       <router-outlet></router-outlet>
-     <app-tabla-cliente></app-tabla-cliente>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>

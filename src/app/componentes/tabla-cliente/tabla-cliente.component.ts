@@ -90,7 +90,6 @@ export class TablaClienteComponent implements OnInit {
     await dialogRef.afterClosed().subscribe(result => {
       if(result != undefined){
         try{
-
           this.db.Delete(cliente.id, 'cliente');
           this.getClientes();
           this.alertaService
