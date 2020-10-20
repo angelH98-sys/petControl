@@ -24,6 +24,7 @@ export class ServiciosComponent implements OnInit {
   ngOnInit(): void {
 
     this.formServicios = this.formBuilder.group({
+      id: undefined,
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
       duracion: ['', Validators.required],
