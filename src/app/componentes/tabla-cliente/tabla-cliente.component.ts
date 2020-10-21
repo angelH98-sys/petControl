@@ -34,6 +34,7 @@ export class TablaClienteComponent implements OnInit {
             id: single.payload.doc.id,
             nombre: single.payload.doc.data().nombre,
             telefono: single.payload.doc.data().telefono,
+            direccion: single.payload.doc.data().direccion,
             correo: single.payload.doc.data().correo,
             dui: single.payload.doc.data().dui,
             mascota: single.payload.doc.data().mascota,
@@ -59,14 +60,16 @@ export class TablaClienteComponent implements OnInit {
 
     await dialogRef.afterClosed().subscribe(result => {
       if(result != undefined && result != cliente){
+        console.log(result);
         try{
 
           this.db.Update(result.id, {
             nombre: result.nombre,
             telefono: result.telefono,
             correo: result.correo,
+            direccion: result.direccion,
             dui: result.dui,
-            mascota:result.mascota
+            mascota: result.mascota
           }, 'cliente');
           
           this.getClientes();

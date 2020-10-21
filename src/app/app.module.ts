@@ -30,8 +30,9 @@ import {EliminarClienteDialog} from './componentes/cliente/modal-clientes/client
     ClienteComponent,
     MascotaComponent,
     TablaClienteComponent,
-    EliminarClienteDialog,
     ModificarClienteDialog,
+    EliminarClienteDialog,
+   
   ],
   imports: [
     BrowserModule,

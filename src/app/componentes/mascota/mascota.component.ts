@@ -30,7 +30,6 @@ export class MascotaComponent implements OnInit {
     })
   }
   async onSubmit(){
-    this.validadorService.verificarContrasenias(this.formmascotas);
     if(this.formmascotas.invalid) return false;
     try{
       await this.db.Create(this.formGroupToUser(), 'nombre');
