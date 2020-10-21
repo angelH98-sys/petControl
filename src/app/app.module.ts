@@ -32,7 +32,7 @@ import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, Nueva
     EliminarUsuarioDialog,
     FormEmpleadoComponent,
     TableEmpleadoComponent,
-    ModificarEmpleadoDialog
+    ModificarEmpleadoDialog,
     FormProductoComponent,
     TableProductoComponent,
     ModificarProductoDialog,
