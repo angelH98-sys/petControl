@@ -1,0 +1,70 @@
+<mat-card class="col-xl-6 col-lg-6 col-md-12 mat-elevation-z8 mb-3">
+    <p class="mat-display-1 mb-3">
+        <button mat-mini-fab color="primary"
+            matTooltip="Volver"
+            routerLink="../tabla">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        Nuevo producto
+    </p>
+    <form [formGroup]="form" class="row">
+        <mat-form-field class="col-12 mb-1">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text"
+                formControlName="nombre">
+            <mat-error *ngIf="form.get('nombre').invalid">
+                {{alertaService.errorInput(form.get('nombre'))}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12 mb-1">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput formControlName="descripcion"></textarea>
+            <mat-error *ngIf="form.get('descripcion').invalid">
+                {{alertaService.errorInput(form.get('descripcion'))}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12 mb-1">
+            <mat-label>Precio unitario de compra</mat-label>
+            <input matInput type="number" min="0.01" step="0.01"
+                formControlName="precioUnitario">
+            <span matPrefix>$&nbsp;</span>
+            <mat-error *ngIf="form.get('precioUnitario').invalid">
+                {{alertaService.errorInput(form.get('precioUnitario'))}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12 mb-1">
+            <mat-label>Cantidad a comprar</mat-label>
+            <input matInput type="number" min="1" step="1"
+                formControlName="cantidad">
+            <mat-error *ngIf="form.get('cantidad').invalid">
+                {{alertaService.errorInput(form.get('cantidad'))}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12 mb-1">
+            <mat-label>Precio de venta</mat-label>
+            <input matInput type="number" min="0.01" step="0.01"
+                formControlName="precioVenta">
+            <span matPrefix>$&nbsp;</span>
+            <mat-error *ngIf="form.get('precioVenta').invalid">
+                {{alertaService.errorInput(form.get('precioVenta'))}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12 mb-1">
+            <mat-label>Fecha de compra</mat-label>
+            <input matInput [matDatepicker]="picker"
+                formControlName="fecha">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="form.get('fecha').invalid">
+                {{alertaService.errorInput(form.get('fecha'))}}
+            </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" 
+            class="col-11 py-2 mx-auto mt-1"
+            (click)="onSubmit()"
+            [disabled]="form.invalid || buttonMessage == 'Enviando información...'">
+            {{buttonMessage}}
+        </button>
+    </form>
+</mat-card>

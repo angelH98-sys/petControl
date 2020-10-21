@@ -1,8 +1,15 @@
-<mat-card class="col-xl-6 col-lg-6 col-md-12 mat-elevation-z8 mb-3">
-    <p class="mat-display-1 mb-3">Nuevo usuario</p>
+<mat-card class="col-xl-6 col-lg-8 col-md-12 mat-elevation-z8 mb-3">
+    <p class="mat-display-1 mb-3">
+        <button mat-mini-fab color="primary"
+            routerLink="../tabla"
+            matTooltip="Volver">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        Nuevo usuario
+    </p>
     <form [formGroup]="formUsuario" class="row" 
         (ngSubmit)="onSubmit()">
-        <mat-form-field class="col-12">
+        <mat-form-field class="col-12 mb-1">
             <mat-label>Nombre</mat-label>
             <input matInput type="text"
                 formControlName="nombre">
@@ -10,7 +17,7 @@
                 {{alertaService.errorInput(formUsuario.get('nombre'))}}
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="col-12">
+        <mat-form-field class="col-12 mb-1">
             <mat-label>Usuario</mat-label>
             <input matInput type="text"
                 formControlName="usuario">
@@ -18,7 +25,7 @@
                 {{alertaService.errorInput(formUsuario.get('usuario'))}}
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="col-12">
+        <mat-form-field class="col-12 mb-1">
             <mat-label>Correo electrónico</mat-label>
             <input matInput type="text"
                 formControlName="correo">
@@ -27,7 +34,7 @@
                 {{alertaService.errorInput(formUsuario.get('correo'))}}
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="col-12">
+        <mat-form-field class="col-12 mb-1">
             <mat-label>Constraseña</mat-label>
             <input matInput type="password"
                 formControlName="contrasenia">
@@ -35,7 +42,7 @@
                 {{alertaService.errorInput(formUsuario.get('contrasenia'))}}
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="col-12">
+        <mat-form-field class="col-12 mb-1">
             <mat-label>Confirmar contraseña</mat-label>
             <input matInput type="password"
                 formControlName="comprobacion">
@@ -43,7 +50,7 @@
                 {{alertaService.errorInput(formUsuario.get('comprobacion'))}}
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="col-12">
+        <mat-form-field class="col-12 mb-1">
             <mat-label>Pregunta de seguridad</mat-label>
             <input matInput type="text"
                 formControlName="pregunta">
@@ -51,7 +58,7 @@
                 {{alertaService.errorInput(formUsuario.get('pregunta'))}}
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="col-12">
+        <mat-form-field class="col-12 mb-1">
             <mat-label>Respuesta</mat-label>
             <input matInput type="password"
                 formControlName="respuesta">

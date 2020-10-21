@@ -1,21 +1,18 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { AlertaService } from 'src/app/utilidades/alerta.service';
 import { DbService } from 'src/app/utilidades/db.service';
-import { EliminarUsuarioDialog, ModificarUsuarioDialog } from '../modal-usuario/usuario-dialog';
+import { ModificarEmpleadoDialog } from '../modal-empleado/empleado-dialog';
 
 @Component({
-  selector: 'app-table-usuario',
-  templateUrl: './table-usuario.component.html',
-  styleUrls: ['./table-usuario.component.css']
+  selector: 'app-table-empleado',
+  templateUrl: './table-empleado.component.html',
+  styleUrls: ['./table-empleado.component.css']
 })
-export class TableUsuarioComponent implements OnInit {
+export class TableEmpleadoComponent implements OnInit {
 
-  dataSource = new MatTableDataSource();
-  message = "Cargando información";
-  tableCharged = false;
-  windowWidth: any;
+  dataSource: any;
 
   constructor(
     private db: DbService,
@@ -23,33 +20,30 @@ export class TableUsuarioComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    
-    this.getUsuarios();
-    this.windowWidth = window.innerWidth;
+
+    this.getEmpleados();
   }
 
-  async getUsuarios(){
+  async getEmpleados(){
     try{
-      let response = await this.db.GetAllFrom('usuario');
+      let response = await this.db.GetAllFrom('empleado');
       response.subscribe(res => {
         let list = [];
         res.forEach((single: any) => {
           list.push({
             id: single.payload.doc.id,
             nombre: single.payload.doc.data().nombre,
-            usuario: single.payload.doc.data().usuario,
+            telefono: single.payload.doc.data().telefono,
             correo: single.payload.doc.data().correo,
+            dui:single.payload.doc.data().dui,
+            especialidad:single.payload.doc.data().especialidad,
+            estado:single.payload.doc.data().estado
           });
         });
-        if(list.length > 0){
-          this.dataSource = new MatTableDataSource(list);
-        }else{
-          this.message = "No se encontraron usuarios registrados";
-        }
-        this.tableCharged = true;
+        this.dataSource = new MatTableDataSource(list);
       });
     }catch(rej){
-      this.alertaService.openErrorSnackBar('Error al cargar los usuarios');
+      this.alertaService.openErrorSnackBar('Error al cargar los empleados');
     }
   }
 
@@ -58,36 +52,39 @@ export class TableUsuarioComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  async modifyDialog(usuario: any){
-    const dialogRef = this.dialog.open(ModificarUsuarioDialog, {
+  async modifyDialog(empleado: any){
+    const dialogRef = this.dialog.open(ModificarEmpleadoDialog, {
       width: '250px',
-      data: usuario
+      data: empleado
     });
 
     await dialogRef.afterClosed().subscribe(result => {
-      if(result != undefined && result != usuario){
+      if(result != undefined && result != empleado){
+        console.log(result);
         try{
 
           this.db.Update(result.id, {
             nombre: result.nombre,
-            usuario: result.usuario,
-            correo: result.correo
-          }, 'usuario');
+            telefono: result.telefono,
+            correo: result.correo,
+            dui:result.dui,
+            especialidad:result.especialidad,
+            estado:result.estado
+          }, 'empleado');
           
-          this.getUsuarios();
+          this.getEmpleados();
           this.alertaService
-            .openSuccessSnackBar('Usuario modificado exitosamente');
+            .openSuccessSnackBar('Empleado modificado exitosamente');
         }catch(rej){
-
           this.alertaService
-            .openErrorSnackBar('Ups... Ocurrio un error al modificar el usuario');
+            .openErrorSnackBar('Ups... Ocurrio un error al modificar el Empleado');
         }
       }
     });
   }
 
   async deleteDialog(usuario: any){
-    const dialogRef = this.dialog.open(EliminarUsuarioDialog, {
+    /*const dialogRef = this.dialog.open(EliminarUsuarioDialog, {
       width: '250px',
       data: usuario.nombre
     });
@@ -95,7 +92,6 @@ export class TableUsuarioComponent implements OnInit {
     await dialogRef.afterClosed().subscribe(result => {
       if(result != undefined){
         try{
-
           this.db.Delete(usuario.id, 'usuario');
           this.getUsuarios();
           this.alertaService
@@ -106,12 +102,7 @@ export class TableUsuarioComponent implements OnInit {
             .openErrorSnackBar('Ups... Ocurrio un error al eliminar el usuario');
         }
       }
-    });
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.windowWidth = window.innerWidth;
+    });*/
   }
 
 }

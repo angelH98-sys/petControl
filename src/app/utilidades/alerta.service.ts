@@ -12,6 +12,9 @@ export class AlertaService {
   errorInput(input: FormControl) {
     for(let error in input.errors){
       switch(error){
+        case "matDatepickerParse": {
+          return "Formato de fecha incorrecto";
+        }
         case "required":{
           return "Campo requerido";
         }
@@ -20,6 +23,21 @@ export class AlertaService {
         }
         case "contraseniasDiferentes":{
           return "No coinciden las constraseñas";
+        }
+        case "usuarioNoDisponible": {
+          return "Usuario no disponible";
+        }
+        case "correoNoDisponible": {
+          return "Correo no disponible";
+        }
+        case "min": {
+          return "La cantidad indicada no es válida";
+        }
+        case "precioInvalido": {
+          return "Precio de venta inválido";
+        }
+        case "productoNoDisponible": {
+          return "Nombre de producto no disponible";
         }
       }
     }
