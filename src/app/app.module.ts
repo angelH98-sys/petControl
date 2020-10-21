@@ -14,6 +14,9 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
+import { ServiciosComponent } from './componentes/servicios/servicios.component';
+import{ TableServiciosComponent} from './componentes/servicios/table-servicio/table-servicios.component'
+import { EliminarServiciosDialog, ModificarServiciosDialog } from './componentes/servicios/modal-servicio/servicios-dialog';
 import { FormEmpleadoComponent } from './componentes/empleado/form-empleado/form-empleado.component';
 import { TableEmpleadoComponent } from './componentes/empleado/table-empleado/table-empleado.component';
 import { ModificarEmpleadoDialog } from './componentes/empleado/modal-empleado/empleado-dialog';
@@ -30,6 +33,10 @@ import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, Nueva
     TableUsuarioComponent,
     ModificarUsuarioDialog,
     EliminarUsuarioDialog,
+    ServiciosComponent,
+    TableServiciosComponent,
+    EliminarServiciosDialog,
+    ModificarServiciosDialog,
     FormEmpleadoComponent,
     TableEmpleadoComponent,
     ModificarEmpleadoDialog,
