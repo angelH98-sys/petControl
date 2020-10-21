@@ -13,7 +13,13 @@ import { TableUsuarioComponent } from './componentes/usuario/table-usuario/table
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
+import { ClienteComponent } from './componentes/cliente/cliente.component';
+import { MascotaComponent } from './componentes/mascota/mascota.component';
+import { TablaClienteComponent } from './componentes/tabla-cliente/tabla-cliente.component';
+import {ModificarClienteDialog} from './componentes/cliente/modal-clientes/cliente-dialog';
+import {EliminarClienteDialog} from './componentes/cliente/modal-clientes/cliente-dialog';
 import { ServiciosComponent } from './componentes/servicios/servicios.component';
 import{ TableServiciosComponent} from './componentes/servicios/table-servicio/table-servicios.component'
 import { EliminarServiciosDialog, ModificarServiciosDialog } from './componentes/servicios/modal-servicio/servicios-dialog';
@@ -26,6 +32,7 @@ import { AprobarProductoDialog, ModificarProductoDialog } from './componentes/pr
 import { TableCompraComponent } from './componentes/compras/table-compra/table-compra.component';
 import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, NuevaCompraDialog } from './componentes/compras/modal-compra/compra-dialog';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +40,11 @@ import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, Nueva
     TableUsuarioComponent,
     ModificarUsuarioDialog,
     EliminarUsuarioDialog,
+    ClienteComponent,
+    MascotaComponent,
+    TablaClienteComponent,
+    ModificarClienteDialog,
+    EliminarClienteDialog,
     ServiciosComponent,
     TableServiciosComponent,
     EliminarServiciosDialog,
