@@ -18,10 +18,10 @@ import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usu
 import { ClienteComponent } from './componentes/cliente/cliente.component';
 import { MascotaComponent } from './componentes/mascota/mascota.component';
 import { TablaClienteComponent } from './componentes/tabla-cliente/tabla-cliente.component';
-import {ModificarClienteDialog} from './componentes/cliente/modal-clientes/cliente-dialog';
-import {EliminarClienteDialog} from './componentes/cliente/modal-clientes/cliente-dialog';
+import { ModificarClienteDialog } from './componentes/cliente/modal-clientes/cliente-dialog';
+import { EliminarClienteDialog } from './componentes/cliente/modal-clientes/cliente-dialog';
 import { ServiciosComponent } from './componentes/servicios/servicios.component';
-import{ TableServiciosComponent} from './componentes/servicios/table-servicio/table-servicios.component'
+import { TableServiciosComponent } from './componentes/servicios/table-servicio/table-servicios.component'
 import { EliminarServiciosDialog, ModificarServiciosDialog } from './componentes/servicios/modal-servicio/servicios-dialog';
 import { FormEmpleadoComponent } from './componentes/empleado/form-empleado/form-empleado.component';
 import { TableEmpleadoComponent } from './componentes/empleado/table-empleado/table-empleado.component';
