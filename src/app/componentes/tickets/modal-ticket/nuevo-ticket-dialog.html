@@ -19,14 +19,6 @@
                     {{option.nombreDui}}
                 </mat-option>
             </mat-autocomplete>
-
-            <!--mat-select [value]="formGroup.get('cliente').value"
-                formControlName="cliente">
-                <mat-option *ngFor="let cliente of clientes" 
-                    [value]="cliente.id">
-                    {{cliente.nombre}}<b> | </b>{{cliente.dui}}
-                </mat-option>
-              </mat-select-->
             <mat-error *ngIf="formGroup.get('clienteDetail').invalid">
                 {{alertaService.errorInput(formGroup.get('clienteDetail'))}}
             </mat-error>

@@ -34,6 +34,7 @@ export class TableTicketComponent implements OnInit {
       let response = await this.db.GetAllFrom('tickets');
       response.subscribe(res => {
 
+        this.ticketList = [];
         let formatedDate: Date;
         res.forEach((single: any) => {
           
@@ -49,14 +50,11 @@ export class TableTicketComponent implements OnInit {
           });
         });
 
-        if(this.ticketList == []){
+        if(this.ticketList.length == 0){
 
-          this.alertaService
-            .openErrorSnackBar('No existen tickets registrados');
-        }else{
-
-          this.ticketsCharged = true;
+          this.message = "No se encontraron tickets registrados";
         }
+        this.ticketsCharged = true;
       });
     }catch(rej){
 
@@ -76,6 +74,7 @@ export class TableTicketComponent implements OnInit {
 
         this.db.Create(result, 'tickets').then(() => {
           this.alertaService.openSuccessSnackBar('Ticket creado exitosamente');
+          this.getTickets();
         }).catch(() => {
           this.alertaService
             .openErrorSnackBar('Ocurrio un error al crear el ticket');

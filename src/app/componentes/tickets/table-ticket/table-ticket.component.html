@@ -2,14 +2,15 @@
     Tickets
 </p>
 <div class="row">
-    <div class="col-sm-1 col-2 mx-auto"
+    <div class="col-sm-1 col-2 mx-auto mx-auto"
         [ngClass]="{'d-none': windowWidth >= 768}">
         <button mat-mini-fab color="primary"
+            class="mb-3"
             (click)="newTicketDialog()">
             <mat-icon>add</mat-icon>
         </button>
     </div>
-    <div class="col-xl-2 col-lg-2 col-md-3"
+    <div class="col-xl-2 col-lg-2 col-md-3 mx-auto"
         [ngClass]="{'d-none': windowWidth < 768}">
         <button mat-raised-button color="primary"
             class="w-100 mt-2"
@@ -17,9 +18,46 @@
             Nuevo ticket
         </button>
     </div>
-    <!--mat-form-field class="col-xl-10 col-lg-10 col-md-9 col-10">
-        <mat-label>Buscar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" #input
-            [disabled]="dataSource == undefined">
-    </mat-form-field-->
+</div>
+<div class="row mt-5"
+    *ngIf="ticketList.length == 0">
+    <div class="col-xl-4 mx-auto">
+        <div class="mb-3" style="height: 100px;"
+            *ngIf="!ticketsCharged">
+            <div class="row h-100 overflow-hidden">
+                <mat-spinner class="m-auto"></mat-spinner>
+            </div>
+        </div>
+        <img src="../../../../assets/img/empty-box.png"
+            class="d-block mx-auto mb-2"
+            *ngIf="ticketsCharged">
+        <p class="mat-h1 text-center">
+            {{message}}
+        </p>
+    </div>
+</div>
+<div class="row mt-5" *ngIf="ticketList.length > 0">
+    <div *ngFor="let ticket of ticketList"
+        class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+        <div class="row">
+            <mat-card class="mx-auto mat-elevation-z8 mb-5
+                col-xl-10 col-lg-11 col-md-10 col-sm-11 col-10">
+                <mat-card-content>
+                    <p class="mat-body">
+                        <b>Cliente | Mascota:</b> {{ticket.clienteDetail}}
+                    </p>
+                    <p class="mat-body">
+                        <b>Precio total:</b> ${{ticket.precioTotal.toFixed(2)}}
+                    </p>
+                    <p class="mat-body">
+                        <b>Fecha de creación:</b> {{ticket.fechaFormated}}
+                    </p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button>Detalle</button>
+                    <button cdkFocusInitial mat-button>Efectuar</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
 </div>
