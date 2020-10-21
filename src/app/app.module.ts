@@ -17,6 +17,14 @@ import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usu
 import { ServiciosComponent } from './componentes/servicios/servicios.component';
 import{ TableServiciosComponent} from './componentes/servicios/table-servicio/table-servicios.component'
 import { EliminarServiciosDialog, ModificarServiciosDialog } from './componentes/servicios/modal-servicio/servicios-dialog';
+import { FormEmpleadoComponent } from './componentes/empleado/form-empleado/form-empleado.component';
+import { TableEmpleadoComponent } from './componentes/empleado/table-empleado/table-empleado.component';
+import { ModificarEmpleadoDialog } from './componentes/empleado/modal-empleado/empleado-dialog';
+import { FormProductoComponent } from './componentes/productos/form-producto/form-producto.component';
+import { TableProductoComponent } from './componentes/productos/table-producto/table-producto.component';
+import { AprobarProductoDialog, ModificarProductoDialog } from './componentes/productos/modal-producto/producto-dialog';
+import { TableCompraComponent } from './componentes/compras/table-compra/table-compra.component';
+import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, NuevaCompraDialog } from './componentes/compras/modal-compra/compra-dialog';
 
 @NgModule({
   declarations: [
@@ -28,7 +36,19 @@ import { EliminarServiciosDialog, ModificarServiciosDialog } from './componentes
     ServiciosComponent,
     TableServiciosComponent,
     EliminarServiciosDialog,
-    ModificarServiciosDialog
+    ModificarServiciosDialog,
+    FormEmpleadoComponent,
+    TableEmpleadoComponent,
+    ModificarEmpleadoDialog,
+    FormProductoComponent,
+    TableProductoComponent,
+    ModificarProductoDialog,
+    TableCompraComponent,
+    NuevaCompraDialog,
+    AprobarProductoDialog,
+    AprobarCompraDialog,
+    ModificarCompraDialog,
+    CancelarCompraDialog
   ],
   imports: [
     BrowserModule,

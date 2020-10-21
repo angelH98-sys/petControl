@@ -1,0 +1,34 @@
+<mat-card class="col-xl-6">
+    <p class="mat-display-1 mb-3">Nuevo empleado</p>
+    <form  [formGroup]="formEmpleado" class="row" (ngSubmit)="onSubmit()">
+        <mat-form-field class="col-12">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text" formControlName="nombre">
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Telefono</mat-label>
+            <mat-hint>Ej: 0000-0000</mat-hint>
+            <input matInput type="text" formControlName="telefono">
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Correo</mat-label>
+            <input matInput type="text" formControlName="correo">
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>DUI</mat-label>
+            <input matInput type="text" formControlName="dui">
+            <mat-hint>Ej: 12345678-9</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Especialidad</mat-label>
+            <input matInput type="text" formControlName="especialidad">
+        </mat-form-field>
+        <button mat-raised-button color="primary" 
+            class="col-11 py-2 mx-auto mt-1"
+            [disabled]="formEmpleado.invalid">
+            Registrar empleado
+        </button>
+    </form>
+
+   
+</mat-card>
