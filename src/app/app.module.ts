@@ -21,6 +21,7 @@ import { TableCompraComponent } from './componentes/compras/table-compra/table-c
 import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, NuevaCompraDialog } from './componentes/compras/modal-compra/compra-dialog';
 import { NuevoTicketDialog } from './componentes/tickets/modal-ticket/ticket-dialog';
 import { TableTicketComponent } from './componentes/tickets/table-ticket/table-ticket.component';
+import { NuevaVentaDialog } from './componentes/ventas/modal-venta/venta-dialog';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { TableTicketComponent } from './componentes/tickets/table-ticket/table-t
     ModificarCompraDialog,
     CancelarCompraDialog,
     NuevoTicketDialog,
-    TableTicketComponent
+    TableTicketComponent,
+    NuevaVentaDialog
   ],
   imports: [
     BrowserModule,

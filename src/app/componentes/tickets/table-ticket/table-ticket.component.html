@@ -52,6 +52,21 @@
                     <p class="mat-body">
                         <b>Fecha de creación:</b> {{ticket.fechaFormated}}
                     </p>
+                    <div class="row">
+                        <div class="col">
+                            <button mat-mini-fab color="warn"
+                                matTooltip="Añadir producto"
+                                (click)="newSellDialog(ticket)">
+                                <mat-icon>shopping_bag</mat-icon>
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button mat-mini-fab color="warn"
+                                matTooltip="Añadir servicio">
+                                <mat-icon>pan_tool</mat-icon>
+                            </button>
+                        </div>
+                    </div>
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-button>Detalle</button>
