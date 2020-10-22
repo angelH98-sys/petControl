@@ -69,7 +69,10 @@
                     </div>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-button>Detalle</button>
+                    <button mat-button
+                        [routerLink]="['/tickets/detalle/', ticket.id]">
+                        Detalle
+                    </button>
                     <button cdkFocusInitial mat-button>Efectuar</button>
                 </mat-card-actions>
             </mat-card>

@@ -22,6 +22,7 @@ import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, Nueva
 import { NuevoTicketDialog } from './componentes/tickets/modal-ticket/ticket-dialog';
 import { TableTicketComponent } from './componentes/tickets/table-ticket/table-ticket.component';
 import { NuevaVentaDialog } from './componentes/ventas/modal-venta/venta-dialog';
+import { DetalleTicketComponent } from './componentes/tickets/detalle-ticket/detalle-ticket.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { NuevaVentaDialog } from './componentes/ventas/modal-venta/venta-dialog'
     CancelarCompraDialog,
     NuevoTicketDialog,
     TableTicketComponent,
-    NuevaVentaDialog
+    NuevaVentaDialog,
+    DetalleTicketComponent
   ],
   imports: [
     BrowserModule,

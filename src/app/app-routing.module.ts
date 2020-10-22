@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { TableCompraComponent } from './componentes/compras/table-compra/table-compra.component';
 import { FormProductoComponent } from './componentes/productos/form-producto/form-producto.component';
 import { TableProductoComponent } from './componentes/productos/table-producto/table-producto.component';
+import { DetalleTicketComponent } from './componentes/tickets/detalle-ticket/detalle-ticket.component';
 import { TableTicketComponent } from './componentes/tickets/table-ticket/table-ticket.component';
 import { FormUsuarioComponent } from './componentes/usuario/form-usuario/form-usuario.component';
 import { TableUsuarioComponent } from './componentes/usuario/table-usuario/table-usuario.component';
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'productos/tabla', component: TableProductoComponent },
   { path: 'compras/tabla/:id', component: TableCompraComponent },
   { path: 'tickets/tabla', component: TableTicketComponent },
+  { path: 'tickets/detalle/:id', component: DetalleTicketComponent },
 ];
 
 @NgModule({
