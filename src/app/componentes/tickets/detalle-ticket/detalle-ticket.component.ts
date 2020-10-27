@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertaService } from 'src/app/utilidades/alerta.service';
 import { DbService } from 'src/app/utilidades/db.service';
 import { EliminarVentaDialog, ModificarVentaDialog, NuevaVentaDialog } from '../../ventas/modal-venta/venta-dialog';
+import { ModificarTicketDialog } from '../modal-ticket/ticket-dialog';
 
 @Component({
   selector: 'app-detalle-ticket',
@@ -100,6 +101,49 @@ export class DetalleTicketComponent implements OnInit {
       this.router.navigate(['/tickets/tabla']);
     }
 
+  }
+
+  async modifyTicket(){
+    try{
+      let startData = {
+        cliente: this.ticket.cliente,
+        clienteDetail: this.ticket.clienteDetail,
+        fecha: this.ticket.fecha
+      }
+      const dialogRef = this.dialog.open(ModificarTicketDialog, {
+        width: '400px',
+        data: startData
+      });
+
+      await dialogRef.afterClosed().subscribe(result => {
+        if(result != undefined && result != startData){
+
+          this.ticket.cliente = result.cliente,
+          this.ticket.clienteDetail = result.clienteDetail,
+          this.ticket.fecha = result.fecha;
+          this.ticket.fechaFormated = this.ticket.fecha.toLocaleDateString();
+          
+          this.db.Update(this.ticket.id, {
+            cliente: this.ticket.cliente,
+            clienteDetail: this.ticket.clienteDetail,
+            fecha: this.ticket.fecha
+          }, 'tickets').then(() => {
+
+            this.alertaService
+              .openSuccessSnackBar('Ticket modificado exitosamente');
+          }).catch(() => {
+
+            this.alertaService
+              .openErrorSnackBar('Ocurrio un error al actualizar el ticket');
+          });
+        }
+      });
+
+    }catch(rej){
+
+      this.alertaService
+        .openErrorSnackBar('Ocurrio un error al abrir el formulario');
+    }
   }
 
   async deleteSell(producto: any){

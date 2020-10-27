@@ -104,3 +104,99 @@ class client {
     }
   
 }
+
+@Component({
+    selector: 'modificar-ticket-dialog',
+    templateUrl: 'modificar-ticket-dialog.html',
+  })
+  export class ModificarTicketDialog {
+
+    formGroup: FormGroup;
+    formReady: boolean = false;
+    clientes: client[] = [];
+    filteredOptions: Observable<client[]>;
+  
+    constructor(
+      public dialogRef: MatDialogRef<ModificarTicketDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: any,
+      private formBuilder: FormBuilder,
+      public alertaService: AlertaService,
+      private db: DbService) {
+
+        this.PrepareForm();
+        this.getCustomers();
+    }
+
+    PrepareForm(){
+        this.formGroup = this.formBuilder.group({
+            cliente: this.data.cliente,
+            clienteDetail: [this.data.clienteDetail, Validators.required],
+            fecha: new Date(this.data.fecha.seconds * 1000)
+        });
+    }
+
+    async getCustomers(){
+
+        try{
+
+            let response = await this.db.GetAllFrom('cliente'); 
+            response.subscribe(res => {
+                res.forEach((single: any) => {
+
+                    this.clientes.push({
+                        id: single.payload.doc.id,
+                        nombreDui: `${single.payload.doc.data().nombre} | ${single.payload.doc.data().dui}`,
+                        nombreMascota: `${single.payload.doc.data().nombre} | ${single.payload.doc.data().mascota}`
+                    });
+
+                    if(this.clientes.length == 0){
+
+                        this.alertaService
+                    .openErrorSnackBar('No existen usuarios para crear ticket');
+                        this.dialogRef.close();
+                    }else{
+
+                        this.filteredOptions = this.formGroup.get('clienteDetail')
+                            .valueChanges.pipe(
+                                startWith(''),
+                                map(value => this._filter(value)));
+                        this.formReady = true;
+                    }
+                });
+            });
+        }catch(rej){
+            this.alertaService
+                .openErrorSnackBar('Ocurrio un error al abrir el formulario');
+                this.dialogRef.close();
+        }
+    }
+
+    private _filter(value: string): client[]{
+        const filterValue = value.toLowerCase();
+        return this.clientes
+            .filter(option => option.nombreDui.toLowerCase().includes(filterValue));
+    }
+
+    sendTicket(): void{
+        let cliente = this.clientes
+            .filter(c => c.nombreDui == this.formGroup.get('clienteDetail').value);
+        
+        if(cliente.length == 0){
+            this.formGroup.get('clienteDetail')
+                .setErrors({clienteInvalido: true});
+        }
+
+        if(this.formGroup.valid){
+            this.dialogRef.close({
+                cliente: cliente[0].id,
+                clienteDetail: cliente[0].nombreMascota,
+                fecha: this.formGroup.get('fecha').value
+            });
+        }
+    }
+
+    onNoClick(): void {
+        this.dialogRef.close();
+      }
+
+  }

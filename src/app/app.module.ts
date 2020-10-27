@@ -19,7 +19,7 @@ import { TableProductoComponent } from './componentes/productos/table-producto/t
 import { AprobarProductoDialog, ModificarProductoDialog } from './componentes/productos/modal-producto/producto-dialog';
 import { TableCompraComponent } from './componentes/compras/table-compra/table-compra.component';
 import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, NuevaCompraDialog } from './componentes/compras/modal-compra/compra-dialog';
-import { NuevoTicketDialog } from './componentes/tickets/modal-ticket/ticket-dialog';
+import { ModificarTicketDialog, NuevoTicketDialog } from './componentes/tickets/modal-ticket/ticket-dialog';
 import { TableTicketComponent } from './componentes/tickets/table-ticket/table-ticket.component';
 import { EliminarVentaDialog, ModificarVentaDialog, NuevaVentaDialog } from './componentes/ventas/modal-venta/venta-dialog';
 import { DetalleTicketComponent } from './componentes/tickets/detalle-ticket/detalle-ticket.component';
@@ -46,7 +46,8 @@ import { DetalleTicketComponent } from './componentes/tickets/detalle-ticket/det
     NuevaVentaDialog,
     DetalleTicketComponent,
     ModificarVentaDialog,
-    EliminarVentaDialog
+    EliminarVentaDialog,
+    ModificarTicketDialog
   ],
   imports: [
     BrowserModule,
