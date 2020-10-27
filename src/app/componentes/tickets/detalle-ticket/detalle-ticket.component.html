@@ -2,7 +2,7 @@
     Detalle de ticket
 </p>
 
-<div class="row">
+<div class="row mb-5">
     <div class="col-xl-12" *ngIf="ticket == undefined">
         <mat-progress-bar mode="indeterminate">
         </mat-progress-bar>
@@ -10,9 +10,13 @@
             Cargando información...
         </p>
     </div>
-    <div class="col-xl-12" *ngIf="ticket != undefined">
-        <p class="mat-h1">
+    <div class="col-xl-8 col-lg-8 col-md-6" *ngIf="ticket != undefined">
+        <p class="mat-h1 mb-0">
             Información de ticket
+            <button mat-icon-button color="primary"
+                matTooltip="Editar">
+                <mat-icon>edit</mat-icon>
+            </button>
         </p>
         <mat-divider></mat-divider>
         <p class="mat-h2 mt-2">
@@ -25,12 +29,39 @@
             <b>Estado de ticket:</b> {{ticket.estado}}
         </p>
     </div>
+    <div class="col-xl-4 col-lg-4 col-md-6" *ngIf="ticket != undefined">
+        <mat-card style="background-color: #3f51b5; color: white;">
+            <mat-card-content>
+                <p class="mat-h2 text-right">
+                    Productos:
+                    <b *ngIf="venta != undefined; else elseBlock">
+                        ${{venta.precioTotal.toFixed(2)}}
+                    </b>
+                </p>
+                <p class="mat-h2 text-right">
+                    Citas:
+                    <b *ngIf="cita != undefined; else elseBlock">
+                        ${{cita.precioTotal.toFixed(2)}}
+                    </b>
+                </p>
+                <ng-template #elseBlock>
+                    <b>$0.00</b>
+                </ng-template>
+                <mat-divider style="background-color: white;"></mat-divider>
+                <p class="mat-h1 text-right">
+                    TOTAL:<b>${{ticket.precioTotal.toFixed(2)}}</b>
+                </p>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </div>
+
+<mat-divider></mat-divider>
 
 <div class="row">
     <div class="col-xl-12 mt-3">
         <p class="mat-h1">
-            Productos a vender
+            Productos del ticket
         </p>
         <div class="row">
             <div class="col-sm-1 col-2 mx-auto"
@@ -86,7 +117,8 @@
                 <th mat-header-cell *matHeaderCellDef>Acciones</th>
                 <td mat-cell *matCellDef="let element">
                     <button mat-icon-button color="primary"
-                        matTooltip="Editar">
+                        matTooltip="Editar"
+                        (click)="modifySell(element)">
                         <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button color="primary"
