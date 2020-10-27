@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertaService } from 'src/app/utilidades/alerta.service';
 import { DbService } from 'src/app/utilidades/db.service';
-import { ModificarVentaDialog, NuevaVentaDialog } from '../../ventas/modal-venta/venta-dialog';
+import { EliminarVentaDialog, ModificarVentaDialog, NuevaVentaDialog } from '../../ventas/modal-venta/venta-dialog';
 
 @Component({
   selector: 'app-detalle-ticket',
@@ -100,6 +100,53 @@ export class DetalleTicketComponent implements OnInit {
       this.router.navigate(['/tickets/tabla']);
     }
 
+  }
+
+  async deleteSell(producto: any){
+    try{
+
+      const dialogRef = this.dialog.open(EliminarVentaDialog, {
+        width: '400px',
+        data: producto.detalle
+      });
+
+      await dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          let index = this.venta.productos.indexOf(producto);
+          this.venta.productos.splice(index, 1);
+          this.venta.precioTotal -= producto.precioTotal;
+
+          this.ticket.precioTotal -= producto.precioTotal;
+
+          this.db.Update(this.venta.id, {
+            productos: this.venta.productos,
+            precioTotal: this.venta.precioTotal
+          }, 'ventas').then(() => {
+
+            this.db.Update(this.ticket.id, {
+              precioTotal: this.ticket.precioTotal
+            }, 'tickets').then(() => {
+
+              this.alertaService.openSuccessSnackBar('Producto eliminado del ticket');
+              this.ventaSource = new MatTableDataSource(this.venta.productos);
+              
+            }).catch(() => {
+              this.alertaService
+                .openErrorSnackBar('Ocurrio un error al eliminar el producto del ticket');
+            });
+          }).catch(() => {
+
+            this.alertaService
+              .openErrorSnackBar('Ocurrio un error al eliminar el producto del ticket');
+          });
+        }
+      });
+
+    }catch(rej){
+
+      this.alertaService
+        .openErrorSnackBar('Ocurrio un error al abrir el formulario');
+    }
   }
 
   async modifySell(producto: any){

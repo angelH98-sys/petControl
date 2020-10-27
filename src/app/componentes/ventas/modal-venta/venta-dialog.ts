@@ -252,3 +252,19 @@ class product {
       }
 
 }
+
+@Component({
+    selector: 'eliminar-venta-dialog',
+    templateUrl: 'eliminar-venta-dialog.html',
+  })
+  export class EliminarVentaDialog {
+
+    constructor(
+        public dialogRef: MatDialogRef<EliminarVentaDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+    }
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
+  }
