@@ -200,3 +200,16 @@ class client {
       }
 
   }
+
+@Component({
+selector: 'efectuar-ticket-dialog',
+templateUrl: 'efectuar-ticket-dialog.html',
+})
+  export class EfectuarTicketDialog {
+
+    constructor(public dialogRef: MatDialogRef<EfectuarTicketDialog>){}
+
+    onNoClick(): void {
+        this.dialogRef.close();
+      }
+}

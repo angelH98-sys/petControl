@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AlertaService } from 'src/app/utilidades/alerta.service';
 import { DbService } from 'src/app/utilidades/db.service';
 import { NuevaVentaDialog } from '../../ventas/modal-venta/venta-dialog';
-import { NuevoTicketDialog } from '../modal-ticket/ticket-dialog';
+import { EfectuarTicketDialog, NuevoTicketDialog } from '../modal-ticket/ticket-dialog';
 
 @Component({
   selector: 'app-table-ticket',
@@ -84,6 +84,92 @@ export class TableTicketComponent implements OnInit {
     });
   }
 
+  async efectuarTicket(ticket){
+
+    try{
+
+      const dialogRef = this.dialog.open(EfectuarTicketDialog, {
+        width: '400px'
+      });
+
+      await dialogRef.afterClosed().subscribe(result => {
+
+        if(result){
+          this.db.GetDocWith('ticket', ticket.id, 'ventas').then(res => {
+            if(!res.empty){
+
+              this.PrepareProductos(res.docs[0].data().productos)
+                .then((products: any) => {
+
+                  if(products){
+                    
+                    this.db.EffectTicket(ticket.id, res.docs[0].id, products)
+                      .then(() => {
+                        
+                        this.alertaService
+                          .openSuccessSnackBar('Ticket efectuado exitosamente');
+                      })
+                      .catch(reject => {
+                        console.log(reject);
+                        this.alertaService
+                          .openErrorSnackBar('Ocurrio un error al efectuar el ticket');
+                      });
+                  }else{
+
+                    this.alertaService
+                      .openErrorSnackBar('No es posible efectuar el ticket');
+                  }
+                });
+            }
+            
+          }).catch(() => {
+
+            this.alertaService
+              .openErrorSnackBar('Ocurrio un error al acceder a los productos del ticket');
+          });
+
+        }
+      });
+    }catch(rej){
+
+      this.alertaService
+        .openErrorSnackBar('Ocurrio un error al abrir el formulario');
+    }
+  }
+
+  async PrepareProductos(productsInTicket: any){
+
+    try{
+
+      let response = 
+        await this.db.GetDocWith('estado', 'Disponible', 'productos');
+
+      if(response.empty) return false;
+
+      let aux, stock, documents = [];
+      productsInTicket.forEach(element => {
+        
+        aux = response.docs.filter(r => r.id == element.id);
+        if(aux.length == 0) return false;
+
+        stock = aux[0].data().stock;
+        if(stock < element.cantidad) return false;
+
+        stock -= element.cantidad;
+
+        documents.push({
+          id: element.id,
+          stock: stock
+        });
+      });
+
+      return documents;
+    }catch(rej){
+      console.log(rej);
+      return false;
+    }
+  }
+
   async newSellDialog(ticket: any){
 
     const dialogRef = this.dialog.open(NuevaVentaDialog, {
@@ -144,7 +230,6 @@ export class TableTicketComponent implements OnInit {
           }
 
           }).catch((rej) => {
-            console.log(rej);
             this.alertaService
               .openErrorSnackBar('Ocurrio un error al registrar venta');
           });

@@ -73,7 +73,9 @@
                         [routerLink]="['/tickets/detalle/', ticket.id]">
                         Detalle
                     </button>
-                    <button cdkFocusInitial mat-button>Efectuar</button>
+                    <button cdkFocusInitial mat-button
+                        [disabled]="ticket.precioTotal == 0"
+                        (click)="efectuarTicket(ticket)">Efectuar</button>
                 </mat-card-actions>
             </mat-card>
         </div>
