@@ -12,9 +12,14 @@ import { EfectuarTicketDialog, NuevoTicketDialog } from '../modal-ticket/ticket-
 })
 export class TableTicketComponent implements OnInit {
 
-  ticketList = [];
+  startDate: Date = new Date();
+  endDate: Date = new Date();
+
+  listaBorrador: any[];
+  listaEfectuado: any[];
+  listaPagado: any[];
   ticketsCharged: boolean = false;
-  message = "Cargando información";
+  message: string;
   windowWidth: any;
 
   constructor(
@@ -25,40 +30,61 @@ export class TableTicketComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.startDate.setHours(0,0,0,0);
+    this.endDate.setHours(24,0,0,0);
     this.windowWidth = window.innerWidth;
     this.getTickets();
   }
 
   async getTickets(){
+
+    this.message = "Cargando información";
+    this.listaBorrador = [];
+    this.listaEfectuado = [];
+    this.listaPagado = [];
+
     try{
 
-      let response = await this.db.GetAllFrom('tickets');
-      response.subscribe(res => {
+      let response = await this.db.GetTicketsFrom(this.startDate, this.endDate);
+      
+      let formatedDate: Date;
+      let ticketObj;
+      response.docs.forEach(element => {
 
-        this.ticketList = [];
-        let formatedDate: Date;
-        res.forEach((single: any) => {
-          
-          formatedDate = new Date(single.payload.doc.data().fecha.seconds * 1000);
-          this.ticketList.push({
-            id: single.payload.doc.id,
-            cliente: single.payload.doc.data().cliente,
-            clienteDetail: single.payload.doc.data().clienteDetail,
-            estado: single.payload.doc.data().estado,
-            fecha: single.payload.doc.data().fecha,
-            fechaFormated: formatedDate.toLocaleDateString(),
-            precioTotal: single.payload.doc.data().precioTotal
-          });
-        });
-
-        if(this.ticketList.length == 0){
-
-          this.message = "No se encontraron tickets registrados";
+        formatedDate = new Date(element.data().fecha.seconds * 1000);
+        ticketObj = {
+          id: element.id,
+          cliente: element.data().cliente,
+          clienteDetail: element.data().clienteDetail,
+          estado: element.data().estado,
+          fecha: element.data().fecha,
+          fechaFormated: formatedDate.toLocaleDateString(),
+          precioTotal: element.data().precioTotal
         }
-        this.ticketsCharged = true;
-      });
-    }catch(rej){
 
+        switch(element.data().estado){
+          case 'Borrador':{
+            
+            this.listaBorrador.push(ticketObj);
+            break;
+          }
+          case 'Efectuado':{
+
+            this.listaEfectuado.push(ticketObj);
+            break;
+          }
+          case 'Pagado':{
+            
+            this.listaPagado.push(ticketObj);
+            break;
+          }
+        }
+      });
+
+      this.ticketsCharged = true;
+      this.message = "No se encontraron tickets registrados";
+    }catch(rej){
+      
       this.alertaService
         .openErrorSnackBar('Ocurrio un problema al buscar los tickets');
     }
@@ -84,6 +110,38 @@ export class TableTicketComponent implements OnInit {
     });
   }
 
+  async pagarTicket(ticket){
+    try{
+
+      this.db.GetDocWith('ticket', ticket.id, 'ventas').then(res => {
+
+        this.db.PayTicket(ticket.id, res.docs[0].id).then(() => {
+
+          let index = this.listaEfectuado.indexOf(ticket);
+          this.listaEfectuado.splice(index, 1);
+
+          ticket.estado = "Pagado";
+          this.listaPagado.push(ticket);
+
+          this.alertaService
+            .openSuccessSnackBar('Ticket pagado exitosamente');
+        }).catch(() => {
+
+          this.alertaService
+            .openErrorSnackBar('Error al pagar el ticket');
+        });
+      }).catch(() => {
+
+        this.alertaService
+          .openErrorSnackBar('Error al pagar el ticket');
+      });
+    }catch(rej){
+      
+      this.alertaService
+        .openErrorSnackBar('Error al pagar el ticket');
+    }
+  }
+
   async efectuarTicket(ticket){
 
     try{
@@ -105,12 +163,17 @@ export class TableTicketComponent implements OnInit {
                     
                     this.db.EffectTicket(ticket.id, res.docs[0].id, products)
                       .then(() => {
+
+                        let index = this.listaBorrador.indexOf(ticket);
+                        ticket.estado = "Efectuado";
+                        this.listaBorrador.splice(index, 1);
+                        this.listaEfectuado.push(ticket);
                         
                         this.alertaService
                           .openSuccessSnackBar('Ticket efectuado exitosamente');
                       })
                       .catch(reject => {
-                        console.log(reject);
+                        
                         this.alertaService
                           .openErrorSnackBar('Ocurrio un error al efectuar el ticket');
                       });
@@ -177,6 +240,7 @@ export class TableTicketComponent implements OnInit {
     });
 
     await dialogRef.afterClosed().subscribe(result => {
+
       if(result != undefined){
 
         this.db.GetDocWith('ticket', ticket.id, 'ventas').then(res => {
@@ -191,18 +255,24 @@ export class TableTicketComponent implements OnInit {
               cantidad: result.cantidad,
               precioTotal: result.precioTotal
             });
-            this.db.Create({
+
+            let sellObj = {
               productos: productos,
               precioTotal: result.precioTotal,
               ticket: ticket.id,
               estado: 'Borrador'
-            }, 'ventas').then(() => {
+            }
 
-              this.updateTicket(ticket, result.precioTotal);
+            ticket.precioTotal += result.precioTotal;
+            this.db.NewSell(ticket, sellObj).then(() => {
 
-            }).catch(() => {
               this.alertaService
-                .openErrorSnackBar('Ocurrio un error al registrar venta');
+                .openSuccessSnackBar('Venta registrada exitosamente');
+            }).catch(reject => {
+
+              ticket.precioTotal -= result.precioTotal;
+              this.alertaService
+                .openErrorSnackBar('No fue posible registrar la venta');
             });
           }else{
 
@@ -214,19 +284,29 @@ export class TableTicketComponent implements OnInit {
               cantidad: result.cantidad,
               precioTotal: result.precioTotal
             });
-            
-            let total = res.docs[0].data().precioTotal + result.precioTotal;
-            this.db.Update(res.docs[0].id, {
+
+            let precioTotal
+              = res.docs[0].data().precioTotal + result.precioTotal;
+
+            let ventaObj = {
+              id: res.docs[0].id,
               productos: productos,
-              precioTotal: total
-            }, 'ventas').then(() => {
+              precioTotal: precioTotal
+            }
 
-              this.updateTicket(ticket, result.precioTotal);
+            ticket.precioTotal += result.precioTotal;
 
-            }).catch(() => {
+            this.db.UpdateSell(ticket, ventaObj).then(() => {
+
               this.alertaService
-                .openErrorSnackBar('Ocurrio un error al registrar venta');
+                .openSuccessSnackBar('Venta registrada exitosamente');
+            }).catch(() => {
+
+              this.alertaService
+                .openErrorSnackBar('No fue posible registrar la venta');
+              ticket.precioTotal -= result.precioTotal;
             });
+            
           }
 
           }).catch((rej) => {
@@ -236,22 +316,6 @@ export class TableTicketComponent implements OnInit {
       
       }
     });
-  }
-
-  async updateTicket(ticket: any, precioTotal){
-    try{
-
-      precioTotal += ticket.precioTotal;
-      await this.db.Update(ticket.id, {
-        precioTotal: precioTotal
-      }, 'tickets');
-      this.getTickets();
-      this.alertaService.openSuccessSnackBar('Venta registrada exitosamente');
-
-    }catch(rej){
-      this.alertaService
-        .openErrorSnackBar('Ocurrio un error al actualizar el precio total del ticket');
-    }
   }
 
   @HostListener('window:resize', ['$event'])

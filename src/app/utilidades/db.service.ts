@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BrowserStack } from 'protractor/built/driverProviders';
+import { start } from 'repl';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +27,77 @@ export class DbService {
     return this.firestore.collection(collection).doc(id).get();
   }
 
+  GetTicketsFrom(startDate: Date, endDate: Date){
+    
+    return this.firestore.collection('tickets').ref
+      .where('fecha', '>=', startDate).where('fecha', '<=', endDate).get();
+  }
+
+  async NewSell(ticket: any, sellObj: any){
+    let batch = this.firestore.firestore.batch();
+
+    let res = await this.firestore.collection('ventas').add({});
+
+    batch.set(
+      this.firestore.firestore.collection('ventas').doc(res.id),
+      sellObj
+    );
+
+    batch.update(
+      this.firestore.firestore.collection('tickets').doc(ticket.id),
+      {
+        precioTotal: ticket.precioTotal
+      }
+    );
+
+    return batch.commit();
+  }
+
+  async UpdateSell(ticket: any, venta: any){
+
+    let batch = this.firestore.firestore.batch();
+
+    batch.update(
+      this.firestore.firestore.collection('ventas').doc(venta.id),
+      {
+        productos: venta.productos,
+        precioTotal: venta.precioTotal
+      }
+    );
+
+    batch.update(
+      this.firestore.firestore.collection('tickets').doc(ticket.id),
+      {
+        precioTotal: ticket.precioTotal
+      }
+    );
+    
+    return batch.commit();
+
+  }
+
   Update(id: string, data: any, collecton: string){
     return this.firestore.collection(collecton).doc(id).update(data);
+  }
+
+  PayTicket(ticketId, ventaId){
+    
+    let batch = this.firestore.firestore.batch();
+
+    batch.update(
+      this.firestore.firestore.collection('tickets').doc(ticketId),
+      {
+        estado: "Pagado"
+      }
+    )
+
+    batch.update(
+      this.firestore.firestore.collection('ventas').doc(ventaId),
+      {
+        estado: "Pagado"
+      }
+    )
+    return batch.commit();
   }
 
   EffectTicket(ticketId, ventaId, products: any){

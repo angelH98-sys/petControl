@@ -19,6 +19,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatSelectModule,
         MatMenuModule,
         MatProgressSpinnerModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatTabsModule
     ],
     exports:[
         MatToolbarModule,
@@ -62,7 +64,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatSelectModule,
         MatMenuModule,
         MatProgressSpinnerModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatTabsModule
     ]
 })
 
