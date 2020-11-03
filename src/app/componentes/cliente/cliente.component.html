@@ -1,0 +1,49 @@
+<mat-card class="col-xl-6 col-lg-6 col-md-12 mat-elevation-z8 mb-3">
+    <p class="mat-display-1 mb-3">Nuevo Cliente </p>
+    <form [formGroup]="formcliente" class="row" 
+        (ngSubmit)="onSubmit()">
+        <mat-form-field class="col-12">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text"
+                formControlName="nombre">
+           
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Telefono</mat-label>
+            <input matInput type="text"
+                formControlName="telefono">
+                <mat-hint>Ej: 1111-1111</mat-hint>
+          
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput type="text"
+                formControlName="correo">
+            <mat-hint>Ej: 123456@gmail.com</mat-hint>
+          
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Dui</mat-label>
+            <input matInput type="text"
+                formControlName="dui">
+                <mat-hint>Ej:00000000-0</mat-hint>
+           
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Direccion</mat-label>
+            <input matInput type="text"
+                formControlName="direccion">
+           
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Tipo de Mascota</mat-label>
+            <input matInput type="text"
+                formControlName="mascota">
+        </mat-form-field>
+        <button mat-raised-button color="primary" 
+            class="col-11 py-2 mx-auto mt-1"
+            [disabled]="formcliente.invalid">
+            Registrar Cliente
+        </button>
+    </form>
+</mat-card>

@@ -8,23 +8,43 @@
 <mat-drawer-container hasBackDrop="true" id="drawerContainer">
   <mat-drawer #drawer mode="push">
     <button mat-button class="drawerButton w-100 py-1"
-      [routerLink]="['/usuarios/tabla']"
+      [routerLink]="['/productos/tabla']"
       (click)="drawer.toggle()">
-      Usuarios
+      Productos
+    </button>
+    <button mat-button class="drawerButton w-100 py-1"
+      [routerLink]="['/empleados/tabla']"
+      (click)="drawer.toggle()">
+      Empleados
+    </button>
+    <button mat-button class="drawerButton w-100 py-1"
+      [routerLink]="['/servicio/tabla']"
+      (click)="drawer.toggle()">
+      Servicios
+    </button>
+    <button mat-button class="drawerButton w-100 py-1"
+      [routerLink]="['/clientes/tabla']"
+      (click)="drawer.toggle()">
+      Clientes
     </button>
     <button mat-button class="drawerButton w-100 py-1"
       [routerLink]="['/tickets/tabla']"
       (click)="drawer.toggle()">
       Tickets
     </button>
+    <button mat-button class="drawerButton w-100 py-1"
+      [routerLink]="['/usuarios/tabla']"
+      (click)="drawer.toggle()">
+      Usuarios
+    </button>
   </mat-drawer>
   <mat-drawer-content>
     <div class="container mt-4">
       <router-outlet></router-outlet>
+      
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
-
 <footer>
   <p class="text-center mat-body text-white my-0">DPS</p>
 </footer>

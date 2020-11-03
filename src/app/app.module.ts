@@ -14,6 +14,18 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { DeshabilitarUsuarioDialog, HabilitarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
+import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
+import { ClienteComponent } from './componentes/cliente/cliente.component';
+import { MascotaComponent } from './componentes/mascota/mascota.component';
+import { TablaClienteComponent } from './componentes/tabla-cliente/tabla-cliente.component';
+import { ModificarClienteDialog } from './componentes/cliente/modal-clientes/cliente-dialog';
+import { EliminarClienteDialog } from './componentes/cliente/modal-clientes/cliente-dialog';
+import { ServiciosComponent } from './componentes/servicios/servicios.component';
+import { TableServiciosComponent } from './componentes/servicios/table-servicio/table-servicios.component'
+import { EliminarServiciosDialog, ModificarServiciosDialog } from './componentes/servicios/modal-servicio/servicios-dialog';
+import { FormEmpleadoComponent } from './componentes/empleado/form-empleado/form-empleado.component';
+import { TableEmpleadoComponent } from './componentes/empleado/table-empleado/table-empleado.component';
+import { ModificarEmpleadoDialog } from './componentes/empleado/modal-empleado/empleado-dialog';
 import { FormProductoComponent } from './componentes/productos/form-producto/form-producto.component';
 import { TableProductoComponent } from './componentes/productos/table-producto/table-producto.component';
 import { AprobarProductoDialog, ModificarProductoDialog } from './componentes/productos/modal-producto/producto-dialog';
@@ -24,6 +36,7 @@ import { TableTicketComponent } from './componentes/tickets/table-ticket/table-t
 import { EliminarVentaDialog, ModificarVentaDialog, NuevaVentaDialog } from './componentes/ventas/modal-venta/venta-dialog';
 import { DetalleTicketComponent } from './componentes/tickets/detalle-ticket/detalle-ticket.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +45,19 @@ import { DetalleTicketComponent } from './componentes/tickets/detalle-ticket/det
     ModificarUsuarioDialog,
     DeshabilitarUsuarioDialog,
     HabilitarUsuarioDialog,
+    EliminarUsuarioDialog,
+    ClienteComponent,
+    MascotaComponent,
+    TablaClienteComponent,
+    ModificarClienteDialog,
+    EliminarClienteDialog,
+    ServiciosComponent,
+    TableServiciosComponent,
+    EliminarServiciosDialog,
+    ModificarServiciosDialog,
+    FormEmpleadoComponent,
+    TableEmpleadoComponent,
+    ModificarEmpleadoDialog,
     FormProductoComponent,
     TableProductoComponent,
     ModificarProductoDialog,
