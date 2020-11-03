@@ -20,11 +20,18 @@ import { AlertaService } from 'src/app/utilidades/alerta.service';
         this.formGroup = this.formBuilder.group({
             id: this.data.id,
             nombre: [this.data.nombre, Validators.required],
-            telefono: [this.data.telefono, Validators.required],
+            telefono: [this.data.telefono, [
+              Validators.required,
+              Validators.pattern(/^\d{4}-\d{4}$/)
+            ]],
             correo: [this.data.correo, [
-                Validators.required,
-                Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
-            dui:[this.data.dui, Validators.required],
+              Validators.required,
+              Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+            ]],
+            dui:[this.data.dui, [
+              Validators.required,
+              Validators.pattern(/^\d{8}-\d{1}$/)
+            ]],
             especialidad:[this.data.especialidad, Validators.required],
             estado:[this.data.estado,Validators.required]
         });
