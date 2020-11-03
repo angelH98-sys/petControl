@@ -1,0 +1,192 @@
+<p class="mat-display-1 mb-3 text-center">
+    Tickets
+</p>
+<div class="row">
+    <div class="col-sm-1 col-2 mx-auto mx-auto"
+        [ngClass]="{'d-none': windowWidth >= 768}">
+        <button mat-mini-fab color="primary"
+            class="mb-3"
+            (click)="newTicketDialog()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <div class="col-xl-2 col-lg-2 col-md-3 mx-auto"
+        [ngClass]="{'d-none': windowWidth < 768}">
+        <button mat-raised-button color="primary"
+            class="w-100 mt-2"
+            (click)="newTicketDialog()">
+            Nuevo ticket
+        </button>
+    </div>
+</div>
+
+<mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Borrador" class="w-100">
+        <div class="row mt-5 mx-0"
+            *ngIf="listaBorrador.length == 0">
+            <div class="col-xl-4 mx-auto">
+                <div class="mb-3" style="height: 100px;"
+                    *ngIf="!ticketsCharged">
+                    <div class="row h-100 overflow-hidden">
+                        <mat-spinner class="m-auto"></mat-spinner>
+                    </div>
+                </div>
+                <img src="../../../../assets/img/empty-box.png"
+                    class="d-block mx-auto mb-2"
+                    *ngIf="ticketsCharged">
+                <p class="mat-h1 text-center">
+                    {{message}}
+                </p>
+            </div>
+        </div>
+        <div class="row mt-5 mx-0" *ngIf="listaBorrador.length > 0">
+            <div *ngFor="let ticket of listaBorrador"
+                class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                <div class="row">
+                    <mat-card class="mx-auto mat-elevation-z8 mb-5
+                        col-xl-10 col-lg-11 col-md-10 col-sm-11 col-10"
+                        style="background-color: #3f51b5; color: white;">
+                        <mat-card-content>
+                            <p class="mat-body">
+                                <b>Cliente | Mascota:</b> {{ticket.clienteDetail}}
+                            </p>
+                            <p class="mat-body">
+                                <b>Precio total:</b> ${{ticket.precioTotal.toFixed(2)}}
+                            </p>
+                            <p class="mat-body">
+                                <b>Fecha de creación:</b> {{ticket.fechaFormated}}
+                            </p>
+                            <div class="row">
+                                <div class="col-6">
+                                    <button mat-mini-fab color="warn"
+                                        matTooltip="Añadir producto"
+                                        (click)="newSellDialog(ticket)"
+                                        class="float-right">
+                                        <mat-icon>shopping_bag</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button mat-mini-fab color="warn"
+                                        matTooltip="Añadir servicio"
+                                        class="float-left">
+                                        <mat-icon>pan_tool</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-button
+                                [routerLink]="['/tickets/detalle/', ticket.id]">
+                                Detalle
+                            </button>
+                            <button cdkFocusInitial mat-button
+                                [disabled]="ticket.precioTotal == 0"
+                                (click)="efectuarTicket(ticket)">
+                                Efectuar
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Efectuado">
+        <div class="row mt-5 mx-0"
+            *ngIf="listaEfectuado.length == 0">
+            <div class="col-xl-4 mx-auto">
+                <div class="mb-3" style="height: 100px;"
+                    *ngIf="!ticketsCharged">
+                    <div class="row h-100 overflow-hidden">
+                        <mat-spinner class="m-auto"></mat-spinner>
+                    </div>
+                </div>
+                <img src="../../../../assets/img/empty-box.png"
+                    class="d-block mx-auto mb-2"
+                    *ngIf="ticketsCharged">
+                <p class="mat-h1 text-center">
+                    {{message}}
+                </p>
+            </div>
+        </div>
+        <div class="row mt-5 mx-0" *ngIf="listaEfectuado.length > 0">
+            <div *ngFor="let ticket of listaEfectuado"
+                class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                <div class="row">
+                    <mat-card class="mx-auto mat-elevation-z8 mb-5
+                        col-xl-10 col-lg-11 col-md-10 col-sm-11 col-10"
+                        style="background-color: #36B552; color: white;">
+                        <mat-card-content>
+                            <p class="mat-body">
+                                <b>Cliente | Mascota:</b> {{ticket.clienteDetail}}
+                            </p>
+                            <p class="mat-body">
+                                <b>Precio total:</b> ${{ticket.precioTotal.toFixed(2)}}
+                            </p>
+                            <p class="mat-body">
+                                <b>Fecha de creación:</b> {{ticket.fechaFormated}}
+                            </p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-button
+                                [routerLink]="['/tickets/detalle/', ticket.id]">
+                                Detalle
+                            </button>
+                            <button cdkFocusInitial mat-button
+                                [disabled]="ticket.precioTotal == 0"
+                                (click)="pagarTicket(ticket)">
+                                Pagar
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Pagado">
+        <div class="row mt-5 mx-0"
+            *ngIf="listaPagado.length == 0">
+            <div class="col-xl-4 mx-auto">
+                <div class="mb-3" style="height: 100px;"
+                    *ngIf="!ticketsCharged">
+                    <div class="row h-100 overflow-hidden">
+                        <mat-spinner class="m-auto"></mat-spinner>
+                    </div>
+                </div>
+                <img src="../../../../assets/img/empty-box.png"
+                    class="d-block mx-auto mb-2"
+                    *ngIf="ticketsCharged">
+                <p class="mat-h1 text-center">
+                    {{message}}
+                </p>
+            </div>
+        </div>
+        <div class="row mt-5 mx-0" *ngIf="listaPagado.length > 0">
+            <div *ngFor="let ticket of listaPagado"
+                class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                <div class="row">
+                    <mat-card class="mx-auto mat-elevation-z8 mb-5
+                        col-xl-10 col-lg-11 col-md-10 col-sm-11 col-10"
+                        style="background-color: #B5515D; color: white;">
+                        <mat-card-content>
+                            <p class="mat-body">
+                                <b>Cliente | Mascota:</b> {{ticket.clienteDetail}}
+                            </p>
+                            <p class="mat-body">
+                                <b>Precio total:</b> ${{ticket.precioTotal.toFixed(2)}}
+                            </p>
+                            <p class="mat-body">
+                                <b>Fecha de creación:</b> {{ticket.fechaFormated}}
+                            </p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-button
+                                [routerLink]="['/tickets/detalle/', ticket.id]">
+                                Detalle
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

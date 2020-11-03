@@ -23,7 +23,9 @@ import { AlertaService } from 'src/app/utilidades/alerta.service';
             usuario: [this.data.usuario, Validators.required],
             correo: [this.data.correo, [
                 Validators.required,
-                Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]]
+                Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
+            estado: [this.data.estado, Validators.required],
+            permiso: [this.data.permiso, Validators.required]
         });
       }
   
@@ -34,13 +36,30 @@ import { AlertaService } from 'src/app/utilidades/alerta.service';
   }
 
   @Component({
-    selector: 'eliminar-usuario-dialog',
-    templateUrl: 'eliminar-usuario-dialog.html',
+    selector: 'deshabilitar-usuario-dialog',
+    templateUrl: 'deshabilitar-usuario-dialog.html',
   })
-  export class EliminarUsuarioDialog {
+  export class DeshabilitarUsuarioDialog {
   
     constructor(
-      public dialogRef: MatDialogRef<ModificarUsuarioDialog>,
+      public dialogRef: MatDialogRef<DeshabilitarUsuarioDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: any) {
+      }
+  
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
+  
+  }
+
+  @Component({
+    selector: 'habilitar-usuario-dialog',
+    templateUrl: 'habilitar-usuario-dialog.html',
+  })
+  export class HabilitarUsuarioDialog {
+  
+    constructor(
+      public dialogRef: MatDialogRef<HabilitarUsuarioDialog>,
       @Inject(MAT_DIALOG_DATA) public data: any) {
       }
   

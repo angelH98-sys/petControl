@@ -39,6 +39,15 @@ export class AlertaService {
         case "productoNoDisponible": {
           return "Nombre de producto no disponible";
         }
+        case "clienteInvalido": {
+          return "No existe registro del cliente";
+        }
+        case "productoInexistente": {
+          return "No existe registro de este producto";
+        }
+        case "cantidadInvalida": {
+          return "La cantidad excede el stock del producto";
+        }
       }
     }
   }

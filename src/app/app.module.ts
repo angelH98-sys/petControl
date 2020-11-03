@@ -13,7 +13,7 @@ import { TableUsuarioComponent } from './componentes/usuario/table-usuario/table
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-
+import { DeshabilitarUsuarioDialog, HabilitarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
 import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
 import { ClienteComponent } from './componentes/cliente/cliente.component';
 import { MascotaComponent } from './componentes/mascota/mascota.component';
@@ -31,6 +31,10 @@ import { TableProductoComponent } from './componentes/productos/table-producto/t
 import { AprobarProductoDialog, ModificarProductoDialog } from './componentes/productos/modal-producto/producto-dialog';
 import { TableCompraComponent } from './componentes/compras/table-compra/table-compra.component';
 import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, NuevaCompraDialog } from './componentes/compras/modal-compra/compra-dialog';
+import { EfectuarTicketDialog, ModificarTicketDialog, NuevoTicketDialog } from './componentes/tickets/modal-ticket/ticket-dialog';
+import { TableTicketComponent } from './componentes/tickets/table-ticket/table-ticket.component';
+import { EliminarVentaDialog, ModificarVentaDialog, NuevaVentaDialog } from './componentes/ventas/modal-venta/venta-dialog';
+import { DetalleTicketComponent } from './componentes/tickets/detalle-ticket/detalle-ticket.component';
 
 
 @NgModule({
@@ -39,6 +43,8 @@ import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, Nueva
     FormUsuarioComponent,
     TableUsuarioComponent,
     ModificarUsuarioDialog,
+    DeshabilitarUsuarioDialog,
+    HabilitarUsuarioDialog,
     EliminarUsuarioDialog,
     ClienteComponent,
     MascotaComponent,
@@ -60,7 +66,15 @@ import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, Nueva
     AprobarProductoDialog,
     AprobarCompraDialog,
     ModificarCompraDialog,
-    CancelarCompraDialog
+    CancelarCompraDialog,
+    NuevoTicketDialog,
+    TableTicketComponent,
+    NuevaVentaDialog,
+    DetalleTicketComponent,
+    ModificarVentaDialog,
+    EliminarVentaDialog,
+    ModificarTicketDialog,
+    EfectuarTicketDialog
   ],
   imports: [
     BrowserModule,
