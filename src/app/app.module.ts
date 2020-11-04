@@ -14,7 +14,6 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { DeshabilitarUsuarioDialog, HabilitarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
-import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
 import { ClienteComponent } from './componentes/cliente/cliente.component';
 import { MascotaComponent } from './componentes/mascota/mascota.component';
 import { TablaClienteComponent } from './componentes/tabla-cliente/tabla-cliente.component';
@@ -45,7 +44,6 @@ import { DetalleTicketComponent } from './componentes/tickets/detalle-ticket/det
     ModificarUsuarioDialog,
     DeshabilitarUsuarioDialog,
     HabilitarUsuarioDialog,
-    EliminarUsuarioDialog,
     ClienteComponent,
     MascotaComponent,
     TablaClienteComponent,
