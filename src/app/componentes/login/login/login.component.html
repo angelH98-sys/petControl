@@ -1,0 +1,29 @@
+<mat-card class="col-xl-6 col-lg-8 col-md-12 mat-elevation-z8 mb-3">
+    <p class="mat-display-1 mb-3">
+        Inicia sesión
+    </p>
+    <form [formGroup]="formlogin" class="row" 
+        (ngSubmit)="onSubmit()">
+        
+        <mat-form-field class="col-12 mb-1">
+            <mat-label>Usuario</mat-label>
+            <input matInput type="text"
+                formControlName="usuario">
+            
+        </mat-form-field>
+        
+        <mat-form-field class="col-12 mb-1">
+            <mat-label>Constraseña</mat-label>
+            <input matInput type="password"
+                formControlName="contrasenia">
+            
+        </mat-form-field>
+        
+
+        <button mat-raised-button color="primary" 
+            class="col-11 py-2 mx-auto mt-1"
+            [disabled]="formlogin.invalid">
+            Registrar usuario
+        </button>
+    </form>
+</mat-card>
