@@ -7,6 +7,7 @@ import { FormProductoComponent } from './componentes/productos/form-producto/for
 import { TableProductoComponent } from './componentes/productos/table-producto/table-producto.component';
 import { FormUsuarioComponent } from './componentes/usuario/form-usuario/form-usuario.component';
 import { TableUsuarioComponent } from './componentes/usuario/table-usuario/table-usuario.component';
+import {LoginComponent} from './componentes/login/login/login.component';
 
 const routes: Routes = [
   { path: 'usuarios/registro', component: FormUsuarioComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'productos/registro', component: FormProductoComponent },
   { path: 'productos/tabla', component: TableProductoComponent },
   { path: 'compras/tabla/:id', component: TableCompraComponent },
+  { path: 'login/login', component:LoginComponent},
 ];
 
 @NgModule({
