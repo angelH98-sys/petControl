@@ -9,14 +9,18 @@
             <mat-label>Usuario</mat-label>
             <input matInput type="text"
                 formControlName="usuario">
-            
+                <mat-error *ngIf="formlogin.get('usuario').invalid">
+                    {{alertaService.errorInput(formlogin.get('usuario'))}}
+                </mat-error>
         </mat-form-field>
         
         <mat-form-field class="col-12 mb-1">
             <mat-label>Constraseña</mat-label>
             <input matInput type="password"
                 formControlName="contrasenia">
-            
+                <mat-error *ngIf="formlogin.get('contrasenia').invalid">
+                    {{alertaService.errorInput(formlogin.get('contrasenia'))}}
+                </mat-error>
         </mat-form-field>
         
 
