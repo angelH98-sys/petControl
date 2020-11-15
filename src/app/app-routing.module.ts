@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'productos/registro', component: FormProductoComponent },
   { path: 'productos/tabla', component: TableProductoComponent },
   { path: 'compras/tabla/:id', component: TableCompraComponent },
-  { path: 'login/login', component:LoginComponent},
+  { path: 'login', component:LoginComponent},
 ];
 
 @NgModule({
