@@ -44,10 +44,13 @@ export class LoginComponent implements OnInit {
     let response = await this.db
       .GetDocWith('usuario', this.formlogin.get('usuario').value, 'usuario');
 
-    if(!response.empty){
+      let response2 = await this.db
+      .GetDocWith('contrasenia', sha256(this.formlogin.get('contrasenia').value), 'usuario');
+
+    if(!response.empty&&!response2.empty){//validar que se vaya a otra parte
       console.log("el usuario se encuentra en la base de datos");
     }else{
-      console.log("El usuario no se encuentra en la base de datos");
+      console.log("el usuario no se encuentra en la base de datos")
     }
     
   }
