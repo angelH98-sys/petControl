@@ -6,38 +6,38 @@ import {map, startWith} from 'rxjs/operators';
 import { AlertaService } from 'src/app/utilidades/alerta.service';
 import { DbService } from 'src/app/utilidades/db.service';
 
-class product {
+class servic {
     id: string;
     nombre: string;
+    empleado: string;
     precio: number;
-    stock: number;
 }
 
 @Component({
-    selector: 'nueva-venta-dialog',
-    templateUrl: 'nueva-venta-dialog.html',
+    selector: 'nueva-cita-dialog',
+    templateUrl: 'nueva-cita-dialog.html',
   })
-  export class NuevaVentaDialog {
+  export class NuevaCitaDialog {
 
     formGroup: FormGroup;
     formReady: boolean = false;
-    productos: product[] = [];
-    filteredOptions: Observable<product[]>;
+    servicios: servic[] = [];
+    filteredOptions: Observable<servic[]>;
     quantityMessage: string = "";
   
     constructor(
-      public dialogRef: MatDialogRef<NuevaVentaDialog>,
+      public dialogRef: MatDialogRef<NuevaCitaDialog>,
       private formBuilder: FormBuilder,
       public alertaService: AlertaService,
       private db: DbService) {
           
         this.formGroup = this.formBuilder.group({
-            productoDetail: ['', Validators.required],
+            servicioDetail: ['', Validators.required],
+            empleado: ['', Validators.required],
             precio: ['0.00', [
                 Validators.required,
                 Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/),
                 Validators.min(0.01)]],
-            cantidad: ['1', [Validators.required, Validators.min(1)]]
         });
         this.PrepareForm();
       }
@@ -49,22 +49,22 @@ class product {
     async PrepareForm(){
         try{
 
-            let response = await this.db.GetDocWith('estado', 'Disponible', 'productos');
+            let response = await this.db.GetDocWith('estado', 'Disponible', 'servicio');
             if(response.size == 0){
-                this.alertaService.openErrorSnackBar('No hay productos disponibles en stock');
+                this.alertaService.openErrorSnackBar('No hay servicios disponibles');
                 this.dialogRef.close();
             }
 
             response.docs.forEach(element => {
-                this.productos.push({
+                this.servicios.push({
                     id: element.id,
                     nombre: element.data().nombre,
                     precio: element.data().precio,
-                    stock: element.data().stock
+                    empleado: element.data().empleado
                 });
             });
 
-            this.filteredOptions = this.formGroup.get('productoDetail')
+            this.filteredOptions = this.formGroup.get('servicioDetail')
                 .valueChanges.pipe(
                     startWith(''),
                     map(value => this._filter(value)));
@@ -77,52 +77,52 @@ class product {
         }
     }
 
-    private _filter(value: string): product[]{
+    private _filter(value: string): servic[]{
         const filterValue = value.toLowerCase();
-        return this.productos
+        return this.servicios
             .filter(option => option.nombre.toLowerCase().includes(filterValue));
     }
 
-    setPrecio(){
+    setPrecios(){
         
-        let nombre = this.formGroup.get('productoDetail').value;
-        let producto = this.productos.filter(p => p.nombre == nombre);
+        let nombre = this.formGroup.get('servicioDetail').value;
+        let servicio = this.servicios.filter(p => p.nombre == nombre);
 
-        if(producto.length == 0){
-            this.formGroup.get('productDetail')
-                .setErrors({productoInexistente: true});
+        if(servicio.length == 0){
+            this.formGroup.get('serviciDetail')
+                .setErrors({servicioInexistente: true});
             return;
         }
-        this.formGroup.get('precio').setValue(producto[0].precio);
-        this.quantityMessage = `Stock: ${producto[0].stock} unidad(es)`;
+        this.formGroup.get('empleado').setValue(servicio[0].empleado);
+        this.formGroup.get('precio').setValue(servicio[0].precio);
+        
     }
 
-    sendSell(){
-        let nombre = this.formGroup.get('productoDetail').value;
-        let producto = this.productos.filter(p => p.nombre == nombre);
+    sendSelll(){
+        let nombre = this.formGroup.get('servicioDetail').value;
+        let servicio = this.servicios.filter(p => p.nombre == nombre);
 
-        if(producto.length == 0){
-            this.formGroup.get('productoDetail')
-                .setErrors({productoInexistente: true});
+        if(servicio.length == 0){
+            this.formGroup.get('servicioDetail')
+                .setErrors({servicioInexistente: true});
             return;
         }
-
+/*
         let cantidad = this.formGroup.get('cantidad').value;
         if(cantidad > producto[0].stock){
             this.formGroup.get('cantidad')
                 .setErrors({cantidadInvalida: true});
             return;
         }
-
+*/
         if(this.formGroup.invalid) return false;
 
-        let precioTotal = this.formGroup.get('precio').value * cantidad;
+        let precioTotal = this.formGroup.get('precio').value;
 
         this.dialogRef.close({
-            producto: producto[0].id,
-            productDetail: producto[0].nombre,
-            cantidad: cantidad,
-            precioUnitario: this.formGroup.get('precio').value,
+            servicio: servicio[0].id,
+            servicDetail: servicio[0].nombre,
+            precio: this.formGroup.get('precio').value,
             precioTotal: precioTotal
         });
 
@@ -131,33 +131,33 @@ class product {
 }
 
 @Component({
-    selector: 'modificar-venta-dialog',
-    templateUrl: 'modificar-venta-dialog.html',
+    selector: 'modificar-cita-dialog',
+    templateUrl: 'modificar-cita-dialog.html',
   })
-  export class ModificarVentaDialog {
+  export class ModificarCitaDialog {
 
     formReady: boolean = false;
-    productos: product[] = [];
-    filteredOptions: Observable<product[]>;
+    servicios: servic[] = [];
+    filteredOptions: Observable<servic[]>;
     formGroup: FormGroup;
     quantityMessage: string = "";
 
     constructor(
-        public dialogRef: MatDialogRef<ModificarVentaDialog>,
+        public dialogRef: MatDialogRef<ModificarCitaDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private formBuilder: FormBuilder,
         public alertaService: AlertaService,
         private db: DbService) {
 
         this.PrepareForm();
-        this.getProducts();
+        this.getServics();
     }
     
     PrepareForm(){
 
         this.formGroup = this.formBuilder.group({
-            cantidad: [this.data.cantidad, [Validators.required, Validators.min(1)]],
             detalle: [this.data.detalle, Validators.required],
+            empleado: [this.data.empleado, Validators.required],
             id: this.data.id,
             precio: [this.data.precio, [
                 Validators.required,
@@ -167,17 +167,17 @@ class product {
 
     }
 
-    async getProducts(){
+    async getServics(){
         try{
 
-            let response = await this.db.GetDocWith('estado', 'Disponible', 'productos');
+            let response = await this.db.GetDocWith('estado', 'Disponible', 'servicio');
 
             response.docs.forEach(element => {
-                this.productos.push({
+                this.servicios.push({
                     id: element.id,
                     nombre: element.data().nombre,
-                    precio: element.data().precio,
-                    stock: element.data().stock
+                    empleado: element.data().empleado,
+                    precio: element.data().precio
                 });
             });
 
@@ -194,53 +194,53 @@ class product {
         }
     }
 
-    private _filter(value: string): product[]{
+    private _filter(value: string): servic[]{
         const filterValue = value.toLowerCase();
-        return this.productos
+        return this.servicios
             .filter(option => option.nombre.toLowerCase().includes(filterValue));
     }
 
-    setPrecio(){
+    setPrecios(){
         
         let nombre = this.formGroup.get('detalle').value;
-        let producto = this.productos.filter(p => p.nombre == nombre);
+        let servicio = this.servicios.filter(p => p.nombre == nombre);
 
-        if(producto.length == 0){
+        if(servicio.length == 0){
             this.formGroup.get('detalle')
-                .setErrors({productoInexistente: true});
+                .setErrors({servicioInexistente: true});
             return;
         }
-
-        this.formGroup.get('precio').setValue(producto[0].precio);
-        this.formGroup.get('cantidad').setValue(1);
-        this.quantityMessage = `Stock: ${producto[0].stock} unidad(es)`;
+        this.formGroup.get('empleado').setValue(servicio[0].empleado);
+        this.formGroup.get('precio').setValue(servicio[0].precio);
+        
+        
     }
 
-    sendSell(){
+    sendSelll(){
         let nombre = this.formGroup.get('detalle').value;
-        let producto = this.productos.filter(p => p.nombre == nombre);
+        let servicio = this.servicios.filter(p => p.nombre == nombre);
 
-        if(producto.length == 0){
+        if(servicio.length == 0){
             this.formGroup.get('detalle')
-                .setErrors({productoInexistente: true});
+                .setErrors({servicioInexistente: true});
             return;
         }
-
+/*
         let cantidad = this.formGroup.get('cantidad').value;
         if(cantidad > producto[0].stock){
             this.formGroup.get('cantidad')
                 .setErrors({cantidadInvalida: true});
             return;
         }
-
+*/
         if(this.formGroup.invalid) return false;
 
-        let precioTotal = this.formGroup.get('precio').value * cantidad;
+        let precioTotal = this.formGroup.get('precio').value;
 
         this.dialogRef.close({
-            id: producto[0].id,
-            detalle: producto[0].nombre,
-            cantidad: cantidad,
+            id: servicio[0].id,
+            detalle: servicio[0].nombre,
+            empleado: servicio[0].empleado,
             precio: this.formGroup.get('precio').value,
             precioTotal: precioTotal
         });
@@ -254,13 +254,13 @@ class product {
 }
 
 @Component({
-    selector: 'eliminar-venta-dialog',
-    templateUrl: 'eliminar-venta-dialog.html',
+    selector: 'eliminar-cita-dialog',
+    templateUrl: 'eliminar-cita-dialog.html',
   })
-  export class EliminarVentaDialog {
+  export class EliminarCitaDialog {
 
     constructor(
-        public dialogRef: MatDialogRef<EliminarVentaDialog>,
+        public dialogRef: MatDialogRef<EliminarCitaDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 

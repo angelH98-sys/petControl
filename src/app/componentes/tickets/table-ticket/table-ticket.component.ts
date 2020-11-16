@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AlertaService } from 'src/app/utilidades/alerta.service';
 import { DbService } from 'src/app/utilidades/db.service';
 import { NuevaVentaDialog } from '../../ventas/modal-venta/venta-dialog';
+import { NuevaCitaDialog } from '../../citas/modal-cita/cita-dialog';
 import { EfectuarTicketDialog, NuevoTicketDialog } from '../modal-ticket/ticket-dialog';
 
 @Component({
@@ -324,3 +325,12 @@ export class TableTicketComponent implements OnInit {
   }
 
 }
+
+
+
+
+
+
+
+
+/*juan Parte*/
