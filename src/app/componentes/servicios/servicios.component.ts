@@ -30,6 +30,7 @@ export class ServiciosComponent implements OnInit {
       duracion: ['', Validators.required],
       precio: ['', Validators.required],
       empleado: ['', Validators.required],    
+      estado1:['Disponible', Validators.required],
     })
   }
 
@@ -53,7 +54,7 @@ export class ServiciosComponent implements OnInit {
       duracion: this.formServicios.get('duracion').value,
       precio: (this.formServicios.get('precio').value),
       empleado: this.formServicios.get('empleado').value,
-    
+      estado1: this.formServicios.get('estado1').value,
     }
   }
 
