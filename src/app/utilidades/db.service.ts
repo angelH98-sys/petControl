@@ -53,6 +53,29 @@ export class DbService {
     return batch.commit();
   }
 
+/*JUAN*/
+async NewService(ticket: any, servObj: any){
+  let batch = this.firestore.firestore.batch();
+
+  let res = await this.firestore.collection('citas').add({});
+
+  batch.set(
+    this.firestore.firestore.collection('citas').doc(res.id),
+    servObj
+  );
+
+  batch.update(
+    this.firestore.firestore.collection('tickets').doc(ticket.id),
+    {
+      precioTotal: ticket.precioTotal
+    }
+  );
+
+  return batch.commit();
+}
+
+
+
   async UpdateSell(ticket: any, venta: any){
 
     let batch = this.firestore.firestore.batch();
@@ -75,6 +98,31 @@ export class DbService {
     return batch.commit();
 
   }
+
+  /*JUAN */
+  async UpdateServ(ticket: any, cita: any){
+
+    let batch = this.firestore.firestore.batch();
+
+    batch.update(
+      this.firestore.firestore.collection('citas').doc(cita.id),
+      {
+        servicios: cita.servicios,
+        precioTotal: cita.precioTotal
+      }
+    );
+
+    batch.update(
+      this.firestore.firestore.collection('tickets').doc(ticket.id),
+      {
+        precioTotal: ticket.precioTotal
+      }
+    );
+    
+    return batch.commit();
+
+  }
+
 
   Update(id: string, data: any, collecton: string){
     return this.firestore.collection(collecton).doc(id).update(data);

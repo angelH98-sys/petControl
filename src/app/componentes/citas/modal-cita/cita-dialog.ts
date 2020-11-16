@@ -32,12 +32,13 @@ class servic {
       private db: DbService) {
           
         this.formGroup = this.formBuilder.group({
-            servicioDetail: ['', Validators.required],
-            empleado: ['', Validators.required],
+            servicioDetail: ['', Validators.required],     
             precio: ['0.00', [
                 Validators.required,
                 Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/),
                 Validators.min(0.01)]],
+                empleado: ['', Validators.required],
+               
         });
         this.PrepareForm();
       }
@@ -49,7 +50,7 @@ class servic {
     async PrepareForm(){
         try{
 
-            let response = await this.db.GetDocWith('estado', 'Disponible', 'servicio');
+            let response = await this.db.GetDocWith('estado1', 'Disponible', 'servicio');
             if(response.size == 0){
                 this.alertaService.openErrorSnackBar('No hay servicios disponibles');
                 this.dialogRef.close();
@@ -93,9 +94,8 @@ class servic {
                 .setErrors({servicioInexistente: true});
             return;
         }
-        this.formGroup.get('empleado').setValue(servicio[0].empleado);
         this.formGroup.get('precio').setValue(servicio[0].precio);
-        
+        this.formGroup.get('empleado').setValue(servicio[0].empleado);
     }
 
     sendSelll(){
@@ -121,8 +121,9 @@ class servic {
 
         this.dialogRef.close({
             servicio: servicio[0].id,
-            servicDetail: servicio[0].nombre,
+            serviciDetail: servicio[0].nombre,
             precio: this.formGroup.get('precio').value,
+            empleado: servicio[0].empleado,
             precioTotal: precioTotal
         });
 
@@ -170,14 +171,14 @@ class servic {
     async getServics(){
         try{
 
-            let response = await this.db.GetDocWith('estado', 'Disponible', 'servicio');
+            let response = await this.db.GetDocWith('estado1', 'Disponible', 'servicio');
 
             response.docs.forEach(element => {
                 this.servicios.push({
                     id: element.id,
                     nombre: element.data().nombre,
-                    empleado: element.data().empleado,
-                    precio: element.data().precio
+                    precio: element.data().precio,
+                    empleado: element.data().empleado
                 });
             });
 
@@ -210,8 +211,9 @@ class servic {
                 .setErrors({servicioInexistente: true});
             return;
         }
-        this.formGroup.get('empleado').setValue(servicio[0].empleado);
+        
         this.formGroup.get('precio').setValue(servicio[0].precio);
+        this.formGroup.get('empleado').setValue(servicio[0].empleado);
         
         
     }
