@@ -50,7 +50,7 @@ class servic {
     async PrepareForm(){
         try{
 
-            let response = await this.db.GetDocWith('estado1', 'Disponible', 'servicio');
+            let response = await this.db.GetDocWith('estado', 'Disponible', 'servicio');
             if(response.size == 0){
                 this.alertaService.openErrorSnackBar('No hay servicios disponibles');
                 this.dialogRef.close();
@@ -90,7 +90,7 @@ class servic {
         let servicio = this.servicios.filter(p => p.nombre == nombre);
 
         if(servicio.length == 0){
-            this.formGroup.get('serviciDetail')
+            this.formGroup.get('servicioDetail')
                 .setErrors({servicioInexistente: true});
             return;
         }
@@ -98,7 +98,7 @@ class servic {
         this.formGroup.get('empleado').setValue(servicio[0].empleado);
     }
 
-    sendSelll(){
+    sendAppointment(){
         let nombre = this.formGroup.get('servicioDetail').value;
         let servicio = this.servicios.filter(p => p.nombre == nombre);
 
@@ -107,14 +107,7 @@ class servic {
                 .setErrors({servicioInexistente: true});
             return;
         }
-/*
-        let cantidad = this.formGroup.get('cantidad').value;
-        if(cantidad > producto[0].stock){
-            this.formGroup.get('cantidad')
-                .setErrors({cantidadInvalida: true});
-            return;
-        }
-*/
+        
         if(this.formGroup.invalid) return false;
 
         let precioTotal = this.formGroup.get('precio').value;

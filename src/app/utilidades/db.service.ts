@@ -53,7 +53,6 @@ export class DbService {
     return batch.commit();
   }
 
-/*JUAN*/
 async NewService(ticket: any, servObj: any){
   let batch = this.firestore.firestore.batch();
 

@@ -15,13 +15,19 @@ import { ModificarTicketDialog } from '../modal-ticket/ticket-dialog';
 export class DetalleTicketComponent implements OnInit {
 
   id: string;
+
   ticket: any;
   ticketCharged: boolean = false;
+
   venta: any;
-  cita: any;
   ventaSource = new MatTableDataSource();
   ventaCharged: boolean = false;
   ventaMessage: string = "Cargando información";
+
+  cita: any;
+  citaSource = new MatTableDataSource();
+  citaCharged: boolean = false;
+  citaMessage: string = "Cargando información";
 
   windowWidth: any;
 
@@ -44,6 +50,7 @@ export class DetalleTicketComponent implements OnInit {
 
     this.getTicket();
     this.getVenta();
+    this.getCita();
   }
 
   async getTicket(){
@@ -101,6 +108,34 @@ export class DetalleTicketComponent implements OnInit {
       this.router.navigate(['/tickets/tabla']);
     }
 
+  }
+
+  async getCita(){
+    try{
+
+      let response = await this.db.GetDocWith('ticket', this.id, 'citas');
+
+      if(!response.empty){
+        this.cita = {
+          id: response.docs[0].id,
+          estado: response.docs[0].data().estado,
+          precioTotal: response.docs[0].data().precioTotal,
+          servicios: response.docs[0].data().servicios,
+          ticket: response.docs[0].data().ticket,
+        }
+        this.citaSource = new MatTableDataSource(this.cita.servicios);
+      
+      }else{
+
+        this.citaMessage = "No existen citas dentro del ticket";
+      }
+      this.citaCharged = true;
+    }catch(e){
+
+      this.alertaService
+        .openErrorSnackBar('Ocurrio un error al cargar las ciatas del ticket');
+      this.router.navigate(['/tickets/tabla']);
+    }
   }
 
   async modifyTicket(){
@@ -355,6 +390,11 @@ export class DetalleTicketComponent implements OnInit {
   applySellFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.ventaSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  applyAppointmentFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.citaSource.filter = filterValue.trim().toLowerCase();
   }
 
   @HostListener('window:resize', ['$event'])

@@ -25,7 +25,7 @@
         
         <mat-form-field class="mb-1 col-xl-12">
             <mat-label>Precio</mat-label>
-            <input matInput type="number" min="1" step="1" formControlName="precio">
+            <input matInput type="number" min="0.01" step="0.01" formControlName="precio">
             <span matPrefix>$&nbsp;</span>
             <mat-hint>{{quantityMessage}}</mat-hint>
             <mat-error *ngIf="formGroup.get('precio').invalid">
@@ -35,7 +35,7 @@
 
         <mat-form-field class="mb-1 col-xl-12">
             <mat-label>Empleado</mat-label>
-            <input matInput type="text" formControlName="empleado">
+            <input matInput type="text" formControlName="empleado" readonly>
             <mat-error *ngIf="formGroup.get('empleado').invalid">
                 {{alertaService.errorInput(formGroup.get('empleado'))}}
             </mat-error>
@@ -46,7 +46,7 @@
     <button mat-button (click)="onNoClick()">
         Cancelar  
       </button>
-    <button mat-button (click)="sendSelll()" *ngIf="formReady"
+    <button mat-button (click)="sendAppointment()" *ngIf="formReady"
       cdkFocusInitial [disabled]="formGroup.invalid">
         Enviar
     </button>

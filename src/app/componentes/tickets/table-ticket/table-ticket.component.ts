@@ -319,13 +319,7 @@ export class TableTicketComponent implements OnInit {
     });
   }
 
-
-
-
-
-  /*Parte Juan*/
-
-  async newSelllDialog(ticket: any){
+  async newAppointmentDialog(ticket: any){
 
     const dialogRef = this.dialog.open(NuevaCitaDialog, {
       width: '400px'
