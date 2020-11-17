@@ -6,7 +6,7 @@ import { AlertaService } from 'src/app/utilidades/alerta.service';
 import { DbService } from 'src/app/utilidades/db.service';
 import { EliminarVentaDialog, ModificarVentaDialog, NuevaVentaDialog } from '../../ventas/modal-venta/venta-dialog';
 import { ModificarTicketDialog } from '../modal-ticket/ticket-dialog';
-
+import { EliminarCitaDialog, ModificarCitaDialog, NuevaCitaDialog } from '../../citas/modal-cita/cita-dialog';
 @Component({
   selector: 'app-detalle-ticket',
   templateUrl: './detalle-ticket.component.html',
@@ -227,6 +227,55 @@ export class DetalleTicketComponent implements OnInit {
         .openErrorSnackBar('Ocurrio un error al abrir el formulario');
     }
   }
+
+  /*juan*/
+  async deleteSelll(servicio: any){
+    try{
+
+      const dialogRef = this.dialog.open(EliminarCitaDialog, {
+        width: '400px',
+        data: servicio.detalle
+      });
+
+      await dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          let index = this.cita.servicios.indexOf(servicio);
+          this.cita.servicios.splice(index, 1);
+          this.cita.precioTotal -= servicio.precioTotal;
+
+          this.ticket.precioTotal -= servicio.precioTotal;
+
+          this.db.Update(this.cita.id, {
+            servicios: this.cita.servicios,
+            precioTotal: this.cita.precioTotal
+          }, 'citas').then(() => {
+
+            this.db.Update(this.ticket.id, {
+              precioTotal: this.ticket.precioTotal
+            }, 'tickets').then(() => {
+
+              this.alertaService.openSuccessSnackBar('Servicio eliminado del ticket');
+              this.citaSource = new MatTableDataSource(this.cita.servicios);
+              
+            }).catch(() => {
+              this.alertaService
+                .openErrorSnackBar('Ocurrio un error al eliminar el servicio del ticket');
+            });
+          }).catch(() => {
+
+            this.alertaService
+              .openErrorSnackBar('Ocurrio un error al eliminar el servicio del ticket');
+          });
+        }
+      });
+
+    }catch(rej){
+
+      this.alertaService
+        .openErrorSnackBar('Ocurrio un error al abrir el formulario');
+    }
+  }
+
 
   async modifySell(producto: any){
 
