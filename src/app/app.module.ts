@@ -23,6 +23,7 @@ import { AprobarProductoDialog, ModificarProductoDialog } from './componentes/pr
 import { TableCompraComponent } from './componentes/compras/table-compra/table-compra.component';
 import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, NuevaCompraDialog } from './componentes/compras/modal-compra/compra-dialog';
 import { LoginComponent } from './componentes/login/login/login.component';
+import { OlvideComponent } from './componentes/login/olvide/olvide.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { LoginComponent } from './componentes/login/login/login.component';
     AprobarCompraDialog,
     ModificarCompraDialog,
     CancelarCompraDialog,
-    LoginComponent
+    LoginComponent,
+    OlvideComponent
   ],
   imports: [
     BrowserModule,

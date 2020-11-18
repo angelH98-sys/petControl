@@ -29,6 +29,10 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  funciono(){
+    console.log("toy funcionando");
+  }
+
   formGroupToUser(){
     return {
       
@@ -48,7 +52,7 @@ export class LoginComponent implements OnInit {
       .GetDocWith('contrasenia', sha256(this.formlogin.get('contrasenia').value), 'usuario');
 
     if(!response.empty&&!response2.empty){//validar que se vaya a otra parte
-      console.log("el usuario se encuentra en la base de datos");
+      this.router.navigate(['empleados/tabla']);
     }else{
       console.log("el usuario no se encuentra en la base de datos")
     }
@@ -56,3 +60,4 @@ export class LoginComponent implements OnInit {
   }
 
 }
+
