@@ -338,25 +338,24 @@ export class TableTicketComponent implements OnInit {
               id: result.servicio,
               detalle: result.serviciDetail,
               empleado: result.empleado,
-              precio: result.precio,
-              precioTotal: result.precioTotal
+              precio: result.precio
             });
 
             let servObj = {
               servicios: servicios,
-              precioTotal: result.precioTotal,
+              precioTotal: result.precio,
               ticket: ticket.id,
               estado: 'Borrador'
             }
 
-            ticket.precioTotal += result.precioTotal;
+            ticket.precioTotal += result.precio;
             this.db.NewService(ticket, servObj).then(() => {
 
               this.alertaService
                 .openSuccessSnackBar('Cita registrada exitosamente');
             }).catch(reject => {
 
-              ticket.precioTotal -= result.precioTotal;
+              ticket.precioTotal -= result.precio;
               this.alertaService
                 .openErrorSnackBar('No fue posible registrar la venta');
             });
@@ -367,12 +366,11 @@ export class TableTicketComponent implements OnInit {
               id: result.servicio,
               detalle: result.serviciDetail,
               empleado: result.empleado,
-              precio: result.precio,
-              precioTotal: result.precioTotal
+              precio: result.precio
             });
 
             let precioTotal
-              = res.docs[0].data().precioTotal + result.precioTotal;
+              = res.docs[0].data().precioTotal + result.precio;
 
             let citaObj = {
               id: res.docs[0].id,
@@ -380,7 +378,7 @@ export class TableTicketComponent implements OnInit {
               precioTotal: precioTotal
             }
 
-            ticket.precioTotal += result.precioTotal;
+            ticket.precioTotal += result.precio;
 
             this.db.UpdateServ(ticket, citaObj).then(() => {
 
@@ -390,7 +388,7 @@ export class TableTicketComponent implements OnInit {
 
               this.alertaService
                 .openErrorSnackBar('No fue posible registrar la cita');
-              ticket.precioTotal -= result.precioTotal;
+              ticket.precioTotal -= result.precio;
             });
             
           }

@@ -229,7 +229,7 @@ export class DetalleTicketComponent implements OnInit {
   }
 
   /*juan*/
-  async deleteSelll(servicio: any){
+  async deleteAppointment(servicio: any){
     try{
 
       const dialogRef = this.dialog.open(EliminarCitaDialog, {
@@ -241,9 +241,10 @@ export class DetalleTicketComponent implements OnInit {
         if(result){
           let index = this.cita.servicios.indexOf(servicio);
           this.cita.servicios.splice(index, 1);
-          this.cita.precioTotal -= servicio.precioTotal;
+          
+          this.cita.precioTotal -= servicio.precio;
 
-          this.ticket.precioTotal -= servicio.precioTotal;
+          this.ticket.precioTotal -= servicio.precio;
 
           this.db.Update(this.cita.id, {
             servicios: this.cita.servicios,

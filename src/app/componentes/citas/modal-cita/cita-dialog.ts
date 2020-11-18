@@ -109,15 +109,12 @@ class servic {
         }
         
         if(this.formGroup.invalid) return false;
-
-        let precioTotal = this.formGroup.get('precio').value;
-
+        
         this.dialogRef.close({
             servicio: servicio[0].id,
             serviciDetail: servicio[0].nombre,
             precio: this.formGroup.get('precio').value,
-            empleado: servicio[0].empleado,
-            precioTotal: precioTotal
+            empleado: servicio[0].empleado
         });
 
     }

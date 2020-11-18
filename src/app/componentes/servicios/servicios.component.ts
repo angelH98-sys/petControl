@@ -30,7 +30,7 @@ export class ServiciosComponent implements OnInit {
       duracion: ['', Validators.required],
       precio: ['', Validators.required],
       empleado: ['', Validators.required],    
-      estado1:['Disponible', Validators.required],
+      estado:['Disponible', Validators.required],
     })
   }
 
