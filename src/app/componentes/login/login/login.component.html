@@ -31,5 +31,18 @@
             Iniciar sesión
         </button>
     </form>
+
+    <form [formGroup]="formlogin" class="row" 
+        (ngSubmit)="olvide()">
+    
+        <button mat-raised-button color="primary" 
+            class="col-11 py-2 mx-auto mt-1">
+            Olvide la contraseña
+        </button>
+    </form>
 </mat-card>
+
+
+
+
 </div>

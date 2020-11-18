@@ -29,9 +29,6 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  funciono(){
-    console.log("toy funcionando");
-  }
 
   formGroupToUser(){
     return {
@@ -57,6 +54,10 @@ export class LoginComponent implements OnInit {
       console.log("el usuario no se encuentra en la base de datos")
     }
     
+  }
+
+  async olvide(){
+    this.router.navigate(['login/olvide']);
   }
 
 }

@@ -8,6 +8,7 @@ import { TableProductoComponent } from './componentes/productos/table-producto/t
 import { FormUsuarioComponent } from './componentes/usuario/form-usuario/form-usuario.component';
 import { TableUsuarioComponent } from './componentes/usuario/table-usuario/table-usuario.component';
 import {LoginComponent} from './componentes/login/login/login.component';
+import { OlvideComponent } from './componentes/login/olvide/olvide.component';
 
 const routes: Routes = [
   { path: 'usuarios/registro', component: FormUsuarioComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'productos/tabla', component: TableProductoComponent },
   { path: 'compras/tabla/:id', component: TableCompraComponent },
   { path: 'login', component:LoginComponent},
+  { path: "login/olvide", component:OlvideComponent},
 ];
 
 @NgModule({
