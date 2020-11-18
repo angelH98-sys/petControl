@@ -7,6 +7,7 @@ import { DbService } from 'src/app/utilidades/db.service';
 import { EliminarVentaDialog, ModificarVentaDialog, NuevaVentaDialog } from '../../ventas/modal-venta/venta-dialog';
 import { ModificarTicketDialog } from '../modal-ticket/ticket-dialog';
 import { EliminarCitaDialog, ModificarCitaDialog, NuevaCitaDialog } from '../../citas/modal-cita/cita-dialog';
+import { Console } from 'console';
 @Component({
   selector: 'app-detalle-ticket',
   templateUrl: './detalle-ticket.component.html',
@@ -331,6 +332,61 @@ export class DetalleTicketComponent implements OnInit {
     }
   }
 
+  /*JUAN */
+  async modifyAppointment(servicio: any){
+
+    try{
+
+      const dialogRef = this.dialog.open(ModificarCitaDialog, {
+        width: '400px',
+        data: servicio
+      });
+
+      await dialogRef.afterClosed().subscribe(result => {
+        if(result != undefined && result != servicio){
+
+          let index = this.cita.servicios.indexOf(servicio);
+
+          this.cita.precioTotal -= servicio.precioTotal;
+          this.cita.precioTotal += result.precioTotal;
+          this.cita.servicios[index] = result;
+
+          this.ticket.precioTotal -= servicio.precioTotal;
+          this.ticket.precioTotal += result.precioTotal;
+
+          this.db.Update(this.cita.id, {
+            servicios: this.cita.servicios,
+              precioTotal: this.cita.precioTotal  
+          }, 'citas').then(() => {
+
+            this.db.Update(this.ticket.id, {
+              precioTotal: this.ticket.precioTotal
+            }, 'tickets').then(() => {
+              
+              this.alertaService
+                .openSuccessSnackBar('Cita modificada exitosamente');
+              this.citaSource = new MatTableDataSource(this.cita.servicios);
+              
+            }).catch(() => {
+
+              this.alertaService
+                .openErrorSnackBar('Ocurrio un error al actualizar el precio total del ticket');
+            })
+          }).catch(() => {
+
+            this.alertaService
+              .openErrorSnackBar('Ocurrio un error al modificar la cita');
+          });
+        }
+      });
+    }catch(rej){
+
+      this.alertaService
+        .openErrorSnackBar('Ocurrio un error al abrir el formulario');
+    }
+  }
+
+
   async newSell(){
     try{
 
@@ -419,6 +475,97 @@ export class DetalleTicketComponent implements OnInit {
         .openErrorSnackBar('Ocurrio un error al abrir el formulario');
     }
   }
+
+  /*JUAN */
+  async newSellAppointment(){
+    try{
+
+      const dialogRef = this.dialog.open(NuevaCitaDialog, {
+        width: '400px'
+      });
+
+      await dialogRef.afterClosed().subscribe(result => {
+        if(result != undefined){
+          
+          if(this.cita != undefined){
+            this.cita.servicios.push({
+              id: result.servicio,
+              detalle: result.serviciDetail,
+              precio: result.precio,
+              empleado:result.empleado
+             
+            });
+            this.cita.precioTotal += result.precio;
+            this.ticket.precioTotal += result.precio;
+          
+            this.db.Update(this.cita.id, {
+              servicios: this.cita.servicios,
+              precioTotal: this.cita.precioTotal
+            }, 'citas').then(() => {
+
+              this.citaSource = new MatTableDataSource(this.cita.servicios);
+
+              this.db.Update(this.id,{
+                precioTotal: this.ticket.precioTotal
+              }, 'tickets').then(() => {
+                
+                this.alertaService
+                  .openSuccessSnackBar('Cita registrada exitosamente');
+              }).catch(() => {
+                
+                this.alertaService
+                  .openErrorSnackBar('Ocurrio un problema al registrar la cita');
+              });
+            }).catch(() => {
+
+              this.alertaService
+                .openErrorSnackBar('Ocurrio un problema al registrar la cita');
+            });
+          }else{
+            
+            let servicios = [];
+            servicios.push({
+              id: result.servicio,
+              detalle: result.detalle,
+              precio: result.precio,
+              empleado: result.empleado,
+             
+            });
+
+            this.db.Create({
+              servicios: servicios,
+              precioTotal: result.precioTotal,
+              ticket: this.id,
+              estado: 'Borrador'
+            }, 'citas').then(() => {
+
+              this.ticket.precioTotal += result.precioTotal;
+              this.db.Update(this.id, {
+                precioTotal: this.ticket.precioTotal
+              }, 'tickets').then(() => {
+                this.ticket.precioTotal += result.precioTotal;
+                this.getCita();
+                this.alertaService
+                  .openSuccessSnackBar('Cita registrada exitosamente');
+              }).catch((reject) => {
+                console.log(reject);
+                this.alertaService
+                  .openErrorSnackBar('Ocurrio un error al registrar cita');
+              });
+            }).catch(() => {
+              this.alertaService
+                .openErrorSnackBar('Ocurrio un error al registrar cita');
+            });
+          }
+        }
+      });
+    }catch(rej){
+
+      this.alertaService
+        .openErrorSnackBar('Ocurrio un error al abrir el formulario');
+    }
+  }
+
 
   async updateTicket(ticket: any, precioTotal){
     try{
