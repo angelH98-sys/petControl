@@ -33,6 +33,7 @@ import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, Nueva
 import { EfectuarTicketDialog, ModificarTicketDialog, NuevoTicketDialog } from './componentes/tickets/modal-ticket/ticket-dialog';
 import { TableTicketComponent } from './componentes/tickets/table-ticket/table-ticket.component';
 import { EliminarVentaDialog, ModificarVentaDialog, NuevaVentaDialog } from './componentes/ventas/modal-venta/venta-dialog';
+import { EliminarCitaDialog, ModificarCitaDialog, NuevaCitaDialog } from './componentes/citas/modal-cita/cita-dialog';
 import { DetalleTicketComponent } from './componentes/tickets/detalle-ticket/detalle-ticket.component';
 
 
@@ -68,9 +69,12 @@ import { DetalleTicketComponent } from './componentes/tickets/detalle-ticket/det
     NuevoTicketDialog,
     TableTicketComponent,
     NuevaVentaDialog,
+    NuevaCitaDialog,
     DetalleTicketComponent,
     ModificarVentaDialog,
+    ModificarCitaDialog,
     EliminarVentaDialog,
+    EliminarCitaDialog,
     ModificarTicketDialog,
     EfectuarTicketDialog
   ],

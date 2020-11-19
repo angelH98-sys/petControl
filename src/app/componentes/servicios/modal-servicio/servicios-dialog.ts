@@ -24,6 +24,7 @@ import { AlertaService } from 'src/app/utilidades/alerta.service';
             duracion: [this.data.duracion, Validators.required],
             precio: [this.data.precio, Validators.required],
             empleado: [this.data.empleado, Validators.required],
+            estado1: [this.data.estado1, Validators.required],
         });
       }
   
