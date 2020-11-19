@@ -9,9 +9,9 @@
             <mat-form-field class="col-12 mb-1" *ngIf=hide>
                 <mat-label>Ingresa el usuario</mat-label>
                 <input matInput type="text"
-                    formControlName="pregunta">
-                    <mat-error *ngIf="formolvide.get('pregunta').invalid">
-                        {{alertaService.errorInput(formolvide.get('pregunta'))}}
+                    formControlName="usuario">
+                    <mat-error *ngIf="formolvide.get('usuario').invalid">
+                        {{alertaService.errorInput(formolvide.get('usuario'))}}
                     </mat-error>
             </mat-form-field>
             
@@ -44,7 +44,7 @@
         (ngSubmit)="ingresa()">
         <button mat-raised-button color="primary" 
                 class="col-11 py-2 mx-auto mt-1" *ngIf=hide>
-                Valida la información
+                Valida la informaciónn
         </button>
         </form>
     </mat-card>

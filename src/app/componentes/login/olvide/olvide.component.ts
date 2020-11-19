@@ -25,6 +25,7 @@ export class OlvideComponent implements OnInit {
     ngOnInit(): void {
       this.formolvide=this.formBuilder.group({
         id:undefined,
+        usuario: ['', Validators.required],
         pregunta: ['', Validators.required],
         respuesta: ['', Validators.required],
       })
@@ -32,7 +33,7 @@ export class OlvideComponent implements OnInit {
 
     formGroupToUser(){
       return {
-        
+        usuario: this.formolvide.get('usuario').value,
         pregunta: this.formolvide.get('pregunta').value,
         respuesta: this.formolvide.get('respuesta').value,
       }
@@ -58,8 +59,23 @@ export class OlvideComponent implements OnInit {
     }
 
     async ingresa(){
-      this.show=true;
-      this.hide=false;
+
+      //revision de el usuario
+      let response = await this.db
+      .GetDocWith('usuario', this.formolvide.get('usuario').value, 'usuario');
+
+      if(!response.empty){
+        //ingresar al input la pregunta de seguridad de el usuario
+        this.show=true;
+        this.hide=false;
+      }else{
+        this.alertaService.openErrorSnackBar("El usuario no existe")
+        this.formolvide.reset()
+      }
+
+
+
+      
     }
 
 }
