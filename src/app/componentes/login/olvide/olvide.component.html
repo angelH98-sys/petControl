@@ -17,8 +17,8 @@
             
             <mat-form-field class="col-12 mb-1" *ngIf=show>
                 <mat-label>Ingresa la pregunta de seguridad</mat-label>
-                <input matInput type="text"
-                    formControlName="pregunta">
+                <input  matInput type="text"
+                    formControlName="pregunta"  >
                     <mat-error *ngIf="formolvide.get('pregunta').invalid">
                         {{alertaService.errorInput(formolvide.get('pregunta'))}}
                     </mat-error>
