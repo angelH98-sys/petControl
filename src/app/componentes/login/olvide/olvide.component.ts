@@ -68,17 +68,21 @@ export class OlvideComponent implements OnInit {
         //ingresar al input la pregunta de seguridad de el usuario
         this.show=true;
         this.hide=false;
+        this.formolvide.controls["pregunta"].disable()
 
         this.formolvide.get('pregunta').setValue(response.docs[0].data().pregunta);
+        
         
       }else{
         this.alertaService.openErrorSnackBar("El usuario no existe")
         this.formolvide.reset()
+
       }
 
 
 
       
     }
+    
 
 }
