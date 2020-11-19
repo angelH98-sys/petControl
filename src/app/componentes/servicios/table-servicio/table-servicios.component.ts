@@ -38,6 +38,7 @@ export class TableServiciosComponent implements OnInit {
             duracion: single.payload.doc.data().duracion,
             precio: single.payload.doc.data().precio,
             empleado: single.payload.doc.data().empleado,
+            estado1: single.payload.doc.data().estado1,
           });
         });
         this.dataSource = new MatTableDataSource(list);
@@ -68,6 +69,7 @@ export class TableServiciosComponent implements OnInit {
             duracion: result.duracion,
             precio: result.precio,
             empleado: result.empleado,
+            estado1: result.estado1,
           }, 'servicio');
           
           this.getServicios();

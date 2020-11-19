@@ -51,6 +51,9 @@ export class AlertaService {
         case "errorFiltroFechas": {
           return "Fecha inválida";
         }
+        case "servicioInexistente": {
+          return "No existe registro de este servicio";
+        }
       }
     }
   }

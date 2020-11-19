@@ -1,3 +1,5 @@
+
+
 <p class="mat-display-1 text-center">
     Detalle de ticket
 </p>
@@ -154,6 +156,103 @@
                     </div>
                     <div *ngIf="ventaSource.data.length > 0">
                         No se encotraron coincidencias para "{{input.value}}"
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="row">
+    <div class="col-xl-12 mt-3">
+        <p class="mat-h1">
+            Citas del ticket
+        </p>
+        <div class="row">
+            <div class="col-sm-1 col-2 mx-auto"
+                [ngClass]="{'d-none': windowWidth >= 768}">
+                <button mat-mini-fab color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-3"
+                [ngClass]="{'d-none': windowWidth < 768}"
+                (click)="newSellAppointment()">
+                <button mat-raised-button color="primary"
+                    class="w-100 mt-2">
+                    Nueva cita
+                </button>
+            </div>
+            <mat-form-field class="col-xl-10 col-lg-10 col-md-9 col-10">
+                <mat-label>Buscar</mat-label>
+                <input matInput (keyup)="applyAppointmentFilter($event)" #input2
+                    [readonly]="citaSource == undefined">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="col-xl-12 mx-auto overflow-auto">
+        <table mat-table [dataSource]="citaSource"
+            class="w-100 mat-elevation-z8 mb-5">
+            <ng-container matColumnDef="detalle">
+                <th mat-header-cell *matHeaderCellDef>Servicio</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.detalle}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="precio">
+                <th mat-header-cell *matHeaderCellDef>Precio</th>
+                <td mat-cell *matCellDef="let element">
+                    ${{element.precio.toFixed(2)}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="empleado">
+                <th mat-header-cell *matHeaderCellDef>Empleado</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.empleado}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="primary"
+                        matTooltip="Editar"
+                        (click)="modifyAppointment(element)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary"
+                        matTooltip="Eliminar" (click)="deleteAppointment(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row 
+                *matHeaderRowDef="['detalle', 'precio', 'empleado', 'actions']">
+            </tr>
+            <tr mat-row 
+                *matRowDef="
+                let row; 
+                columns: ['detalle', 'precio', 'empleado', 'actions'];">
+            </tr>
+
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="5">
+                    <div class="my-5" *ngIf="citaSource.data.length == 0">
+                        <p class="text-center">
+                            <img src="../../../../assets/img/empty-box.png"
+                                class="d-block mx-auto mb-2"
+                                *ngIf="citaCharged ">
+                            <ng-template [ngIf]="!citaCharged">
+                                <mat-progress-bar mode="indeterminate">
+                                </mat-progress-bar>
+                            </ng-template>
+                            {{citaMessage}}
+                        </p>
+                    </div>
+                    <div *ngIf="citaSource.data.length > 0">
+                        No se encotraron coincidencias para "{{input2.value}}"
                     </div>
                 </td>
             </tr>

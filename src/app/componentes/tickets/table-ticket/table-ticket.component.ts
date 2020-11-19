@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AlertaService } from 'src/app/utilidades/alerta.service';
 import { DbService } from 'src/app/utilidades/db.service';
 import { NuevaVentaDialog } from '../../ventas/modal-venta/venta-dialog';
+import { NuevaCitaDialog } from '../../citas/modal-cita/cita-dialog';
 import { EfectuarTicketDialog, NuevoTicketDialog } from '../modal-ticket/ticket-dialog';
 
 @Component({
@@ -350,6 +351,88 @@ export class TableTicketComponent implements OnInit {
       this.panelOpenState = false;
     }
   }
+  async newAppointmentDialog(ticket: any){
+
+    const dialogRef = this.dialog.open(NuevaCitaDialog, {
+      width: '400px'
+    });
+
+    await dialogRef.afterClosed().subscribe(result => {
+
+      if(result != undefined){
+
+        this.db.GetDocWith('ticket', ticket.id, 'citas').then(res => {
+
+          let servicios = [];
+          if(res.empty){
+
+            servicios.push({
+              id: result.servicio,
+              detalle: result.serviciDetail,
+              empleado: result.empleado,
+              precio: result.precio
+            });
+
+            let servObj = {
+              servicios: servicios,
+              precioTotal: result.precio,
+              ticket: ticket.id,
+              estado: 'Borrador'
+            }
+
+            ticket.precioTotal += result.precio;
+            this.db.NewService(ticket, servObj).then(() => {
+
+              this.alertaService
+                .openSuccessSnackBar('Cita registrada exitosamente');
+            }).catch(reject => {
+
+              ticket.precioTotal -= result.precio;
+              this.alertaService
+                .openErrorSnackBar('No fue posible registrar la venta');
+            });
+          }else{
+
+            servicios = res.docs[0].data().servicios;
+            servicios.push({
+              id: result.servicio,
+              detalle: result.serviciDetail,
+              empleado: result.empleado,
+              precio: result.precio
+            });
+
+            let precioTotal
+              = res.docs[0].data().precioTotal + result.precio;
+
+            let citaObj = {
+              id: res.docs[0].id,
+              servicios: servicios,
+              precioTotal: precioTotal
+            }
+
+            ticket.precioTotal += result.precio;
+
+            this.db.UpdateServ(ticket, citaObj).then(() => {
+
+              this.alertaService
+                .openSuccessSnackBar('Cita registrada exitosamente');
+            }).catch(() => {
+
+              this.alertaService
+                .openErrorSnackBar('No fue posible registrar la cita');
+              ticket.precioTotal -= result.precio;
+            });
+            
+          }
+
+          }).catch((rej) => {
+            this.alertaService
+              .openErrorSnackBar('Ocurrio un error al registrar cita');
+          });
+      
+      }
+    });
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -357,3 +440,4 @@ export class TableTicketComponent implements OnInit {
   }
 
 }
+

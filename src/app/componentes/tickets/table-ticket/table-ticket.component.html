@@ -116,6 +116,7 @@
                                 <div class="col-6">
                                     <button mat-mini-fab color="warn"
                                         matTooltip="Añadir servicio"
+                                        (click)="newAppointmentDialog(ticket)"
                                         class="float-left">
                                         <mat-icon>pan_tool</mat-icon>
                                     </button>
@@ -168,7 +169,7 @@
                                 <b>Cliente | Mascota:</b> {{ticket.clienteDetail}}
                             </p>
                             <p class="mat-body">
-                                <b>Precio total:</b> ${{ticket.precioTotal.toFixed(2)}}
+                                <b>Precio total:</b> ${{ticket.precioTotal}}
                             </p>
                             <p class="mat-body">
                                 <b>Fecha de creación:</b> {{ticket.fechaFormated}}
