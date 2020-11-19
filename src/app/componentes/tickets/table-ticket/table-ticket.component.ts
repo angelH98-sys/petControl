@@ -172,15 +172,24 @@ export class TableTicketComponent implements OnInit {
       await dialogRef.afterClosed().subscribe(result => {
 
         if(result){
-          this.db.GetDocWith('ticket', ticket.id, 'ventas').then(res => {
-            if(!res.empty){
+          
+          this.getSellAndAppointment(ticket.id).then(obj => {
 
-              this.PrepareProductos(res.docs[0].data().productos)
+            this.PrepareProductos(obj.sell)
                 .then((products: any) => {
 
                   if(products){
                     
-                    this.db.EffectTicket(ticket.id, res.docs[0].id, products)
+                    let sellId, appointmentId;
+                    if(obj.sell != undefined){
+                      sellId = obj.sell.id;
+                    }
+
+                    if(obj.appointment != undefined){
+                      appointmentId = obj.appointment.id;
+                    }
+
+                    this.db.EffectTicket(ticket.id, sellId, appointmentId, products)
                       .then(() => {
 
                         let index = this.listaBorrador.indexOf(ticket);
@@ -202,14 +211,7 @@ export class TableTicketComponent implements OnInit {
                       .openErrorSnackBar('No es posible efectuar el ticket');
                   }
                 });
-            }
-            
-          }).catch(() => {
-
-            this.alertaService
-              .openErrorSnackBar('Ocurrio un error al acceder a los productos del ticket');
           });
-
         }
       });
     }catch(rej){
@@ -219,16 +221,44 @@ export class TableTicketComponent implements OnInit {
     }
   }
 
-  async PrepareProductos(productsInTicket: any){
+  async getSellAndAppointment(ticketId: any){
+
+    let sell = await this.db.GetDocWith('ticket', ticketId, 'ventas');
+    let appointment = await this.db.GetDocWith('ticket', ticketId, 'citas');
+
+    let obj = {
+      sell: undefined,
+      appointment: undefined
+    }
+
+    if(!sell.empty && !appointment.empty){
+      
+      obj.sell = sell.docs[0];
+      obj.appointment = appointment.docs[0];
+    }else if(sell.empty && !appointment.empty){
+      
+      obj.appointment = appointment.docs[0];
+    }else if(!sell.empty && appointment.empty){
+
+      obj.sell = sell.docs[0];
+    }
+
+    return obj;
+  }
+
+  async PrepareProductos(sell: any){
 
     try{
 
       let response = 
         await this.db.GetDocWith('estado', 'Disponible', 'productos');
 
-      if(response.empty) return false;
+      if(response.empty) return [];
 
       let aux, stock, documents = [];
+
+      let productsInTicket = sell.data().productos;
+
       productsInTicket.forEach(element => {
         
         aux = response.docs.filter(r => r.id == element.id);
@@ -247,8 +277,8 @@ export class TableTicketComponent implements OnInit {
 
       return documents;
     }catch(rej){
-      console.log(rej);
-      return false;
+
+      return [];
     }
   }
 

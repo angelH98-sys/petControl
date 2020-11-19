@@ -27,11 +27,11 @@ export class DetalleTicketComponent implements OnInit {
   ventaColumns: string[];
 
   cita: any;
-
-  cita: any;
+  
   citaSource = new MatTableDataSource();
   citaCharged: boolean = false;
   citaMessage: string = "Cargando información";
+  citaColumns: string[];
 
   windowWidth: any;
 
@@ -134,6 +134,12 @@ export class DetalleTicketComponent implements OnInit {
           ticket: response.docs[0].data().ticket,
         }
         this.citaSource = new MatTableDataSource(this.cita.servicios);
+
+        if(this.cita.estado == "Borrador"){
+          this.citaColumns = ['detalle', 'precio', 'empleado', 'actions'];
+        }else{
+          this.citaColumns = ['detalle', 'precio', 'empleado'];
+        }
       
       }else{
 
@@ -488,8 +494,7 @@ async modifyAppointment (servicio: any){
     }
   }
 
-  /*JUAN */
-  async newSellAppointment(){
+  async newAppointment(){
     try{
 
       const dialogRef = this.dialog.open(NuevaCitaDialog, {

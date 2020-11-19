@@ -147,7 +147,7 @@ async NewService(ticket: any, servObj: any){
     return batch.commit();
   }
 
-  EffectTicket(ticketId, ventaId, products: any){
+  EffectTicket(ticketId, ventaId, citaId, products: any){
     //https://firebase.google.com/docs/firestore/manage-data/transactions#batched-writes
     let batch = this.firestore.firestore.batch();
     
@@ -169,15 +169,28 @@ async NewService(ticket: any, servObj: any){
 
     });
 
+    if(ventaId != undefined){
+
+      batch.update(
+        this.firestore.firestore.collection('ventas').doc(ventaId),
+        {"estado": "Efectuado"}
+      )
+    }
+
+    if(citaId != undefined){
+
+      batch.update(
+        this.firestore.firestore.collection('citas').doc(citaId),
+        {"estado": "Efectuado"}
+      )
+    }
+
     batch.update(
       this.firestore.firestore.collection('tickets').doc(ticketId),
       {"estado": "Efectuado"}
     );
 
-    batch.update(
-      this.firestore.firestore.collection('ventas').doc(ventaId),
-      {"estado": "Efectuado"}
-    )
+    
 
     return batch.commit();
   }

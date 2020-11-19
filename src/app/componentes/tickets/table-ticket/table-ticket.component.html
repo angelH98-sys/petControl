@@ -2,10 +2,10 @@
     Tickets
 </p>
 <div class="row">
-    <div class="col-sm-1 col-2"
+    <div class="col-sm-1 col-2 mx-auto"
         [ngClass]="{'d-none': windowWidth >= 768}">
         <button mat-mini-fab color="primary"
-            class="mb-3"
+            class="mb-3 ml-2"
             (click)="newTicketDialog()">
             <mat-icon>add</mat-icon>
         </button>
@@ -18,7 +18,7 @@
             Nuevo ticket
         </button>
     </div>
-    <div class="col-xl-10">
+    <div class="col-xl-10 col-lg-10 col-md-9 col-sm-10 col-12">
         <mat-expansion-panel [expanded]="panelOpenState" 
             (opened)="panelOpenState = true">
             <mat-expansion-panel-header>
@@ -30,7 +30,7 @@
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <form class="row" [formGroup]="form" (ngSubmit)="onSubmit()">
-                <mat-form-field class="col-xl-5">
+                <mat-form-field class="col-xl-5 col-lg-5 col-md-4 col-sm-12">
                     <mat-label>Desde</mat-label>
                     <input matInput [matDatepicker]="picker1"
                         formControlName="startDate">
@@ -43,7 +43,7 @@
                             errorInput(form.get('startDate'))}}
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field class="col-xl-5">
+                <mat-form-field class="col-xl-5 col-lg-5 col-md-4 col-sm-12">
                     <mat-label>Hasta</mat-label>
                     <input matInput [matDatepicker]="picker2"
                         formControlName="endDate">
@@ -56,8 +56,7 @@
                             errorInput(form.get('endDate'))}}
                     </mat-error>
                 </mat-form-field>
-                <div class="col-xl-2"
-                    [ngClass]="{'d-none': windowWidth < 768}">
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12">
                     <button mat-raised-button color="primary"
                         class="w-100 mt-2" [disabled]=form.invalid>
                         Efectuar
