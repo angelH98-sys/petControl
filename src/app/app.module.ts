@@ -24,6 +24,7 @@ import { TableCompraComponent } from './componentes/compras/table-compra/table-c
 import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, NuevaCompraDialog } from './componentes/compras/modal-compra/compra-dialog';
 import { LoginComponent } from './componentes/login/login/login.component';
 import { OlvideComponent } from './componentes/login/olvide/olvide.component';
+import { ActualizarComponent } from './componentes/login/actualizar/actualizar.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { OlvideComponent } from './componentes/login/olvide/olvide.component';
     ModificarCompraDialog,
     CancelarCompraDialog,
     LoginComponent,
-    OlvideComponent
+    OlvideComponent,
+    ActualizarComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FormEmpleadoComponent } from './componentes/empleado/form-empleado/form-empleado.component';
 import { TableEmpleadoComponent } from './componentes/empleado/table-empleado/table-empleado.component';
@@ -9,6 +9,7 @@ import { FormUsuarioComponent } from './componentes/usuario/form-usuario/form-us
 import { TableUsuarioComponent } from './componentes/usuario/table-usuario/table-usuario.component';
 import {LoginComponent} from './componentes/login/login/login.component';
 import { OlvideComponent } from './componentes/login/olvide/olvide.component';
+import { ActualizarComponent } from './componentes/login/actualizar/actualizar.component';
 
 const routes: Routes = [
   { path: 'usuarios/registro', component: FormUsuarioComponent },
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'productos/tabla', component: TableProductoComponent },
   { path: 'compras/tabla/:id', component: TableCompraComponent },
   { path: 'login', component:LoginComponent},
-  { path: "login/olvide", component:OlvideComponent},
+  { path: 'login/olvide', component:OlvideComponent},
+  { path: 'login/actualizar', component:ActualizarComponent},
 ];
 
 @NgModule({

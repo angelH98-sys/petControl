@@ -24,27 +24,32 @@ export class OlvideComponent implements OnInit {
     ngOnInit(): void {
       this.formolvide=this.formBuilder.group({
         id:undefined,
-        usuario: ['', Validators.required],
-        contrasenia: ['', Validators.required],
+        pregunta: ['', Validators.required],
+        respuesta: ['', Validators.required],
       })
     }
 
+    formGroupToUser(){
+      return {
+        
+        pregunta: this.formolvide.get('pregunta').value,
+        respuesta: this.formolvide.get('respuesta').value,
+      }
+    }
+
     async onSubmit(){
-    
-      if(this.formolvide.invalid) return false;
-  
+      if(this,this.formolvide.invalid) return false;
+
       let response = await this.db
-        .GetDocWith('usuario', this.formolvide.get('usuario').value, 'usuario');
-  
-        let response2 = await this.db
-        .GetDocWith('contrasenia', sha256(this.formolvide.get('contrasenia').value), 'usuario');
-  
+      .GetDocWith('pregunta', this.formolvide.get('pregunta').value, 'usuario');
+
+      let response2 = await this.db
+      .GetDocWith('respuesta', sha256(this.formolvide.get('respuesta').value), 'usuario');
+
       if(!response.empty&&!response2.empty){//validar que se vaya a otra parte
-        console.log("el usuario se encuentra en la base de datos");
+        this.router.navigate(['login/actualizar']);
       }else{
         console.log("el usuario no se encuentra en la base de datos")
       }
-      
     }
-
 }
