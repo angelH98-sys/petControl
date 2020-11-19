@@ -5,8 +5,17 @@
         </p>
         <form [formGroup]="formolvide" class="row" 
             (ngSubmit)="onSubmit()">
+
+            <mat-form-field class="col-12 mb-1" *ngIf=hide>
+                <mat-label>Ingresa el usuario</mat-label>
+                <input matInput type="text"
+                    formControlName="pregunta">
+                    <mat-error *ngIf="formolvide.get('pregunta').invalid">
+                        {{alertaService.errorInput(formolvide.get('pregunta'))}}
+                    </mat-error>
+            </mat-form-field>
             
-            <mat-form-field class="col-12 mb-1" *ngIf="show">
+            <mat-form-field class="col-12 mb-1" *ngIf=show>
                 <mat-label>Ingresa la pregunta de seguridad</mat-label>
                 <input matInput type="text"
                     formControlName="pregunta">
@@ -15,7 +24,7 @@
                     </mat-error>
             </mat-form-field>
             
-            <mat-form-field class="col-12 mb-1" *ngIf="show">
+            <mat-form-field class="col-12 mb-1" *ngIf=show>
                 <mat-label>Ingresa la respuesta de seguridad</mat-label>
                 <input matInput type="password"
                     formControlName="respuesta">
@@ -26,7 +35,7 @@
 
             <button mat-raised-button color="primary" 
                 class="col-11 py-2 mx-auto mt-1"
-                [disabled]="formolvide.invalid">
+                [disabled]="formolvide.invalid" *ngIf=show>
                 Valida la información
             </button>
         </form>
@@ -34,7 +43,7 @@
         <form [formGroup]="formolvide" class="row" 
         (ngSubmit)="ingresa()">
         <button mat-raised-button color="primary" 
-                class="col-11 py-2 mx-auto mt-1">
+                class="col-11 py-2 mx-auto mt-1" *ngIf=hide>
                 Valida la información
         </button>
         </form>

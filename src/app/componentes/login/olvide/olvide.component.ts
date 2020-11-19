@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class OlvideComponent implements OnInit {
   show:boolean=false;
+  hide:boolean=true;
   formolvide:FormGroup;
 
   constructor(private formBuilder: FormBuilder,
@@ -58,5 +59,7 @@ export class OlvideComponent implements OnInit {
 
     async ingresa(){
       this.show=true;
+      this.hide=false;
     }
+
 }
