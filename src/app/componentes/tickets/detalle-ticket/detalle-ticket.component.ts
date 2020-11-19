@@ -333,58 +333,61 @@ export class DetalleTicketComponent implements OnInit {
   }
 
   /*JUAN */
-  async modifyAppointment(servicio: any){
+ 
+async modifyAppointment (servicio: any){
 
-    try{
+  
+  try{
 
-      const dialogRef = this.dialog.open(ModificarCitaDialog, {
-        width: '400px',
-        data: servicio
-      });
+    const dialogRef = this.dialog.open(ModificarCitaDialog, {
+      width: '400px',
+      data: servicio
+    });
 
-      await dialogRef.afterClosed().subscribe(result => {
-        if(result != undefined && result != servicio){
+    await dialogRef.afterClosed().subscribe(result => {
+      if(result != undefined && result != servicio){
 
-          let index = this.cita.servicios.indexOf(servicio);
+        let index = this.cita.servicios.indexOf(servicio);
 
-          this.cita.precioTotal -= servicio.precioTotal;
-          this.cita.precioTotal += result.precioTotal;
-          this.cita.servicios[index] = result;
+        this.cita.precioTotal -= servicio.precio;
+        this.cita.precioTotal += result.precio;
+        this.cita.servicios[index] = result;
 
-          this.ticket.precioTotal -= servicio.precioTotal;
-          this.ticket.precioTotal += result.precioTotal;
+        this.ticket.precioTotal -= servicio.precio;
+        this.ticket.precioTotal += result.precio;
 
-          this.db.Update(this.cita.id, {
-            servicios: this.cita.servicios,
-              precioTotal: this.cita.precioTotal  
-          }, 'citas').then(() => {
+        this.db.Update(this.cita.id, {
+            precioTotal: this.cita.precioTotal,
+            servicios: this.cita.servicios
+        }, 'citas').then(() => {
 
-            this.db.Update(this.ticket.id, {
-              precioTotal: this.ticket.precioTotal
-            }, 'tickets').then(() => {
-              
-              this.alertaService
-                .openSuccessSnackBar('Cita modificada exitosamente');
-              this.citaSource = new MatTableDataSource(this.cita.servicios);
-              
-            }).catch(() => {
-
-              this.alertaService
-                .openErrorSnackBar('Ocurrio un error al actualizar el precio total del ticket');
-            })
+          this.db.Update(this.ticket.id, {
+            precioTotal: this.ticket.precioTotal
+          }, 'tickets').then(() => {
+            
+            this.alertaService
+              .openSuccessSnackBar('Cita modificada exitosamente');
+            this.citaSource = new MatTableDataSource(this.cita.servicios);
+            
           }).catch(() => {
 
             this.alertaService
-              .openErrorSnackBar('Ocurrio un error al modificar la cita');
-          });
-        }
-      });
-    }catch(rej){
+              .openErrorSnackBar('Ocurrio un error al actualizar el precio total del ticket');
+          })
+        }).catch(() => {
 
-      this.alertaService
-        .openErrorSnackBar('Ocurrio un error al abrir el formulario');
-    }
+          this.alertaService
+            .openErrorSnackBar('Ocurrio un error al modificar la cita');
+        });
+      }
+    });
+  }catch(rej){
+
+    this.alertaService
+      .openErrorSnackBar('Ocurrio un error al abrir el formulario');
   }
+}
+
 
 
   async newSell(){
@@ -526,7 +529,7 @@ export class DetalleTicketComponent implements OnInit {
             let servicios = [];
             servicios.push({
               id: result.servicio,
-              detalle: result.detalle,
+              detalle: result.serviciDetail,
               precio: result.precio,
               empleado: result.empleado,
              
@@ -534,16 +537,16 @@ export class DetalleTicketComponent implements OnInit {
 
             this.db.Create({
               servicios: servicios,
-              precioTotal: result.precioTotal,
+              precioTotal: result.precio,
               ticket: this.id,
               estado: 'Borrador'
             }, 'citas').then(() => {
 
-              this.ticket.precioTotal += result.precioTotal;
+              this.ticket.precioTotal += result.precio;
               this.db.Update(this.id, {
                 precioTotal: this.ticket.precioTotal
               }, 'tickets').then(() => {
-                this.ticket.precioTotal += result.precioTotal;
+                this.ticket.precioTotal += result.precio;
                 this.getCita();
                 this.alertaService
                   .openSuccessSnackBar('Cita registrada exitosamente');

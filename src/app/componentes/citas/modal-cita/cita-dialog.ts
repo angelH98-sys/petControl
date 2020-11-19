@@ -90,7 +90,7 @@ class servic {
         let servicio = this.servicios.filter(p => p.nombre == nombre);
 
         if(servicio.length == 0){
-            this.formGroup.get('servicioDetail')
+            this.formGroup.get('serviciDetail')
                 .setErrors({servicioInexistente: true});
             return;
         }
@@ -148,12 +148,12 @@ class servic {
 
         this.formGroup = this.formBuilder.group({
             detalle: [this.data.detalle, Validators.required],
-            empleado: [this.data.empleado, Validators.required],
             id: this.data.id,
             precio: [this.data.precio, [
                 Validators.required,
                 Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/),
-                Validators.min(0.01)]]
+                Validators.min(0.01)]],
+                empleado: [this.data.empleado, Validators.required],
         });
 
     }
@@ -161,7 +161,7 @@ class servic {
     async getServics(){
         try{
 
-            let response = await this.db.GetDocWith('estado1', 'Disponible', 'servicio');
+            let response = await this.db.GetDocWith('estado', 'Disponible', 'servicio');
 
             response.docs.forEach(element => {
                 this.servicios.push({
@@ -208,7 +208,7 @@ class servic {
         
     }
 
-    sendSelll(){
+    sendAppointment(){
         let nombre = this.formGroup.get('detalle').value;
         let servicio = this.servicios.filter(p => p.nombre == nombre);
 
@@ -227,14 +227,14 @@ class servic {
 */
         if(this.formGroup.invalid) return false;
 
-        let precioTotal = this.formGroup.get('precio').value;
+       
 
         this.dialogRef.close({
             id: servicio[0].id,
             detalle: servicio[0].nombre,
             empleado: servicio[0].empleado,
             precio: this.formGroup.get('precio').value,
-            precioTotal: precioTotal
+            
         });
 
     }

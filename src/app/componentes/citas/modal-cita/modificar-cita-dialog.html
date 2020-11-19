@@ -26,7 +26,7 @@
             <mat-label>Empleado</mat-label>
             <input matInput type="text" 
                 formControlName="empleado">
-            <span matPrefix>$&nbsp;</span>
+            <span matPrefix></span>
             <mat-error *ngIf="formGroup.get('empleado').invalid">
                 {{alertaService.errorInput(formGroup.get('empleado'))}}
             </mat-error>
@@ -46,7 +46,7 @@
     <button mat-button (click)="onNoClick()">
         Cancelar  
       </button>
-    <button mat-button (click)="sendSelll()" *ngIf="formReady"
+    <button mat-button (click)="sendAppointment()" *ngIf="formReady"
       cdkFocusInitial [disabled]="formGroup.invalid">
         Enviar
     </button>
