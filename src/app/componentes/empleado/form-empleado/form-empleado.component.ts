@@ -77,8 +77,7 @@ export class FormEmpleadoComponent implements OnInit {
         this.alertaService.openSuccessSnackBar('Empleado registrado exitosamente');
         this.router.navigate(['empleados/tabla']);
       }catch(rej){
-        this.alertaService
-          .openErrorSnackBar('Ups... algo salio mal al registrar el usuario.');
+        this.alertaService.openErrorSnackBar('Ups... algo salio mal al registrar el usuario.');
       }
     }
   }

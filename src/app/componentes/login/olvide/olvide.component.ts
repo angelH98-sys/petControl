@@ -36,6 +36,8 @@ export class OlvideComponent implements OnInit {
         respuesta: this.formolvide.get('respuesta').value,
       }
     }
+    
+  
 
     async onSubmit(){
       if(this,this.formolvide.invalid) return false;
@@ -49,7 +51,8 @@ export class OlvideComponent implements OnInit {
       if(!response.empty&&!response2.empty){//validar que se vaya a otra parte
         this.router.navigate(['login/actualizar']);
       }else{
-        console.log("el usuario no se encuentra en la base de datos")
+        this.alertaService.openErrorSnackBar("La respuesta no es correcta")
+        this.formolvide.reset()
       }
     }
 }
