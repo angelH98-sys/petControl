@@ -48,6 +48,9 @@ export class AlertaService {
         case "cantidadInvalida": {
           return "La cantidad excede el stock del producto";
         }
+        case "errorFiltroFechas": {
+          return "Fecha inválida";
+        }
       }
     }
   }

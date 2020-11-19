@@ -15,13 +15,17 @@ import { ModificarTicketDialog } from '../modal-ticket/ticket-dialog';
 export class DetalleTicketComponent implements OnInit {
 
   id: string;
+
   ticket: any;
   ticketCharged: boolean = false;
+
   venta: any;
-  cita: any;
   ventaSource = new MatTableDataSource();
   ventaCharged: boolean = false;
   ventaMessage: string = "Cargando información";
+  ventaColumns: string[];
+
+  cita: any;
 
   windowWidth: any;
 
@@ -90,6 +94,12 @@ export class DetalleTicketComponent implements OnInit {
           estado: response.docs[0].data().estado
         }
         this.ventaSource = new MatTableDataSource(this.venta.productos);
+
+        if(this.venta.estado == "Borrador"){
+          this.ventaColumns = ['detalle', 'precio', 'cantidad', 'precioTotal', 'actions'];
+        }else{
+          this.ventaColumns = ['detalle', 'precio', 'cantidad', 'precioTotal'];
+        }
 
       }else{
         this.ventaMessage = "No existen ventas de productos dentro del ticket";

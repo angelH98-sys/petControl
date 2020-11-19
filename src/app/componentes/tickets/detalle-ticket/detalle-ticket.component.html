@@ -82,8 +82,7 @@
             </div>
             <mat-form-field class="col-xl-10 col-lg-10 col-md-9 col-10">
                 <mat-label>Buscar</mat-label>
-                <input matInput (keyup)="applySellFilter($event)" #input
-                    [disabled]="ventaSource == undefined">
+                <input matInput (keyup)="applySellFilter($event)" #input>
             </mat-form-field>
         </div>
     </div>
@@ -131,12 +130,12 @@
             </ng-container>
 
             <tr mat-header-row 
-                *matHeaderRowDef="['detalle', 'precio', 'cantidad', 'precioTotal', 'actions']">
+                *matHeaderRowDef="ventaColumns">
             </tr>
             <tr mat-row 
                 *matRowDef="
                 let row; 
-                columns: ['detalle', 'precio', 'cantidad', 'precioTotal', 'actions'];">
+                columns: ventaColumns;">
             </tr>
 
             <tr class="mat-row" *matNoDataRow>
@@ -153,9 +152,9 @@
                             {{ventaMessage}}
                         </p>
                     </div>
-                    <!--div *ngIf="dataSource.data.length > 0">
+                    <div *ngIf="ventaSource.data.length > 0">
                         No se encotraron coincidencias para "{{input.value}}"
-                    </div-->
+                    </div>
                 </td>
             </tr>
         </table>

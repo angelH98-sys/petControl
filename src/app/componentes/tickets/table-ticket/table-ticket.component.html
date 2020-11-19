@@ -2,7 +2,7 @@
     Tickets
 </p>
 <div class="row">
-    <div class="col-sm-1 col-2 mx-auto mx-auto"
+    <div class="col-sm-1 col-2"
         [ngClass]="{'d-none': windowWidth >= 768}">
         <button mat-mini-fab color="primary"
             class="mb-3"
@@ -10,13 +10,61 @@
             <mat-icon>add</mat-icon>
         </button>
     </div>
-    <div class="col-xl-2 col-lg-2 col-md-3 mx-auto"
+    <div class="col-xl-2 col-lg-2 col-md-3"
         [ngClass]="{'d-none': windowWidth < 768}">
         <button mat-raised-button color="primary"
             class="w-100 mt-2"
             (click)="newTicketDialog()">
             Nuevo ticket
         </button>
+    </div>
+    <div class="col-xl-10">
+        <mat-expansion-panel [expanded]="panelOpenState" 
+            (opened)="panelOpenState = true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Filtros de busqueda
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{filterString}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <form class="row" [formGroup]="form" (ngSubmit)="onSubmit()">
+                <mat-form-field class="col-xl-5">
+                    <mat-label>Desde</mat-label>
+                    <input matInput [matDatepicker]="picker1"
+                        formControlName="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1">
+                        </mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error 
+                        *ngIf="form.get('startDate').invalid">
+                        {{alertaService.
+                            errorInput(form.get('startDate'))}}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-xl-5">
+                    <mat-label>Hasta</mat-label>
+                    <input matInput [matDatepicker]="picker2"
+                        formControlName="endDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker2">
+                        </mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <mat-error 
+                        *ngIf="form.get('endDate').invalid">
+                        {{alertaService.
+                            errorInput(form.get('endDate'))}}
+                    </mat-error>
+                </mat-form-field>
+                <div class="col-xl-2"
+                    [ngClass]="{'d-none': windowWidth < 768}">
+                    <button mat-raised-button color="primary"
+                        class="w-100 mt-2" [disabled]=form.invalid>
+                        Efectuar
+                    </button>
+                </div>
+            </form>
+        </mat-expansion-panel>
     </div>
 </div>
 

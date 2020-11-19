@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertaService } from 'src/app/utilidades/alerta.service';
 import { DbService } from 'src/app/utilidades/db.service';
@@ -12,12 +13,18 @@ import { EfectuarTicketDialog, NuevoTicketDialog } from '../modal-ticket/ticket-
 })
 export class TableTicketComponent implements OnInit {
 
-  startDate: Date = new Date();
-  endDate: Date = new Date();
+  form: FormGroup = new FormGroup({
+    startDate: new FormControl(new Date(), Validators.required),
+    endDate: new FormControl(new Date, Validators.required)
+  });
+
+  filterString: string = "";
+  panelOpenState = false;
 
   listaBorrador: any[];
   listaEfectuado: any[];
   listaPagado: any[];
+
   ticketsCharged: boolean = false;
   message: string;
   windowWidth: any;
@@ -30,8 +37,8 @@ export class TableTicketComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.startDate.setHours(0,0,0,0);
-    this.endDate.setHours(24,0,0,0);
+    let d = new Date();
+    this.filterString = `Desde: ${d.toLocaleDateString()} | Hasta: ${d.toLocaleDateString()}`;
     this.windowWidth = window.innerWidth;
     this.getTickets();
   }
@@ -44,11 +51,22 @@ export class TableTicketComponent implements OnInit {
     this.listaPagado = [];
 
     try{
+      let d1 = this.form.get('startDate').value;
+      let d2 = this.form.get('endDate').value;
 
-      let response = await this.db.GetTicketsFrom(this.startDate, this.endDate);
+      d1.setHours(0,0,0);
+      d2.setHours(23,59,0);
+
+      let response = await this.db
+        .GetTicketsFrom(d1, d2);
       
       let formatedDate: Date;
       let ticketObj;
+      
+      this.listaBorrador = [];
+      this.listaEfectuado = [];
+      this.listaPagado = [];
+      
       response.docs.forEach(element => {
 
         formatedDate = new Date(element.data().fecha.seconds * 1000);
@@ -316,6 +334,21 @@ export class TableTicketComponent implements OnInit {
       
       }
     });
+  }
+
+  onSubmit(){
+    let d1 = this.form.get('startDate').value;
+    let d2 = this.form.get('endDate').value;
+
+    if(d1 > d2){
+      this.form.get('endDate').setErrors({
+        errorFiltroFechas: true
+      });
+    }else{
+      this.getTickets();
+      this.filterString = `Desde: ${d1.toLocaleDateString()} | Hasta: ${d2.toLocaleDateString()}`;
+      this.panelOpenState = false;
+    }
   }
 
   @HostListener('window:resize', ['$event'])
