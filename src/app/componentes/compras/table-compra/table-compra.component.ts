@@ -191,9 +191,9 @@ export class TableCompraComponent implements OnInit {
           let precioTotal = result.precioUnitario * result.cantidad;
           this.db.Create({
             producto: result.producto,
-            precioUnitario: result.precioUnitario,
+            precioUnitario: parseFloat(result.precioUnitario),
             cantidad: result.cantidad,
-            precioTotal,
+            precioTotal: precioTotal,
             fecha: result.fecha,
             estado: 'En cola'
           }, 'compras');

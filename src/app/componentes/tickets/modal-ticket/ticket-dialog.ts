@@ -130,7 +130,7 @@ class client {
     PrepareForm(){
         this.formGroup = this.formBuilder.group({
             cliente: this.data.cliente,
-            clienteDetail: [this.data.clienteDetail, Validators.required],
+            clienteDetail: ['', Validators.required],
             fecha: new Date(this.data.fecha.seconds * 1000)
         });
     }
@@ -143,11 +143,16 @@ class client {
             response.subscribe(res => {
                 res.forEach((single: any) => {
 
+                    let nombreDui = `${single.payload.doc.data().nombre} | ${single.payload.doc.data().dui}`;
                     this.clientes.push({
                         id: single.payload.doc.id,
-                        nombreDui: `${single.payload.doc.data().nombre} | ${single.payload.doc.data().dui}`,
+                        nombreDui: nombreDui,
                         nombreMascota: `${single.payload.doc.data().nombre} | ${single.payload.doc.data().mascota}`
                     });
+
+                    if(single.payload.doc.id == this.data.cliente){
+                        this.formGroup.get('clienteDetail').setValue(nombreDui);
+                    }
 
                     if(this.clientes.length == 0){
 

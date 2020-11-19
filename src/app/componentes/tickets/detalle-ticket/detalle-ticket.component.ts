@@ -24,6 +24,9 @@ export class DetalleTicketComponent implements OnInit {
   ventaSource = new MatTableDataSource();
   ventaCharged: boolean = false;
   ventaMessage: string = "Cargando información";
+  ventaColumns: string[];
+
+  cita: any;
 
   cita: any;
   citaSource = new MatTableDataSource();
@@ -98,6 +101,12 @@ export class DetalleTicketComponent implements OnInit {
           estado: response.docs[0].data().estado
         }
         this.ventaSource = new MatTableDataSource(this.venta.productos);
+
+        if(this.venta.estado == "Borrador"){
+          this.ventaColumns = ['detalle', 'precio', 'cantidad', 'precioTotal', 'actions'];
+        }else{
+          this.ventaColumns = ['detalle', 'precio', 'cantidad', 'precioTotal'];
+        }
 
       }else{
         this.ventaMessage = "No existen ventas de productos dentro del ticket";
