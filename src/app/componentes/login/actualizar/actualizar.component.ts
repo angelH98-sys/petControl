@@ -40,7 +40,7 @@ export class ActualizarComponent implements OnInit {
 
   async onSubmit(){
     
-    //this.router.navigate(['login']);
+    
     let response = await this.db
       .GetDocWith('usuario', this.formactualizar.get('usuario').value, 'usuario');
     
@@ -49,9 +49,13 @@ export class ActualizarComponent implements OnInit {
         this.db.Update(response.docs[0].id, {
           contrasenia:sha256(this.formactualizar.get('contrasenia').value),
         }, 'usuario');
-        alert(this.formactualizar.get('contrasenia').value);
+        
+        this.alertaService
+            .openSuccessSnackBar('Contrseña modificada exitosamente');
+            this.router.navigate(['login']);
       }else{
-        alert("No existe un usuario llamado asi")
+        this.alertaService
+            .openErrorSnackBar('No existe ningun usuario con ese nombre');
       }
     }catch(rej){
       this.alertaService
