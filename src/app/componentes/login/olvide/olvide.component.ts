@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./olvide.component.css']
 })
 export class OlvideComponent implements OnInit {
-
+  show:boolean=false;
   formolvide:FormGroup;
 
   constructor(private formBuilder: FormBuilder,
@@ -54,5 +54,9 @@ export class OlvideComponent implements OnInit {
         this.alertaService.openErrorSnackBar("La respuesta no es correcta")
         this.formolvide.reset()
       }
+    }
+
+    async ingresa(){
+      this.show=true;
     }
 }
