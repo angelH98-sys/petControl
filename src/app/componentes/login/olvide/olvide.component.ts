@@ -54,7 +54,7 @@ export class OlvideComponent implements OnInit {
         this.router.navigate(['login/actualizar']);
       }else{
         this.alertaService.openErrorSnackBar("La respuesta no es correcta")
-        this.formolvide.reset()
+        this.formolvide.controls["respuesta"].reset();
       }
     }
 
@@ -63,7 +63,6 @@ export class OlvideComponent implements OnInit {
       //revision de el usuario
       let response = await this.db
       .GetDocWith('usuario', this.formolvide.get('usuario').value, 'usuario');
-
       if(!response.empty){
         //ingresar al input la pregunta de seguridad de el usuario
         this.show=true;
@@ -75,7 +74,7 @@ export class OlvideComponent implements OnInit {
         
       }else{
         this.alertaService.openErrorSnackBar("El usuario no existe")
-        this.formolvide.reset()
+        
 
       }
 
