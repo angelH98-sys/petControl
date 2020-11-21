@@ -21,9 +21,9 @@ export class DetalleTicketComponent implements OnInit {
   ticketCharged: boolean = false;
 
   venta: any;
-  ventaSource = new MatTableDataSource();
-  ventaCharged: boolean = false;
-  ventaMessage: string = "Cargando información";
+  ventaSource: any;
+  ventaCharged: boolean;
+  ventaMessage: string;
   ventaColumns: string[];
 
   cita: any;
@@ -90,28 +90,59 @@ export class DetalleTicketComponent implements OnInit {
 
   async getVenta(){
     try{
+      this.ventaMessage = "Cargando información";
+      this.ventaSource = new MatTableDataSource();
+      this.ventaCharged = false;
 
-      let response = await this.db.GetDocWith('ticket', this.id, 'ventas');
-      if(!response.empty){
-        this.venta = {
-          id: response.docs[0].id,
-          ticket: response.docs[0].data().ticket,
-          productos: response.docs[0].data().productos,
-          precioTotal: response.docs[0].data().precioTotal,
-          estado: response.docs[0].data().estado
-        }
-        this.ventaSource = new MatTableDataSource(this.venta.productos);
+      let sell = await this.db.GetDocWith('ticket', this.id, 'ventas');
 
-        if(this.venta.estado == "Borrador"){
-          this.ventaColumns = ['detalle', 'precio', 'cantidad', 'precioTotal', 'actions'];
-        }else{
-          this.ventaColumns = ['detalle', 'precio', 'cantidad', 'precioTotal'];
-        }
+      if(!sell.empty){
+
+        let productsInSell = await this.db.GetSellsFromTicket(sell.docs[0].id);
+        productsInSell.subscribe(response => {
+          
+          if(!response.empty){
+
+            let productos = [];
+            response.docs.forEach(p => {
+              productos.push({
+                docId: p.id,
+                cantidad: p.data().cantidad,
+                detalle: p.data().detalle,
+                precio: p.data().precio,
+                id: p.data().id,
+                precioTotal: p.data().precioTotal
+              });
+            });
+
+            this.venta = {
+              id: sell.docs[0].id,
+              precioTotal: sell.docs[0].data().precioTotal,
+              ticket: this.id,
+              estado: sell.docs[0].data().estado,
+              productos
+            }
+            
+            this.ventaSource = new MatTableDataSource(this.venta.productos);
+    
+            if(this.venta.estado == "Borrador"){
+              this.ventaColumns = ['detalle', 'precio', 'cantidad', 'precioTotal', 'actions'];
+            }else{
+              this.ventaColumns = ['detalle', 'precio', 'cantidad', 'precioTotal'];
+            }
+    
+          }else{
+            this.ventaMessage = "No existen ventas de productos dentro del ticket";
+          }
+
+        });
 
       }else{
         this.ventaMessage = "No existen ventas de productos dentro del ticket";
       }
+
       this.ventaCharged = true;
+
     }catch(rej){    
       this.alertaService
           .openErrorSnackBar('Ocurrio un error al cargar las ventas del ticket');
@@ -207,28 +238,26 @@ export class DetalleTicketComponent implements OnInit {
 
       await dialogRef.afterClosed().subscribe(result => {
         if(result){
+
           let index = this.venta.productos.indexOf(producto);
+
           this.venta.productos.splice(index, 1);
           this.venta.precioTotal -= producto.precioTotal;
-
           this.ticket.precioTotal -= producto.precioTotal;
 
-          this.db.Update(this.venta.id, {
-            productos: this.venta.productos,
-            precioTotal: this.venta.precioTotal
-          }, 'ventas').then(() => {
+          this.db.UpdateSell(
+            this.ticket,
+            {
+              id: this.venta.id,
+              precioTotal: this.venta.precioTotal
+            },
+            undefined,
+            producto.docId
+          ).then(() => {
 
-            this.db.Update(this.ticket.id, {
-              precioTotal: this.ticket.precioTotal
-            }, 'tickets').then(() => {
-
-              this.alertaService.openSuccessSnackBar('Producto eliminado del ticket');
-              this.ventaSource = new MatTableDataSource(this.venta.productos);
-              
-            }).catch(() => {
-              this.alertaService
-                .openErrorSnackBar('Ocurrio un error al eliminar el producto del ticket');
-            });
+            this.alertaService
+              .openSuccessSnackBar('Producto eliminado del ticket');
+            this.ventaSource = new MatTableDataSource(this.venta.productos);
           }).catch(() => {
 
             this.alertaService
@@ -297,47 +326,58 @@ export class DetalleTicketComponent implements OnInit {
   async modifySell(producto: any){
 
     try{
-
+      let startData = {
+        cantidad: producto.cantidad,
+        detalle: producto.detalle,
+        precio: producto.precio,
+        id: producto.id,
+        precioTotal: producto.precioTotal
+      }
       const dialogRef = this.dialog.open(ModificarVentaDialog, {
         width: '400px',
         data: producto
       });
 
       await dialogRef.afterClosed().subscribe(result => {
+
         if(result != undefined && result != producto){
 
           let index = this.venta.productos.indexOf(producto);
 
           this.venta.precioTotal -= producto.precioTotal;
           this.venta.precioTotal += result.precioTotal;
-          this.venta.productos[index] = result;
+
+          let obj = {
+            cantidad: result.cantidad,
+            detalle: result.detalle,
+            precio: result.precio,
+            id: result.id,
+            precioTotal: result.precioTotal,
+            docId: producto.id,
+          }
+
+          this.venta.productos[index] = obj;
 
           this.ticket.precioTotal -= producto.precioTotal;
           this.ticket.precioTotal += result.precioTotal;
 
-          this.db.Update(this.venta.id, {
-              precioTotal: this.venta.precioTotal,
-              productos: this.venta.productos
-          }, 'ventas').then(() => {
-
-            this.db.Update(this.ticket.id, {
-              precioTotal: this.ticket.precioTotal
-            }, 'tickets').then(() => {
-              
+          this.db.UpdateSell(
+            this.ticket,
+            {
+              id: this.venta.id,
+              precioTotal: this.venta.precioTotal
+            },
+            result,
+            producto.docId
+          ).then(() => {
               this.alertaService
                 .openSuccessSnackBar('Venta modificada exitosamente');
               this.ventaSource = new MatTableDataSource(this.venta.productos);
-              
-            }).catch(() => {
-
-              this.alertaService
-                .openErrorSnackBar('Ocurrio un error al actualizar el precio total del ticket');
-            })
           }).catch(() => {
-
-            this.alertaService
-              .openErrorSnackBar('Ocurrio un error al modificar la venta');
+              this.alertaService
+                .openErrorSnackBar('Ocurrio un error al modificar la venta');
           });
+          
         }
       });
     }catch(rej){
@@ -414,53 +454,61 @@ async modifyAppointment (servicio: any){
 
       await dialogRef.afterClosed().subscribe(result => {
         if(result != undefined){
-          
+
+          let producto = {
+            id: result.producto,
+            detalle: result.productDetail,
+            precio: result.precioUnitario,
+            cantidad: result.cantidad,
+            precioTotal: result.precioTotal
+          };
+
           if(this.venta != undefined){
-            this.venta.productos.push({
-              id: result.producto,
-              detalle: result.productDetail,
-              precio: result.precioUnitario,
-              cantidad: result.cantidad,
-              precioTotal: result.precioTotal
-            });
+
             this.venta.precioTotal += result.precioTotal;
             this.ticket.precioTotal += result.precioTotal;
-  
-            this.db.Update(this.venta.id, {
-              productos: this.venta.productos,
-              precioTotal: this.venta.precioTotal
-            }, 'ventas').then(() => {
 
-              this.ventaSource = new MatTableDataSource(this.venta.productos);
-
-              this.db.Update(this.id,{
-                precioTotal: this.ticket.precioTotal
-              }, 'tickets').then(() => {
-                
-                this.alertaService
+            this.db.UpdateSell(
+              this.ticket,
+              {
+                id: this.venta.id,
+                precioTotal: this.venta.precioTotal
+              },
+              producto,
+              undefined
+            ).then(() => {
+              this.alertaService
                   .openSuccessSnackBar('Venta registrada exitosamente');
-              }).catch(() => {
-                
-                this.alertaService
-                  .openErrorSnackBar('Ocurrio un problema al registrar la venta');
-              });
-            }).catch(() => {
-
+              this.getVenta();
+            }).catch((e) => {
+              console.log(e);
               this.alertaService
                 .openErrorSnackBar('Ocurrio un problema al registrar la venta');
             });
+  
           }else{
-            
-            let productos = [];
-            productos.push({
-              id: result.producto,
-              detalle: result.productDetail,
-              precio: result.precioUnitario,
-              cantidad: result.cantidad,
-              precioTotal: result.precioTotal
-            });
 
-            this.db.Create({
+            this.ticket.precioTotal += result.precioTotal;
+            this.db.NewSell(
+              this.ticket,
+              {
+                precioTotal: producto.precioTotal,
+                ticket: this.id,
+                estado: 'Borrador'
+              },
+              producto
+            ).then(() => {
+
+              this.getVenta();
+              this.alertaService
+                .openSuccessSnackBar('Venta registrada exitosamente');
+            }).catch(() => {
+              this.alertaService
+                .openErrorSnackBar('Ocurrio un error al registrar venta');
+            });
+            
+
+            /*this.db.Create({
               productos: productos,
               precioTotal: result.precioTotal,
               ticket: this.id,
@@ -483,7 +531,7 @@ async modifyAppointment (servicio: any){
             }).catch(() => {
               this.alertaService
                 .openErrorSnackBar('Ocurrio un error al registrar venta');
-            });
+            });*/
           }
         }
       });

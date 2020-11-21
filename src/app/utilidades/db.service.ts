@@ -18,6 +18,11 @@ export class DbService {
     return this.firestore.collection(collection).snapshotChanges();
   }
 
+  GetSellsFromTicket(sellId){
+    return this.firestore.collection('ventas').doc(sellId)
+      .collection('productos').get();
+  }
+
   GetDocWith(name: string, value: string, collection: string){
     return this.firestore.collection(collection).ref
       .where(name, '==', value).get();
@@ -33,14 +38,23 @@ export class DbService {
       .where('fecha', '>=', startDate).where('fecha', '<=', endDate).get();
   }
 
-  async NewSell(ticket: any, sellObj: any){
+  async NewSell(ticket: any, sellObj: any, product: any){
     let batch = this.firestore.firestore.batch();
 
-    let res = await this.firestore.collection('ventas').add({});
+    let sell = await this.firestore.collection('ventas').add({});
+
+    let collection = await this.firestore.collection('ventas').doc(sell.id)
+      .collection('productos').add({});
 
     batch.set(
-      this.firestore.firestore.collection('ventas').doc(res.id),
+      this.firestore.firestore.collection('ventas').doc(sell.id),
       sellObj
+    );
+
+    batch.set(
+      this.firestore.firestore.collection('ventas').doc(sell.id)
+        .collection('productos').doc(collection.id),
+      product
     );
 
     batch.update(
@@ -75,14 +89,35 @@ async NewService(ticket: any, servObj: any){
 
 
 
-  async UpdateSell(ticket: any, venta: any){
+  async UpdateSell(ticket: any, venta: any, product: any, productId?: any){
 
     let batch = this.firestore.firestore.batch();
+
+    if(productId != undefined){
+
+      if(product != undefined){
+
+        batch.set(
+          this.firestore.firestore.collection('ventas').doc(venta.id)
+            .collection('productos').doc(productId),
+          product
+        );
+      }else{
+
+        batch.delete(
+          this.firestore.firestore.collection('ventas').doc(venta.id)
+            .collection('productos').doc(productId)
+        )
+      }
+    }else{
+      await this.firestore.collection('ventas').doc(venta.id)
+        .collection('productos').add(product);
+    }
+
 
     batch.update(
       this.firestore.firestore.collection('ventas').doc(venta.id),
       {
-        productos: venta.productos,
         precioTotal: venta.precioTotal
       }
     );
@@ -127,7 +162,7 @@ async NewService(ticket: any, servObj: any){
     return this.firestore.collection(collecton).doc(id).update(data);
   }
 
-  PayTicket(ticketId, ventaId){
+  PayTicket(ticketId, ventaId, appointmentId){
     
     let batch = this.firestore.firestore.batch();
 
@@ -138,12 +173,23 @@ async NewService(ticket: any, servObj: any){
       }
     )
 
-    batch.update(
-      this.firestore.firestore.collection('ventas').doc(ventaId),
-      {
-        estado: "Pagado"
-      }
-    )
+    if(ventaId != undefined){
+      batch.update(
+        this.firestore.firestore.collection('ventas').doc(ventaId),
+        {
+          estado: "Pagado"
+        }
+      )
+    }
+
+    if(appointmentId != undefined){
+      batch.update(
+        this.firestore.firestore.collection('citas').doc(appointmentId),
+        {
+          estado: "Pagado"
+        }
+      )
+    }
     return batch.commit();
   }
 

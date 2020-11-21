@@ -35,6 +35,7 @@ import { TableTicketComponent } from './componentes/tickets/table-ticket/table-t
 import { EliminarVentaDialog, ModificarVentaDialog, NuevaVentaDialog } from './componentes/ventas/modal-venta/venta-dialog';
 import { EliminarCitaDialog, ModificarCitaDialog, NuevaCitaDialog } from './componentes/citas/modal-cita/cita-dialog';
 import { DetalleTicketComponent } from './componentes/tickets/detalle-ticket/detalle-ticket.component';
+import { TableVentaComponent } from './componentes/ventas/table-venta/table-venta.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { DetalleTicketComponent } from './componentes/tickets/detalle-ticket/det
     EliminarVentaDialog,
     EliminarCitaDialog,
     ModificarTicketDialog,
-    EfectuarTicketDialog
+    EfectuarTicketDialog,
+    TableVentaComponent
   ],
   imports: [
     BrowserModule,

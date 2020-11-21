@@ -15,6 +15,7 @@ import { TableServiciosComponent } from './componentes/servicios/table-servicio/
 import { ClienteComponent } from './componentes/cliente/cliente.component';
 import { TablaClienteComponent } from './componentes/tabla-cliente/tabla-cliente.component';
 import { MascotaComponent } from './componentes/mascota/mascota.component';
+import { TableVentaComponent } from './componentes/ventas/table-venta/table-venta.component';
   
 const routes: Routes = [
   { path: 'usuarios/registro', component: FormUsuarioComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'clientes/registro', component: ClienteComponent },
   { path: 'clientes/tabla', component: TablaClienteComponent },
   { path: 'mascota/tabla', component: MascotaComponent},
+  { path: 'ventas/:id', component: TableVentaComponent }
 ];
 
 @NgModule({

@@ -132,9 +132,15 @@ export class TableTicketComponent implements OnInit {
   async pagarTicket(ticket){
     try{
 
-      this.db.GetDocWith('ticket', ticket.id, 'ventas').then(res => {
+      let sell = await this.db.GetDocWith('ticket', ticket.id, 'ventas');
+      let appointment = await this.db.GetDocWith('ticket', ticket.id, 'citas');
 
-        this.db.PayTicket(ticket.id, res.docs[0].id).then(() => {
+      let sellId, appointmentId;
+      if(!sell.empty) sellId = sell.docs[0].id;
+      if(!appointment.empty) appointmentId = appointment.docs[0].id;
+
+      await this.db.PayTicket(ticket.id, sellId, appointmentId)
+        .then(() => {
 
           let index = this.listaEfectuado.indexOf(ticket);
           this.listaEfectuado.splice(index, 1);
@@ -149,11 +155,6 @@ export class TableTicketComponent implements OnInit {
           this.alertaService
             .openErrorSnackBar('Error al pagar el ticket');
         });
-      }).catch(() => {
-
-        this.alertaService
-          .openErrorSnackBar('Error al pagar el ticket');
-      });
     }catch(rej){
       
       this.alertaService
@@ -175,7 +176,7 @@ export class TableTicketComponent implements OnInit {
           
           this.getSellAndAppointment(ticket.id).then(obj => {
 
-            this.PrepareProductos(obj.sell)
+            this.PrepareProductos(obj.products)
                 .then((products: any) => {
 
                   if(products){
@@ -225,30 +226,35 @@ export class TableTicketComponent implements OnInit {
 
     let sell = await this.db.GetDocWith('ticket', ticketId, 'ventas');
     let appointment = await this.db.GetDocWith('ticket', ticketId, 'citas');
+    let products = await this.db.GetSellsFromTicket(sell.docs[0].id).toPromise();
 
     let obj = {
       sell: undefined,
-      appointment: undefined
+      appointment: undefined,
+      products: undefined
     }
 
-    if(!sell.empty && !appointment.empty){
-      
-      obj.sell = sell.docs[0];
-      obj.appointment = appointment.docs[0];
-    }else if(sell.empty && !appointment.empty){
-      
-      obj.appointment = appointment.docs[0];
-    }else if(!sell.empty && appointment.empty){
-
-      obj.sell = sell.docs[0];
-    }
+    if(!sell.empty) obj.sell = sell.docs[0];
+    if(!appointment.empty) obj.appointment = appointment.docs[0];
+    if(!products.empty) obj.products = products.docs;
 
     return obj;
   }
 
-  async PrepareProductos(sell: any){
+  async PrepareProductos(products: any){
 
     try{
+
+      let productsInTicket = [];
+      products.forEach(element => {
+        productsInTicket.push({
+          id: element.data().id,
+          cantidad: element.data().cantidad,
+          detalle: element.data().detalle,
+          precio: element.data().precio,
+          precioTotal: element.data().precioTotal
+        });
+      });
 
       let response = 
         await this.db.GetDocWith('estado', 'Disponible', 'productos');
@@ -256,8 +262,6 @@ export class TableTicketComponent implements OnInit {
       if(response.empty) return [];
 
       let aux, stock, documents = [];
-
-      let productsInTicket = sell.data().productos;
 
       productsInTicket.forEach(element => {
         
@@ -294,26 +298,24 @@ export class TableTicketComponent implements OnInit {
 
         this.db.GetDocWith('ticket', ticket.id, 'ventas').then(res => {
 
-          let productos = [];
+          let producto = {
+            id: result.producto,
+            detalle: result.productDetail,
+            precio: parseFloat(result.precioUnitario),
+            cantidad: parseInt(result.cantidad),
+            precioTotal: parseFloat(result.precioTotal)
+          };
+
           if(res.empty){
 
-            productos.push({
-              id: result.producto,
-              detalle: result.productDetail,
-              precio: result.precioUnitario,
-              cantidad: result.cantidad,
-              precioTotal: result.precioTotal
-            });
-
             let sellObj = {
-              productos: productos,
               precioTotal: result.precioTotal,
               ticket: ticket.id,
               estado: 'Borrador'
             }
-
+            
             ticket.precioTotal += result.precioTotal;
-            this.db.NewSell(ticket, sellObj).then(() => {
+            this.db.NewSell(ticket, sellObj, producto).then(() => {
 
               this.alertaService
                 .openSuccessSnackBar('Venta registrada exitosamente');
@@ -325,27 +327,17 @@ export class TableTicketComponent implements OnInit {
             });
           }else{
 
-            productos = res.docs[0].data().productos;
-            productos.push({
-              id: result.producto,
-              detalle: result.productDetail,
-              precio: result.precioUnitario,
-              cantidad: result.cantidad,
-              precioTotal: result.precioTotal
-            });
-
             let precioTotal
               = res.docs[0].data().precioTotal + result.precioTotal;
 
             let ventaObj = {
               id: res.docs[0].id,
-              productos: productos,
               precioTotal: precioTotal
             }
 
             ticket.precioTotal += result.precioTotal;
 
-            this.db.UpdateSell(ticket, ventaObj).then(() => {
+            this.db.UpdateSell(ticket, ventaObj, producto).then(() => {
 
               this.alertaService
                 .openSuccessSnackBar('Venta registrada exitosamente');
