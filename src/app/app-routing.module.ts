@@ -10,15 +10,17 @@ import { TableUsuarioComponent } from './componentes/usuario/table-usuario/table
 import {LoginComponent} from './componentes/login/login/login.component';
 import { OlvideComponent } from './componentes/login/olvide/olvide.component';
 import { ActualizarComponent } from './componentes/login/actualizar/actualizar.component';
+import { AuthGuard } from "./guards/auth.guard";
 
 const routes: Routes = [
-  { path: 'usuarios/registro', component: FormUsuarioComponent },
-  { path: 'usuarios/tabla', component: TableUsuarioComponent },
-  { path: 'empleados/tabla', component:TableEmpleadoComponent},
-  { path: 'empleados/registro', component:FormEmpleadoComponent},
-  { path: 'productos/registro', component: FormProductoComponent },
-  { path: 'productos/tabla', component: TableProductoComponent },
-  { path: 'compras/tabla/:id', component: TableCompraComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'usuarios/registro', component: FormUsuarioComponent,canActivate: [AuthGuard] },
+  { path: 'usuarios/tabla', component: TableUsuarioComponent,canActivate: [AuthGuard] },
+  { path: 'empleados/tabla', component:TableEmpleadoComponent, canActivate: [AuthGuard]},
+  { path: 'empleados/registro', component:FormEmpleadoComponent, canActivate: [AuthGuard]},
+  { path: 'productos/registro', component: FormProductoComponent, canActivate: [AuthGuard] },
+  { path: 'productos/tabla', component: TableProductoComponent,canActivate: [AuthGuard] },
+  { path: 'compras/tabla/:id', component: TableCompraComponent ,canActivate: [AuthGuard] },
   { path: 'login', component:LoginComponent},
   { path: 'login/olvide', component:OlvideComponent},
   { path: 'login/actualizar', component:ActualizarComponent},
