@@ -1,0 +1,60 @@
+<mat-card class="col-xl-6 col-lg-6 col-md-12 mat-elevation-z8 mb-3">
+    <p class="mat-display-1 mb-3">Nuevo Servicio</p>
+    <form [formGroup]="formServicios" class="row" 
+        (ngSubmit)="onSubmit()">
+        <mat-form-field class="col-12">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text"
+                formControlName="nombre">
+                <mat-error *ngIf="formServicios.get('nombre').invalid">
+                    {{alertaService.errorInput(formServicios.get('nombre'))}}
+                </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Descripcion</mat-label>
+            <input matInput type="text"
+                formControlName="descripcion">
+                <mat-error *ngIf="formServicios.get('descripcion').invalid">
+                    {{alertaService.errorInput(formServicios.get('descripcion'))}}
+                </mat-error>
+            </mat-form-field>
+
+        <mat-form-field class="col-12">
+            <mat-label>Duracion</mat-label>
+            <input matInput type="number"
+                formControlName="duracion">
+        <span matSuffix>minutos</span>
+                <mat-error *ngIf="formServicios.get('duracion').invalid">
+                    {{alertaService.errorInput(formServicios.get('duracion'))}}
+                </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col-12">
+            <mat-label>Precio</mat-label>
+            <input matInput type="number"
+                formControlName="precio">
+                <span matPrefix>$&nbsp;</span>
+                <span matSuffix>.00</span> 
+                <mat-error *ngIf="formServicios.get('precio').invalid">
+                    {{alertaService.errorInput(formServicios.get('precio'))}}
+                </mat-error>
+          </mat-form-field>
+
+        <mat-form-field class="col-12">
+            <mat-label>Empleado</mat-label>
+            <input matInput type="text"
+                formControlName="empleado">
+                <mat-error *ngIf="formServicios.get('empleado').invalid">
+                    {{alertaService.errorInput(formServicios.get('empleado'))}}
+                </mat-error>
+        </mat-form-field>
+
+       
+
+        <button mat-raised-button color="primary" 
+            class="col-11 py-2 mx-auto mt-1"
+            [disabled]="formServicios.invalid">
+            Registrar Servicio
+        </button>
+    </form>
+</mat-card>

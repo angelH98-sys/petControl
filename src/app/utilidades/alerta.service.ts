@@ -48,6 +48,21 @@ export class AlertaService {
         case "duiNoDisponible": {
           return "DUI no disponible";
         }
+        case "clienteInvalido": {
+          return "No existe registro del cliente";
+        }
+        case "productoInexistente": {
+          return "No existe registro de este producto";
+        }
+        case "cantidadInvalida": {
+          return "La cantidad excede el stock del producto";
+        }
+        case "errorFiltroFechas": {
+          return "Fecha inválida";
+        }
+        case "servicioInexistente": {
+          return "No existe registro de este servicio";
+        }
       }
     }
   }

@@ -13,7 +13,15 @@ import { TableUsuarioComponent } from './componentes/usuario/table-usuario/table
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { EliminarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
+import { DeshabilitarUsuarioDialog, HabilitarUsuarioDialog, ModificarUsuarioDialog } from './componentes/usuario/modal-usuario/usuario-dialog';
+import { ClienteComponent } from './componentes/cliente/cliente.component';
+import { MascotaComponent } from './componentes/mascota/mascota.component';
+import { TablaClienteComponent } from './componentes/tabla-cliente/tabla-cliente.component';
+import { ModificarClienteDialog } from './componentes/cliente/modal-clientes/cliente-dialog';
+import { EliminarClienteDialog } from './componentes/cliente/modal-clientes/cliente-dialog';
+import { ServiciosComponent } from './componentes/servicios/servicios.component';
+import { TableServiciosComponent } from './componentes/servicios/table-servicio/table-servicios.component'
+import { EliminarServiciosDialog, ModificarServiciosDialog } from './componentes/servicios/modal-servicio/servicios-dialog';
 import { FormEmpleadoComponent } from './componentes/empleado/form-empleado/form-empleado.component';
 import { TableEmpleadoComponent } from './componentes/empleado/table-empleado/table-empleado.component';
 import { ModificarEmpleadoDialog } from './componentes/empleado/modal-empleado/empleado-dialog';
@@ -24,6 +32,12 @@ import { TableCompraComponent } from './componentes/compras/table-compra/table-c
 import { AprobarCompraDialog, CancelarCompraDialog, ModificarCompraDialog, NuevaCompraDialog } from './componentes/compras/modal-compra/compra-dialog';
 import { LoginComponent } from './componentes/login/login/login.component';
 import { OlvideComponent } from './componentes/login/olvide/olvide.component';
+import { EfectuarTicketDialog, ModificarTicketDialog, NuevoTicketDialog } from './componentes/tickets/modal-ticket/ticket-dialog';
+import { TableTicketComponent } from './componentes/tickets/table-ticket/table-ticket.component';
+import { EliminarVentaDialog, ModificarVentaDialog, NuevaVentaDialog } from './componentes/ventas/modal-venta/venta-dialog';
+import { EliminarCitaDialog, ModificarCitaDialog, NuevaCitaDialog } from './componentes/citas/modal-cita/cita-dialog';
+import { DetalleTicketComponent } from './componentes/tickets/detalle-ticket/detalle-ticket.component';
+import { TableVentaComponent } from './componentes/ventas/table-venta/table-venta.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +45,17 @@ import { OlvideComponent } from './componentes/login/olvide/olvide.component';
     FormUsuarioComponent,
     TableUsuarioComponent,
     ModificarUsuarioDialog,
-    EliminarUsuarioDialog,
+    DeshabilitarUsuarioDialog,
+    HabilitarUsuarioDialog,
+    ClienteComponent,
+    MascotaComponent,
+    TablaClienteComponent,
+    ModificarClienteDialog,
+    EliminarClienteDialog,
+    ServiciosComponent,
+    TableServiciosComponent,
+    EliminarServiciosDialog,
+    ModificarServiciosDialog,
     FormEmpleadoComponent,
     TableEmpleadoComponent,
     ModificarEmpleadoDialog,
@@ -45,7 +69,19 @@ import { OlvideComponent } from './componentes/login/olvide/olvide.component';
     ModificarCompraDialog,
     CancelarCompraDialog,
     LoginComponent,
-    OlvideComponent
+    OlvideComponent,
+    NuevoTicketDialog,
+    TableTicketComponent,
+    NuevaVentaDialog,
+    NuevaCitaDialog,
+    DetalleTicketComponent,
+    ModificarVentaDialog,
+    ModificarCitaDialog,
+    EliminarVentaDialog,
+    EliminarCitaDialog,
+    ModificarTicketDialog,
+    EfectuarTicketDialog,
+    TableVentaComponent
   ],
   imports: [
     BrowserModule,

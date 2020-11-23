@@ -67,7 +67,8 @@
                     </button>
                     <button mat-icon-button color="primary"
                         matTooltip="Ventas"
-                        *ngIf="element.estado != 'Borrador'">
+                        *ngIf="element.estado != 'Borrador'"
+                        [routerLink]="['/ventas/', element.id]">
                         <mat-icon>receipt</mat-icon>
                     </button>
                     <button mat-icon-button color="primary"

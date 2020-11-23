@@ -13,16 +13,24 @@
       Productos
     </button>
     <button mat-button class="drawerButton w-100 py-1"
+      [routerLink]="['/empleados/tabla']"
       (click)="drawer.toggle()">
       Empleados
     </button>
     <button mat-button class="drawerButton w-100 py-1"
+      [routerLink]="['/servicio/tabla']"
       (click)="drawer.toggle()">
       Servicios
     </button>
     <button mat-button class="drawerButton w-100 py-1"
+      [routerLink]="['/clientes/tabla']"
       (click)="drawer.toggle()">
       Clientes
+    </button>
+    <button mat-button class="drawerButton w-100 py-1"
+      [routerLink]="['/tickets/tabla']"
+      (click)="drawer.toggle()">
+      Tickets
     </button>
     <button mat-button class="drawerButton w-100 py-1"
       [routerLink]="['/usuarios/tabla']"
@@ -33,6 +41,7 @@
   <mat-drawer-content>
     <div class="container mt-4">
       <router-outlet></router-outlet>
+      
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
