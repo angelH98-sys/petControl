@@ -226,7 +226,6 @@ export class TableTicketComponent implements OnInit {
 
     let sell = await this.db.GetDocWith('ticket', ticketId, 'ventas');
     let appointment = await this.db.GetDocWith('ticket', ticketId, 'citas');
-    let products = await this.db.GetSellsFromTicket(sell.docs[0].id).toPromise();
 
     let obj = {
       sell: undefined,
@@ -236,7 +235,11 @@ export class TableTicketComponent implements OnInit {
 
     if(!sell.empty) obj.sell = sell.docs[0];
     if(!appointment.empty) obj.appointment = appointment.docs[0];
-    if(!products.empty) obj.products = products.docs;
+
+    if(!sell.empty){
+      let products = await this.db.GetSellsFromTicket(sell.docs[0].id).toPromise();
+      obj.products = products.docs;
+    }
 
     return obj;
   }

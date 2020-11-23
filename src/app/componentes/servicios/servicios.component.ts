@@ -42,6 +42,7 @@ export class ServiciosComponent implements OnInit {
       this.alertaService.openSuccessSnackBar('servicio registrado exitosamente');
       this.router.navigate(['servicio/tabla']);
     }catch(rej){
+      console.log(rej);
       this.alertaService
         .openErrorSnackBar('Ups... algo salio mal al registrar el servicio.');
     }
@@ -54,7 +55,7 @@ export class ServiciosComponent implements OnInit {
       duracion: this.formServicios.get('duracion').value,
       precio: (this.formServicios.get('precio').value),
       empleado: this.formServicios.get('empleado').value,
-      estado1: this.formServicios.get('estado1').value,
+      estado: this.formServicios.get('estado').value,
     }
   }
 

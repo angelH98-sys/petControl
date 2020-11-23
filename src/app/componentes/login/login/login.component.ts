@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
       .GetDocWith('contrasenia', sha256(this.formlogin.get('contrasenia').value), 'usuario');
 
     if(!response.empty&&!response2.empty){//validar que se vaya a otra parte
-      this.router.navigate(['empleados/tabla']);
+      this.router.navigate(['tickets/tabla']);
     }else{
       this.alertaService.openErrorSnackBar("La contraseña es incorrecta")
      this.formlogin.reset()
