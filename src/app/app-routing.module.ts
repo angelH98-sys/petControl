@@ -9,7 +9,6 @@ import { FormUsuarioComponent } from './componentes/usuario/form-usuario/form-us
 import { TableUsuarioComponent } from './componentes/usuario/table-usuario/table-usuario.component';
 import {LoginComponent} from './componentes/login/login/login.component';
 import { OlvideComponent } from './componentes/login/olvide/olvide.component';
-import { ActualizarComponent } from './componentes/login/actualizar/actualizar.component';
 import { AuthGuard } from "./guards/auth.guard";
 
 const routes: Routes = [
@@ -23,7 +22,6 @@ const routes: Routes = [
   { path: 'compras/tabla/:id', component: TableCompraComponent ,canActivate: [AuthGuard] },
   { path: 'login', component:LoginComponent},
   { path: 'login/olvide', component:OlvideComponent},
-  { path: 'login/actualizar', component:ActualizarComponent},
 ];
 
 @NgModule({

@@ -69,29 +69,33 @@ export class OlvideComponent implements OnInit {
 
     async onSubmit2(){
     
-    
-      let response = await this.db
-        .GetDocWith('usuario', this.formolvide.get('usuario').value, 'usuario');
-      
-      try{
-        if(!response.empty){
-          this.db.Update(response.docs[0].id, {
-            contrasenia:sha256(this.formolvide.get('contrasenia').value),
-          }, 'usuario');
-          
+      if(this.formolvide.get('contrasenia').value==this.formolvide.get('confirmarContrasenia').value){
+        let response = await this.db
+          .GetDocWith('usuario', this.formolvide.get('usuario').value, 'usuario');
+        
+        try{
+          if(!response.empty){
+            this.db.Update(response.docs[0].id, {
+              contrasenia:sha256(this.formolvide.get('contrasenia').value),
+            }, 'usuario');
+            
+            this.alertaService
+                .openSuccessSnackBar('Contrseña modificada exitosamente');
+                this.router.navigate(['login']);
+          }else{
+            this.alertaService
+                .openErrorSnackBar('No existe ningun usuario con ese nombre');
+          }
+        }catch(rej){
           this.alertaService
-              .openSuccessSnackBar('Contrseña modificada exitosamente');
-              this.router.navigate(['login']);
-        }else{
-          this.alertaService
-              .openErrorSnackBar('No existe ningun usuario con ese nombre');
+                .openErrorSnackBar('Ups... Ocurrio un error al modificar la contraseña');
         }
-      }catch(rej){
+      }else{
         this.alertaService
-              .openErrorSnackBar('Ups... Ocurrio un error al modificar el usuario');
+        .openErrorSnackBar('Las contraseñas no son iguales');
+        this.formolvide.controls["contrasenia"].reset();
+        this.formolvide.controls["confirmarContrasenia"].reset();
       }
-      
-      
     }
 
     async ingresa(){
