@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 })
 export class OlvideComponent implements OnInit {
   show:boolean=false;
+  show2:boolean=false;
+  esconder:boolean=true;
   hide:boolean=true;
   formolvide:FormGroup;
 
@@ -28,6 +30,8 @@ export class OlvideComponent implements OnInit {
         usuario: ['', Validators.required],
         pregunta: ['', Validators.required],
         respuesta: ['', Validators.required],
+        contrasenia: ['', Validators.required],
+        confirmarContrasenia: ['', Validators.required],
       })
     }
 
@@ -36,13 +40,15 @@ export class OlvideComponent implements OnInit {
         usuario: this.formolvide.get('usuario').value,
         pregunta: this.formolvide.get('pregunta').value,
         respuesta: this.formolvide.get('respuesta').value,
+        contrasenia: sha256(this.formolvide.get('contrasenia').value),
+        confirmarContrasenia: sha256(this.formolvide.get('contrasenia').value),
       }
     }
     
   
 
     async onSubmit(){
-      if(this,this.formolvide.invalid) return false;
+      
 
       let response = await this.db
       .GetDocWith('pregunta', this.formolvide.get('pregunta').value, 'usuario');
@@ -51,11 +57,41 @@ export class OlvideComponent implements OnInit {
       .GetDocWith('respuesta', sha256(this.formolvide.get('respuesta').value), 'usuario');
 
       if(!response.empty&&!response2.empty){//validar que se vaya a otra parte
-        this.router.navigate(['login/actualizar']);
+        //this.router.navigate(['login/actualizar']);
+       
+        this.show2=true;
+        this.esconder=false;
       }else{
         this.alertaService.openErrorSnackBar("La respuesta no es correcta")
         this.formolvide.controls["respuesta"].reset();
       }
+    }
+
+    async onSubmit2(){
+    
+    
+      let response = await this.db
+        .GetDocWith('usuario', this.formolvide.get('usuario').value, 'usuario');
+      
+      try{
+        if(!response.empty){
+          this.db.Update(response.docs[0].id, {
+            contrasenia:sha256(this.formolvide.get('contrasenia').value),
+          }, 'usuario');
+          
+          this.alertaService
+              .openSuccessSnackBar('Contrseña modificada exitosamente');
+              this.router.navigate(['login']);
+        }else{
+          this.alertaService
+              .openErrorSnackBar('No existe ningun usuario con ese nombre');
+        }
+      }catch(rej){
+        this.alertaService
+              .openErrorSnackBar('Ups... Ocurrio un error al modificar el usuario');
+      }
+      
+      
     }
 
     async ingresa(){

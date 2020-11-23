@@ -1,4 +1,4 @@
-<div class="centrar">
+<div class="centrar" *ngIf=esconder>
     <mat-card class="col-xl-6 col-lg-8 col-md-12 mat-elevation-z8 mb-3">
         <p class="mat-display-1 mb-3">
             Olvide la contraseña
@@ -16,7 +16,7 @@
             </mat-form-field>
             
             <mat-form-field class="col-12 mb-1" *ngIf=show>
-                <mat-label >Ingresa la pregunta de seguridad</mat-label>
+                <mat-label >Su pregunta de seguridad es:</mat-label>
                 <input  matInput type="text" 
                     formControlName="pregunta"  >
                     <mat-error *ngIf="formolvide.get('pregunta').invalid">
@@ -35,7 +35,7 @@
 
             <button mat-raised-button color="primary" 
                 class="col-11 py-2 mx-auto mt-1"
-                [disabled]="formolvide.invalid" *ngIf=show>
+                 *ngIf=show>
                 Valida la información
             </button>
         </form>
@@ -46,6 +46,43 @@
                 class="col-11 py-2 mx-auto mt-1" *ngIf=hide>
                 Valida la informaciónn
         </button>
+        </form>
+    </mat-card>
+</div>
+
+
+
+<div class="centrar" *ngIf=show2>
+    <mat-card class="col-xl-6 col-lg-8 col-md-12 mat-elevation-z8 mb-3">
+        <p class="mat-display-1 mb-3">
+            Actualizar contraseña
+        </p>
+        <form [formGroup]="formolvide" class="row" 
+            (ngSubmit)="onSubmit2()">
+            <mat-form-field class="col-12 mb-1">
+                <mat-label>Ingresa nueva contraseña</mat-label>
+                <input matInput type="password"
+                    formControlName="contrasenia">
+                    <mat-error *ngIf="formolvide.get('contrasenia').invalid">
+                        {{alertaService.errorInput(formolvide.get('contrasenia'))}}
+                    </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field class="col-12 mb-1">
+                <mat-label>Confirmar contraseña</mat-label>
+                <input matInput type="password"
+                    formControlName="confirmarContrasenia">
+                    <mat-error *ngIf="formolvide.get('confirmarContrasenia').invalid">
+                        {{alertaService.errorInput(formolvide.get('confirmarContrasenia'))}}
+                    </mat-error>
+            </mat-form-field>
+            
+    
+            <button mat-raised-button color="primary" 
+                class="col-11 py-2 mx-auto mt-1"
+                [disabled]="formolvide.invalid">  
+                Valida la información
+            </button>
         </form>
     </mat-card>
 </div>
