@@ -4,24 +4,39 @@
         <mat-form-field class="col-12">
             <mat-label>Nombre</mat-label>
             <input matInput type="text" formControlName="nombre">
+            <mat-error *ngIf="formEmpleado.get('nombre').invalid">
+                {{alertaService.errorInput(formEmpleado.get('nombre'))}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="col-12">
             <mat-label>Telefono</mat-label>
             <mat-hint>Ej: 0000-0000</mat-hint>
             <input matInput type="text" formControlName="telefono">
+            <mat-error *ngIf="formEmpleado.get('telefono').invalid">
+                {{alertaService.errorInput(formEmpleado.get('telefono'))}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="col-12">
             <mat-label>Correo</mat-label>
             <input matInput type="text" formControlName="correo">
+            <mat-error *ngIf="formEmpleado.get('correo').invalid">
+                {{alertaService.errorInput(formEmpleado.get('correo'))}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="col-12">
             <mat-label>DUI</mat-label>
             <input matInput type="text" formControlName="dui">
+            <mat-error *ngIf="formEmpleado.get('dui').invalid">
+                {{alertaService.errorInput(formEmpleado.get('dui'))}}
+            </mat-error>
             <mat-hint>Ej: 12345678-9</mat-hint>
         </mat-form-field>
         <mat-form-field class="col-12">
             <mat-label>Especialidad</mat-label>
             <input matInput type="text" formControlName="especialidad">
+            <mat-error *ngIf="formEmpleado.get('especialidad').invalid">
+                {{alertaService.errorInput(formEmpleado.get('especialidad'))}}
+            </mat-error>
         </mat-form-field>
         <button mat-raised-button color="primary" 
             class="col-11 py-2 mx-auto mt-1"

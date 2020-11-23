@@ -39,6 +39,15 @@ export class AlertaService {
         case "productoNoDisponible": {
           return "Nombre de producto no disponible";
         }
+        case "telefonoNoDisponible": {
+          return "Telefono no disponible";
+        }
+        case "correoNoDisponible": {
+          return "Correo no disponible";
+        }
+        case "duiNoDisponible": {
+          return "DUI no disponible";
+        }
         case "clienteInvalido": {
           return "No existe registro del cliente";
         }

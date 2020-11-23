@@ -53,13 +53,32 @@ export class FormEmpleadoComponent implements OnInit {
 
   async onSubmit(){
     if(this.formEmpleado.invalid) return false;
-    try{
-      await this.db.Create(this.formGroupToEmpleado(), 'empleado');
-      this.alertaService.openSuccessSnackBar('Empleado registrado exitosamente');
-      this.router.navigate(['empleados/tabla']);
-    }catch(rej){
-      this.alertaService
-        .openErrorSnackBar('Ups... algo salio mal al registrar el usuario.');
+
+    let response = await this.db
+      .GetDocWith('telefono', this.formEmpleado.get('telefono').value, 'empleado');
+    let response2 = await this.db
+      .GetDocWith('correo', this.formEmpleado.get('correo').value, 'empleado');
+    let response3 = await this.db
+      .GetDocWith('dui', this.formEmpleado.get('dui').value, 'empleado');
+
+    if(!response.empty||!response2.empty||!response3.empty){
+      if(!response.empty){
+        this.formEmpleado.get('telefono').setErrors({telefonoNoDisponible: true});
+      }
+      if(!response2.empty){
+        this.formEmpleado.get('correo').setErrors({correoNoDisponible: true});
+      }
+      if(!response3.empty){
+        this.formEmpleado.get('dui').setErrors({duiNoDisponible: true}); 
+      }   
+    }else{
+      try{
+        await this.db.Create(this.formGroupToEmpleado(), 'empleado');
+        this.alertaService.openSuccessSnackBar('Empleado registrado exitosamente');
+        this.router.navigate(['empleados/tabla']);
+      }catch(rej){
+        this.alertaService.openErrorSnackBar('Ups... algo salio mal al registrar el usuario.');
+      }
     }
   }
   

@@ -4,22 +4,44 @@
       <mat-form-field class="mb-1">
         <mat-label>Nombre</mat-label>
         <input matInput type="text" formControlName="nombre">
+        <mat-error *ngIf="formGroup.get('nombre').invalid">
+          {{alertaService.errorInput(formGroup.get('nombre'))}}
+      </mat-error>
       </mat-form-field>
       <mat-form-field class="mb-1">
         <mat-label>Telefono</mat-label>
         <input matInput type="text" formControlName="telefono">
+        <mat-error *ngIf="formGroup.get('telefono').invalid">
+          {{alertaService.errorInput(formGroup.get('telefono'))}}
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="mb-1">
         <mat-label>Correo</mat-label>
         <input matInput type="text" formControlName="correo">
+        <mat-error *ngIf="formGroup.get('correo').invalid">
+          {{alertaService.errorInput(formGroup.get('correo'))}}
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="mb-1">
         <mat-label>DUI</mat-label>
         <input matInput type="text" formControlName="dui">
+        <mat-error *ngIf="formGroup.get('dui').invalid">
+          {{alertaService.errorInput(formGroup.get('dui'))}}
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="mb-1">
         <mat-label>Especialidad</mat-label>
         <input matInput type="text" formControlName="especialidad">
+        <mat-error *ngIf="formGroup.get('especialidad').invalid">
+          {{alertaService.errorInput(formGroup.get('especialidad'))}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="mb-1">
+        <mat-label>Estado</mat-label>
+        <input matInput type="text" formControlName="estado">
+        <mat-error *ngIf="formGroup.get('estado').invalid">
+          {{alertaService.errorInput(formGroup.get('estado'))}}
+      </mat-error>
       </mat-form-field>
   </form>
 </div>
